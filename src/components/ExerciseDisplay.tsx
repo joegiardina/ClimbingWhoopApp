@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
-import {fontSizes, spacing} from '../../style';
+import {fontSizes, spacing, radii} from '../../style';
 import {ExerciseType} from '../interface';
 
 interface PropertyInterface {
@@ -16,13 +16,22 @@ const formatValue = (type:string, text:string) => {
   return text;
 }
 
+const timerPropNames = [
+  'Duration On (sec)',
+  'Duration Off (sec)',
+  'Reps',
+  'Sets',
+];
+
 // TODO update types
-const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:any, completed:any}> = ({exercise, result, setResult, completed}) => {
+const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:any, completed:any, navigation:any}> = ({exercise, result, setResult, completed, navigation}) => {
   const {name} = exercise;
-  const [values, setValues] = useState(completed ? completed[name] : {});
+  const [values, setValues] = useState(completed && completed[name] || {});
   const textColor = 'white';
   const regularTextStyle = {color: textColor, fontSize: fontSizes.normal};
   const smallTextStyle = {color: textColor, fontSize: fontSizes.small};
+  const showTimerButton = _.every(timerPropNames, name => _.find(exercise.properties, {name}));
+  const timerButtonDisabled = !_.every(timerPropNames, name => !!values[name]);
 
   useEffect(() => {
     if (_.keys(values).length) {
@@ -32,7 +41,28 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
 
   return (
     <View style={{alignItems: 'flex-start', width: '100%', flex: 1}}>
-      <Text style={{...regularTextStyle, marginBottom: spacing.normal}}>{name}</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing.normal}}>
+        <Text style={{flex: 1, ...regularTextStyle}}>{name}</Text>
+        {showTimerButton && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TimerScreen', {
+                durationWork: values[timerPropNames[0]],
+                durationRest: values[timerPropNames[1]],
+                reps: values[timerPropNames[2]],
+                sets: values[timerPropNames[3]],
+              })}
+              disabled={timerButtonDisabled}
+              style={{
+                borderColor: timerButtonDisabled ? 'gray' : textColor,
+                borderRadius: radii.normal,
+                borderWidth: 1,
+                padding: spacing.small
+              }}>
+              <Text style={{color: timerButtonDisabled ? 'gray' : textColor}}>Timer</Text>
+            </TouchableOpacity>
+        )}
+      </View>
+        
       <View style={{flex: 1}}>
         {exercise.properties.map((property:PropertyInterface, key:number) => (
           <View

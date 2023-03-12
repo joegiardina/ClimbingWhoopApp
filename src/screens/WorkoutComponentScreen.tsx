@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import _ from 'lodash';
 import {TouchableOpacity, Text, ScrollView, useColorScheme} from 'react-native';
 import ExerciseDisplay from '../components/ExerciseDisplay';
-import {spacing, fontSizes} from '../../style';
+import {spacing, fontSizes, radii} from '../../style';
 import {ExerciseType} from '../interface';
 
 // TODO: properly type route
@@ -34,6 +34,7 @@ const WorkoutComponent: React.FC<{route:any, navigation:any}> = ({route, navigat
           setResult={setResult}
           exercise={exercise}
           completed={_.find(completed, {name})?.result}
+          navigation={navigation}
         />
       ))}
       <TouchableOpacity
@@ -42,7 +43,7 @@ const WorkoutComponent: React.FC<{route:any, navigation:any}> = ({route, navigat
           marginBottom: spacing.large,
           width: '80%',
           backgroundColor: 'green',
-          borderRadius: 6,
+          borderRadius: radii.normal,
           padding: 12,
         }}>
         <Text style={{textAlign: 'center', color: 'white'}}>Save</Text>

@@ -10,4 +10,10 @@ export const fontSizes = {
     normal: 16,
     medium: 20,
     large: 32,
+    extraLarge: 64,
+    huge: 128,
+};
+
+export const radii = {
+    normal: 6,
 };

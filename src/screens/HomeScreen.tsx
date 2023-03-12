@@ -6,13 +6,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useQuery} from 'react-query'
-// import {Calendar} from 'react-native-calendars';
-import Calendar from '../components/Calendar';
 import WorkoutPicker from '../components/WorkoutPicker';
 import {WorkoutInterface} from '../interface';
 import {fetchPlan} from '../api';
 
-import {spacing, fontSizes} from '../../style';
+import {spacing, fontSizes, radii} from '../../style';
 
 const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
 
@@ -52,7 +50,7 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
           marginBottom: spacing.large,
           width: '80%',
           backgroundColor: 'green',
-          borderRadius: 6,
+          borderRadius: radii.normal,
           padding: 12,
         }}>
         <Text style={{textAlign: 'center', color: 'white'}}>Start Workout</Text>

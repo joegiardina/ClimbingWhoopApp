@@ -4,7 +4,7 @@ import {useColorScheme} from 'react-native';
 import _ from 'lodash';
 import {View, TouchableOpacity, Text} from 'react-native';
 import WorkoutDisplay from '../components/WorkoutDisplay';
-import {spacing} from '../../style';
+import {spacing, radii} from '../../style';
 import {WorkoutComponentInterface} from '../interface';
 import {postCompleted} from '../api';
 
@@ -14,7 +14,6 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
   const isDarkMode = useColorScheme() === 'dark';
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>([]);
   const [error, setError] = useState<string>('');
-  console.log('workout', JSON.stringify(workout, null, 2));
   useEffect(() => {
     setCompleted(
       _.compact(
@@ -25,7 +24,6 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
   
   const onPressComponent = useCallback((workoutComponent: WorkoutComponentInterface) => {
     navigation.navigate('WorkoutComponent', {workoutComponent, workout, completed});
-    // console.log('onPress', workoutComponent);
   }, [completed]);
   
   if (!workout) return null;
@@ -58,7 +56,7 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
           marginBottom: spacing.large,
           width: '80%',
           backgroundColor: buttonDisabled ? 'gray' : 'green',
-          borderRadius: 6,
+          borderRadius: radii.normal,
           padding: 12,
         }}>
         <Text style={{textAlign: 'center', color: 'white'}}>Complete Workout</Text>

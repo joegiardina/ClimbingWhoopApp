@@ -9,6 +9,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import WorkoutScreen from './src/screens/WorkoutScreen';
 import WorkoutComponentScreen from './src/screens/WorkoutComponentScreen';
+import TimerScreen from './src/screens/TimerScreen';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient()
@@ -37,8 +38,9 @@ function App(): JSX.Element {
               ...DefaultTheme.colors,
               background: backgroundStyle.backgroundColor
             }}}>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="HomeScreen">
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false}} />
+            <Stack.Screen name="TimerScreen" component={TimerScreen} />
             <Stack.Screen
               name="WorkoutScreen"
               component={WorkoutScreen}

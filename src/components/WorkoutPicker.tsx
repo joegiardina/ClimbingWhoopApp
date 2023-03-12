@@ -1,10 +1,10 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
-  useColorScheme,
   View,
   TouchableOpacity,
 } from 'react-native';
+import {radii} from '../../style';
 
 const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
 
@@ -35,7 +35,7 @@ const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}>
             marginLeft: 12,
             borderWidth: 1,
             borderColor: getColor(phase === _phase),
-            borderRadius: 6,
+            borderRadius: radii.normal,
             padding: 12
           }}>
           <Text style={{color: getColor(phase === _phase)}}>Phase {_phase}</Text>
@@ -56,7 +56,7 @@ const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}>
               marginLeft: 12,
               borderWidth: 1,
               borderColor: getColor(day === _day),
-              borderRadius: 6,
+              borderRadius: radii.normal,
               padding: 12
             }}>
             <Text style={{color: getColor(day === _day)}}>{_day}</Text>
