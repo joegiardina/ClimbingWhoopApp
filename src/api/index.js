@@ -23,3 +23,6 @@ const post = async (url, data) => {
 export const fetchPlan = () => get(`https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/getPlan`);
 
 export const postCompleted = (data) => post(`https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/completed`, data);
+
+// TODO: actually do auth here
+export const auth = async (username, password) => ({name: 'Joey'});

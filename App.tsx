@@ -26,7 +26,7 @@ function App(): JSX.Element {
     color: isDarkMode ? 'white' : 'black',
   };
 
-  const [user, setUser] = useState({name: 'User'});
+  const [user, setUser] = useState();
 
   return (
     <SafeAreaView style={{...backgroundStyle, flex: 1}}>
@@ -43,14 +43,14 @@ function App(): JSX.Element {
                 ...DefaultTheme.colors,
                 background: backgroundStyle.backgroundColor
               }}}>
-            <Stack.Navigator initialRouteName="SignInScreen">
+            <Stack.Navigator initialRouteName={user ? 'HomeScreen' : 'SignInScreen'}>
               <Stack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
                 options={{
                   headerStyle: backgroundStyle,
                   headerTitleStyle, 
-                  headerTitle: `Hello, ${user.name}`,
+                  headerTitle: `Hello, ${user?.name}`,
                 }} />
               <Stack.Screen
                 name="SignInScreen"
@@ -58,7 +58,7 @@ function App(): JSX.Element {
                 options={{
                   headerStyle: backgroundStyle,
                   headerTitleStyle, 
-                  headerTitle: `Sign In ${user.name}`,
+                  headerTitle: 'Please Sign In',
                 }} />
               <Stack.Screen
                 name="TimerScreen"
