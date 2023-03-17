@@ -108,7 +108,7 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
             <Text style={{alignSelf: 'center', fontSize: fontSizes.large, color: textColor, marginBottom: spacing.medium}}>Rest</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TouchableOpacity
-                onPress={() => setTimerDuration(3)}
+                onPress={() => setTimerDuration(60)}
                 style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
                 <Text style={{...regularTextStyle, color: textColor, fontSize: fontSizes.large}}>1 min</Text>
               </TouchableOpacity>
@@ -125,7 +125,7 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
             </View>
           </>
           ) : (
-            <Timer onFinish={() => setTimerDuration(undefined)} durationPrep={2} durationWork={2} durationRest={2} reps={2} sets={2} autoStart />
+            <Timer onFinish={() => setTimerDuration(undefined)} durationPrep={0} durationWork={0} durationRest={timerDuration} reps={0} sets={0} autoStart />
           )}
         </View>
 

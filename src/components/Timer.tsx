@@ -41,83 +41,8 @@ const Timer: React.FC<{
 
   const states = ['ready', 'preparing', 'working', 'resting', 'done'];
 
-  const startSet = () => {
-    setRemainingReps(reps);
-    let initialState: TimerState = 'ready';
-    if (durationPrep) {
-      initialState = 'preparing';
-    } else if (durationWork) {
-      initialState = 'working';
-    } else if (durationRest) {
-      initialState = 'resting';
-    }
-    console.log('START SET', reps, initialState);
-    setTimerState(initialState);
-    const id = setInterval(() => {
-      setRemainingSec(sec => (sec || 1) - 1);
-    }, 1000);
-    setIntervalId(id);
-  };
-
-  useEffect(() => {
-    console.log('remaining', remainingSec, remainingReps, remainingSets);
-    if (remainingSec === 0 && remainingReps > 0) {
-      setRemainingReps(reps => reps - 1);
-    }
-    if (remainingReps === 0 && remainingSets > 0) {
-      const newSet = remainingSets - 1;
-      setRemainingSets(newSet);
-    }
-    if (remainingSets === 0) {
-      setTimerState('done');
-    }
-  }, [remainingSec, remainingReps, remainingSets]);
-
-  useEffect(() => {
-    let newDuration;
-    switch(timerState) {
-      case 'done':
-        if (onFinish) {
-          onFinish();
-        }
-        break;
-      case 'working':
-        if (durationWork) {
-          newDuration = durationWork;
-        }
-        break;
-      case 'resting':
-        if (durationRest) {
-          newDuration = durationRest;
-        }
-        break;
-      case 'preparing':
-        if (durationPrep) {
-          newDuration = durationPrep;
-        }
-        break;
-      case 'ready':
-        if (autoStart) {
-          startSet();
-        }
-        break;
-    }
-    if (newDuration) {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-      setRemainingSec(newDuration);
-      const id = setInterval(() => {
-        setRemainingSec(sec => (sec || 1) - 1);
-      }, 1000);
-      setIntervalId(id);
-    }
-
-  }, [timerState]);
-
   // const startSet = () => {
   //   setRemainingReps(reps);
-  //   setRemainingSec(durationPrep || durationWork || durationRest);
   //   let initialState: TimerState = 'ready';
   //   if (durationPrep) {
   //     initialState = 'preparing';
@@ -126,6 +51,7 @@ const Timer: React.FC<{
   //   } else if (durationRest) {
   //     initialState = 'resting';
   //   }
+  //   console.log('START SET', reps, initialState);
   //   setTimerState(initialState);
   //   const id = setInterval(() => {
   //     setRemainingSec(sec => (sec || 1) - 1);
@@ -134,52 +60,127 @@ const Timer: React.FC<{
   // };
 
   // useEffect(() => {
-  //   if (autoStart && !intervalId) {
-  //     startSet();
+  //   console.log('remaining', remainingSec, remainingReps, remainingSets);
+  //   if (remainingSec === 0 && remainingReps > 0) {
+  //     setRemainingReps(reps => reps - 1);
   //   }
-  // }, []);
+  //   if (remainingReps === 0 && remainingSets > 0) {
+  //     const newSet = remainingSets - 1;
+  //     setRemainingSets(newSet);
+  //   }
+  //   if (remainingSets === 0) {
+  //     setTimerState('done');
+  //   }
+  // }, [remainingSec, remainingReps, remainingSets]);
 
   // useEffect(() => {
-  //   if (timerState === 'done' && remainingSets > 0) {
-  //     console.log('SETTING DONE, REMAINING SETS:', remainingSets);
-  //     setRemainingSets(set => (set || 1) - 1);
-  //     if (onFinish) {
-  //       onFinish();
-  //     }
-  //   }
-  // }, [timerState, onFinish]);
-
-  // useEffect(() => {
-  //   let newRemainingSec;
-  //   console.log('remainingSec', remainingSec)
-  //   console.log('remainingReps', remainingReps)
-  //   if (remainingSec === 0 && intervalId) {
-  //     if (timerState === 'preparing' || durationPrep === 0) {
-  //       newRemainingSec = durationWork;
-  //       setTimerState('working');
-  //     } else if (timerState === 'working' || durationWork === 0) {
-  //       if (remainingReps > 1) {
-  //         newRemainingSec = durationRest;
+  //   let newDuration;
+  //   switch(timerState) {
+  //     case 'done':
+  //       if (onFinish) {
+  //         onFinish();
   //       }
-  //       setTimerState(remainingReps > 1 ? 'resting' : 'done');
-  //     } else if (timerState === 'resting' && remainingReps > 0 && durationWork) {
-  //       newRemainingSec = durationWork;
-  //       setRemainingReps(remainingReps => remainingReps - 1);
-  //       setTimerState('working');
-  //     } else if (timerState === 'resting' && onFinish) {
-  //       onFinish();
-  //     }
-  //     clearInterval(intervalId);
-  //     if (newRemainingSec) {
-  //       setRemainingSec(newRemainingSec);
-  //       const id = setInterval(() => {
-  //         setRemainingSec(sec => (sec || 1) - 1);
-  //       }, 1000);
-  //       setIntervalId(id);
-  //     }
+  //       break;
+  //     case 'working':
+  //       if (durationWork) {
+  //         newDuration = durationWork;
+  //       }
+  //       break;
+  //     case 'resting':
+  //       if (durationRest) {
+  //         newDuration = durationRest;
+  //       }
+  //       break;
+  //     case 'preparing':
+  //       if (durationPrep) {
+  //         newDuration = durationPrep;
+  //       }
+  //       break;
+  //     case 'ready':
+  //       if (autoStart) {
+  //         startSet();
+  //       }
+  //       break;
   //   }
-  // }, [remainingSec, remainingReps]);
+  //   if (newDuration) {
+  //     if (intervalId) {
+  //       clearInterval(intervalId);
+  //     }
+  //     setRemainingSec(newDuration);
+  //     const id = setInterval(() => {
+  //       setRemainingSec(sec => (sec || 1) - 1);
+  //     }, 1000);
+  //     setIntervalId(id);
+  //   }
 
+  // }, [timerState]);
+
+  ////////////////////////
+  const startSet = () => {
+    setRemainingReps(reps);
+    setRemainingSec(durationPrep || durationWork || durationRest);
+    let initialState: TimerState = 'ready';
+    if (durationPrep) {
+      initialState = 'preparing';
+    } else if (durationWork) {
+      initialState = 'working';
+    } else if (durationRest) {
+      initialState = 'resting';
+    }
+    setTimerState(initialState);
+    const id = setInterval(() => {
+      setRemainingSec(sec => (sec || 1) - 1);
+    }, 1000);
+    setIntervalId(id);
+  };
+
+  useEffect(() => {
+    if (autoStart && !intervalId) {
+      startSet();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (timerState === 'done' && remainingSets > 0) {
+      console.log('SETTING DONE, REMAINING SETS:', remainingSets);
+      setRemainingSets(set => (set || 1) - 1);
+      if (onFinish) {
+        onFinish();
+      }
+    }
+  }, [timerState, onFinish]);
+
+  useEffect(() => {
+    let newRemainingSec;
+    console.log('remainingSec', remainingSec)
+    console.log('remainingReps', remainingReps)
+    if (remainingSec === 0 && intervalId) {
+      if (timerState === 'preparing' || durationPrep === 0) {
+        newRemainingSec = durationWork;
+        setTimerState('working');
+      } else if (timerState === 'working' || durationWork === 0) {
+        if (remainingReps > 1) {
+          newRemainingSec = durationRest;
+        }
+        setTimerState(remainingReps > 1 ? 'resting' : 'done');
+      } else if (timerState === 'resting' && remainingReps > 0 && durationWork) {
+        newRemainingSec = durationWork;
+        setRemainingReps(remainingReps => remainingReps - 1);
+        setTimerState('working');
+      } else if (timerState === 'resting' && onFinish) {
+        onFinish();
+      }
+      clearInterval(intervalId);
+      if (newRemainingSec) {
+        setRemainingSec(newRemainingSec);
+        const id = setInterval(() => {
+          setRemainingSec(sec => (sec || 1) - 1);
+        }, 1000);
+        setIntervalId(id);
+      }
+    }
+  }, [remainingSec, remainingReps]);
+////////////////////////
   return (
     <View
       style={{
