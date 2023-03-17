@@ -50,6 +50,7 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
                 durationRest: values[timerPropNames[1]],
                 reps: values[timerPropNames[2]],
                 sets: values[timerPropNames[3]],
+                durationPrep: 3,
               })}
               disabled={timerButtonDisabled}
               style={{

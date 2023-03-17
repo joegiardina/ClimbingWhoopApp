@@ -40,7 +40,14 @@ function App(): JSX.Element {
             }}}>
           <Stack.Navigator initialRouteName="HomeScreen">
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown: false}} />
-            <Stack.Screen name="TimerScreen" component={TimerScreen} />
+            <Stack.Screen
+              name="TimerScreen"
+              component={TimerScreen}
+              options={{
+                headerStyle: backgroundStyle,
+                headerTitleStyle, 
+                headerTitle: 'Timer'
+              }} />
             <Stack.Screen
               name="WorkoutScreen"
               component={WorkoutScreen}

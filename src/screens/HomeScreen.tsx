@@ -19,9 +19,11 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [backgroundColor] = useState(isDarkMode ? 'black' : 'white');
   const [textColor] = useState(isDarkMode ? 'white' : 'black')
-  const [workout, setWorkout] = useState<WorkoutInterface>({});
+  const [workout, setWorkout] = useState<WorkoutInterface | undefined>();
 
   const {data} = useQuery('plan', fetchPlan);
+
+  const buttonDisabled = !workout;
 
   return (
     <View
@@ -45,11 +47,12 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
       </View> */}
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkoutScreen', {workout})}
+        disabled={buttonDisabled}
         style={{
           marginTop: 'auto',
           marginBottom: spacing.large,
           width: '80%',
-          backgroundColor: 'green',
+          backgroundColor: buttonDisabled ? 'gray' : 'green',
           borderRadius: radii.normal,
           padding: 12,
         }}>
