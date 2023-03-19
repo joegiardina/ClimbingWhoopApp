@@ -9,6 +9,7 @@ import {useQuery} from 'react-query'
 import WorkoutPicker from '../components/WorkoutPicker';
 import {WorkoutInterface} from '../interface';
 import {fetchPlan} from '../api';
+import tw from 'twrnc';
 
 import {spacing, fontSizes, radii} from '../../style';
 
@@ -34,7 +35,7 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
         alignItems: 'center',
         paddingVertical: spacing.large,
       }}>
-      <View style={{alignItems: 'center', marginBottom: 12}}>
+      <View style={tw`pt-6 bg-blue-600 rounded-xl`}>
         <Text style={{color: textColor, fontSize: fontSizes.large}}>Daily Workout</Text>
       </View>
       <WorkoutPicker
