@@ -25,4 +25,4 @@ export const fetchPlan = () => get(`https://vs7k2w1olc.execute-api.us-west-1.ama
 export const postCompleted = (data) => post(`https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/completed`, data);
 
 // TODO: actually do auth here
-export const auth = async (username, password) => ({name: 'Joey'});
+export const auth = async (username, password) => ({name: username, authenticated: true});

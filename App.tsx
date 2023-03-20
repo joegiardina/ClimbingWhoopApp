@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
-import {SafeAreaView, View, StatusBar, useColorScheme,} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, View, StatusBar, useColorScheme,Text} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query'
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
-import WorkoutScreen from './src/screens/WorkoutScreen';
-import WorkoutComponentScreen from './src/screens/WorkoutComponentScreen';
-import TimerScreen from './src/screens/TimerScreen';
-import SignInScreen from './src/screens/SignInScreen';
 import {UserContext} from './src/contexts/user';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UserInterface} from './src/interface';
+import MainStack from './src/navigation/MainStack';
+import UnauthenticatedStack from './src/navigation/UnauthenticatedStack';
 
-const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
 
 function App(): JSX.Element {
@@ -26,67 +23,57 @@ function App(): JSX.Element {
     color: isDarkMode ? 'white' : 'black',
   };
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<UserInterface>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getStoredUser = async () => {
+      let storedUser = await AsyncStorage.getItem('user');
+      storedUser = JSON.parse(storedUser);
+      if (storedUser && storedUser.name) {
+        setUser(storedUser);
+      } else {
+        setUser({authenticated: false})
+      }
+    }
+    getStoredUser();
+    setLoading(false);
+  }, []);
+
+  const updateUser = (u: UserInterface) => {
+    setUser(u)
+    AsyncStorage.setItem('user', JSON.stringify(u));
+  };
+
+  const signoutUser = () => {
+    AsyncStorage.removeItem('user');
+    setUser({authenticated: false});
+  }
 
   return (
     <SafeAreaView style={{...backgroundStyle, flex: 1}}>
-      <UserContext.Provider value={{user, updateUser: setUser}}>
+      <UserContext.Provider value={{user, updateUser, signoutUser}}>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        <QueryClientProvider client={queryClient}>
-          <NavigationContainer
-            theme={{
-              dark: isDarkMode,
-              colors: {
-                ...DefaultTheme.colors,
-                background: backgroundStyle.backgroundColor
-              }}}>
-            <Stack.Navigator initialRouteName={user ? 'HomeScreen' : 'SignInScreen'}>
-              <Stack.Screen
-                name="HomeScreen"
-                component={HomeScreen}
-                options={{
-                  headerStyle: backgroundStyle,
-                  headerTitleStyle, 
-                  headerTitle: `Hello, ${user?.name}`,
-                }} />
-              <Stack.Screen
-                name="SignInScreen"
-                component={SignInScreen}
-                options={{
-                  headerStyle: backgroundStyle,
-                  headerTitleStyle, 
-                  headerTitle: 'Please Sign In',
-                }} />
-              <Stack.Screen
-                name="TimerScreen"
-                component={TimerScreen}
-                options={{
-                  headerStyle: backgroundStyle,
-                  headerTitleStyle, 
-                  headerTitle: 'Timer'
-                }} />
-              <Stack.Screen
-                name="WorkoutScreen"
-                component={WorkoutScreen}
-                options={{
-                  headerStyle: backgroundStyle,
-                  headerTitleStyle, 
-                  headerTitle: 'Workout'
-                }} />
-              <Stack.Screen
-                name="WorkoutComponent"
-                component={WorkoutComponentScreen}
-                options={{
-                  headerStyle: backgroundStyle,
-                  headerTitleStyle, 
-                  headerTitle: 'Workout Component'
-                }} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </QueryClientProvider>
+        {!loading ? (
+          <QueryClientProvider client={queryClient}>
+            <NavigationContainer
+              theme={{
+                dark: isDarkMode,
+                colors: {
+                  ...DefaultTheme.colors,
+                  background: backgroundStyle.backgroundColor
+                }}}>
+              {user.authenticated ? <MainStack user={user} /> : <UnauthenticatedStack />}
+            </NavigationContainer>
+          </QueryClientProvider>
+        ) : (
+          <View>
+            <Text>Loading</Text>
+          </View>
+        )}
       </UserContext.Provider>
     </SafeAreaView>
   );

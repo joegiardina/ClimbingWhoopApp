@@ -1,3 +1,19 @@
-import {createContext} from 'react';
+import {createContext, useContext} from 'react';
+import {UserInterface} from '../interface';
 
-export const UserContext = createContext({user: {}, updateUser: () => {}});
+interface UserContextInterface {
+  user: UserInterface,
+  updateUser: (user: UserInterface) => void,
+  signoutUser: () => void,
+}
+
+export const UserContext = createContext<UserContextInterface>({
+  user: {},
+  updateUser: (u: UserInterface) => {},
+  signoutUser: () => {},
+});
+
+export const useUserContext = () => {
+  const userContext = useContext(UserContext);
+  return userContext;
+}
