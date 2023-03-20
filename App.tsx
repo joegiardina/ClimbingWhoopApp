@@ -19,18 +19,15 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? 'black' : 'white',
   };
-  const headerTitleStyle = {
-    color: isDarkMode ? 'white' : 'black',
-  };
 
   const [user, setUser] = useState<UserInterface>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getStoredUser = async () => {
-      let storedUser = await AsyncStorage.getItem('user');
-      storedUser = JSON.parse(storedUser);
-      if (storedUser && storedUser.name) {
+      const storedUserStr = await AsyncStorage.getItem('user');
+      const storedUser: UserInterface = storedUserStr ? JSON.parse(storedUserStr) : {};
+      if (storedUser.authenticated) {
         setUser(storedUser);
       } else {
         setUser({authenticated: false})
