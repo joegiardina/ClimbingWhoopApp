@@ -5,11 +5,12 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {useQuery} from 'react-query'
+import {useQuery} from 'react-query';
+import tw from 'twrnc';
 import WorkoutPicker from '../components/WorkoutPicker';
 import {WorkoutInterface} from '../interface';
 import {fetchPlan} from '../api';
-import tw from 'twrnc';
+import {useUserContext} from '../contexts/user';
 
 import {spacing, fontSizes, radii} from '../../style';
 
@@ -26,6 +27,8 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
 
   const buttonDisabled = !workout;
 
+  const userContext = useUserContext();
+  
   return (
     <View
       style={{
@@ -43,9 +46,6 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
         data={data}
         setWorkout={setWorkout}
       />
-      {/* <View style={{margin: spacing.normal}}>
-        <Calendar textColor={'white'} backgroundColor={'black'} />
-      </View> */}
       <TouchableOpacity
         onPress={() => navigation.navigate('WorkoutScreen', {workout})}
         disabled={buttonDisabled}
