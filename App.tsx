@@ -38,7 +38,7 @@ function App(): JSX.Element {
   }, []);
 
   const updateUser = (u: UserInterface) => {
-    setUser(u)
+    setUser(u);
     AsyncStorage.setItem('user', JSON.stringify(u));
   };
 

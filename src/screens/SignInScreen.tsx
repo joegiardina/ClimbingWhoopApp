@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {auth} from '../api';
+import {auth, createUser} from '../api';
 import {spacing, fontSizes, radii} from '../../style';
 import {useUserContext} from '../contexts/user';
 
@@ -24,9 +24,13 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
   const onPressSignIn = async () => {
     const authorizedUser = await auth(username, password);
     if (authorizedUser && userContext) {
-      if (userContext) {
-        userContext.updateUser(authorizedUser);
-      }
+      userContext.updateUser(authorizedUser);
+    }
+  }
+  const onPressCreateUser = async () => {
+    const authorizedUser = await createUser(username, password);
+    if (authorizedUser && userContext) {
+      userContext.updateUser(authorizedUser);
     }
   }
   const signInDisabled = !username || !password;
@@ -71,9 +75,14 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
           />
         </View>
       </View>
-      <TouchableOpacity style={{flex: 1, marginTop: spacing.small}} disabled={signInDisabled} onPress={onPressSignIn}>
-        <Text style={{color: signInDisabled ? backgroundColor : textColor}}>Sign In</Text>
-      </TouchableOpacity>
+      <View style={{flexDirection: 'row',  marginTop: spacing.small, flex: 1}}>
+        <TouchableOpacity style={{flex: 1, marginRight: spacing.small}} disabled={signInDisabled} onPress={onPressSignIn}>
+          <Text style={{color: signInDisabled ? backgroundColor : textColor}}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{flex: 1}} disabled={signInDisabled} onPress={onPressCreateUser}>
+          <Text style={{color: signInDisabled ? backgroundColor : textColor}}>Create</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
