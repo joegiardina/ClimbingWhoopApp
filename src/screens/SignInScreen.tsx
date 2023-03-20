@@ -26,7 +26,6 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
     if (authorizedUser && userContext) {
       if (userContext) {
         userContext.updateUser(authorizedUser);
-        navigation.reset({index: 0, routes: [{name: 'HomeScreen'}]});
       }
     }
   }
@@ -46,6 +45,7 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
         placeholder="Username"
         autoCapitalize="none"
         autoComplete="off"
+        autoCorrect={false}
         onChangeText={(text) => setUsername(text)}
       />
       <TextInput
@@ -54,13 +54,12 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
         placeholder="Password"
         autoCapitalize="none"
         autoComplete="off"
+        autoCorrect={false}
         onChangeText={(text) => setPassword(text)}
       />
-      {!signInDisabled && (
-        <TouchableOpacity onPress={onPressSignIn}>
-          <Text style={{color: textColor}}>Sign In</Text>
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity disabled={signInDisabled} onPress={onPressSignIn} style={{flex: 1}}>
+        <Text style={{color: signInDisabled ? backgroundColor : textColor}}>Sign In</Text>
+      </TouchableOpacity>
     </View>
   );
 }
