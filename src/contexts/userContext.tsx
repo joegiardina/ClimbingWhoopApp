@@ -2,13 +2,12 @@ import {createContext, useContext} from 'react';
 import {UserInterface} from '../interface';
 
 interface UserContextInterface {
-  user: UserInterface,
+  user?: UserInterface,
   updateUser: (user: UserInterface) => void,
   signoutUser: () => void,
 }
 
 export const UserContext = createContext<UserContextInterface>({
-  user: {},
   updateUser: (u: UserInterface) => {},
   signoutUser: () => {},
 });

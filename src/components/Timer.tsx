@@ -18,8 +18,8 @@ const Timer: React.FC<{
   durationRest: number,
   reps: number,
   sets: number,
-  autoStart: Boolean | undefined,
-  onFinish: Function | undefined,
+  autoStart?: Boolean,
+  onFinish?: Function,
 }> = ({durationPrep, durationWork, durationRest, reps, sets, autoStart, onFinish}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const textColor = isDarkMode ? 'white' : 'black';

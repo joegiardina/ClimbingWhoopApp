@@ -1,12 +1,13 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
-import {radii} from '../../style';
+import {spacing, radii} from '../../style';
 
 interface ButtonProps {
   text: string,
-  disabled?: Boolean,
+  disabled?: boolean,
   onPress?: () => any,
   style?: any,
+  outline?: boolean,
 }
 
 const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style}) => {
@@ -17,7 +18,8 @@ const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style}) => {
       style={[style, {
         backgroundColor: disabled ? 'gray' : 'green',
         borderRadius: radii.normal,
-        padding: 12,
+        paddingVertical: spacing.normal,
+        paddingHorizontal: spacing.small,
       }]}
     >
       <Text style={{textAlign: 'center', color: 'white'}}>{text}</Text>

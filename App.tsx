@@ -1,17 +1,17 @@
 import React from 'react';
-import {SafeAreaView, View, StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query'
-import {UserContext} from './src/contexts/user';
+import {UserContext} from './src/contexts/userContext';
 import {ThemeContext, useThemeContext} from './src/contexts/themeContext';
 import MainStack from './src/navigation/MainStack';
 import UnauthenticatedStack from './src/navigation/UnauthenticatedStack';
-import theme, {colors as themeColors} from './style';
+import {colors as themeColors} from './style';
 import useUser from './src/hooks/useUser';
-import Text from './src/components/Text';
+import LoadingOverlay from './src/components/LoadingOverlay';
 
 const queryClient = new QueryClient();
 
@@ -22,31 +22,29 @@ function App(): JSX.Element {
 
   const {user, ready, updateUser, signoutUser} = useUser();
 
+  if (!ready || !user) {
+    return <LoadingOverlay />;
+  }
+
   return (
-    <ThemeContext.Provider value={{...theme, colors}}>
+    <ThemeContext.Provider value={{colors}}>
       <SafeAreaView style={{backgroundColor, flex: 1}}>
         <UserContext.Provider value={{user, updateUser, signoutUser}}>
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundColor}
           />
-          {ready ? (
-            <QueryClientProvider client={queryClient}>
-              <NavigationContainer
-                theme={{
-                  dark: isDarkMode,
-                  colors: {
-                    ...DefaultTheme.colors,
-                    background: backgroundColor,
-                  }}}>
-                {user.authenticated ? <MainStack user={user} /> : <UnauthenticatedStack />}
-              </NavigationContainer>
-            </QueryClientProvider>
-          ) : (
-            <View>
-              <Text>Loading</Text>
-            </View>
-          )}
+          <QueryClientProvider client={queryClient}>
+            <NavigationContainer
+              theme={{
+                dark: isDarkMode,
+                colors: {
+                  ...DefaultTheme.colors,
+                  background: backgroundColor,
+                }}}>
+              {user.authenticated ? <MainStack /> : <UnauthenticatedStack />}
+            </NavigationContainer>
+          </QueryClientProvider>
         </UserContext.Provider>
       </SafeAreaView>
     </ThemeContext.Provider>

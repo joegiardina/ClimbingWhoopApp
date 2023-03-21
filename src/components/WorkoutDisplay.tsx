@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
 import {fontSizes, spacing, radii} from '../../style';
 import {WorkoutInterface, WorkoutComponentInterface, ExerciseType} from '../interface';
 import Timer from './Timer';
+import Text from './Text';
+import Button from './Button';
 
 const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComponentInterface[], onPress?:Function}> = ({workout, completed, onPress}) => {
   const {exertion, components} = workout;
@@ -37,7 +39,7 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
           backgroundColor: 'white',
           borderRadius: radii.normal,
         }}>
-          <Text style={{fontSize: fontSizes.large, marginBottom: spacing.normal}}>Choose an Exercise:</Text>
+          <Text large inputStyle={{color: 'black', marginBottom: spacing.normal}}>Choose an Exercise:</Text>
           <View style={{paddingLeft: spacing.small}}>
             {exerciseNames.map(name => (
               <TouchableOpacity
@@ -46,28 +48,20 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
                   setSelectedExercise(_.find(exercises, {name}));
                 }}
                 style={{marginBottom: spacing.normal}}>
-                <Text style={{fontSize: fontSizes.medium}}>{name}</Text>
+                <Text medium inputStyle={{color: 'black'}}>{name}</Text>
               </TouchableOpacity>
             ))}
           </View>
-          <TouchableOpacity
+          <Button
+            text="Continue"
+            disabled={buttonDisabled}
             onPress={() => {
               if (onPress) {
                 onPress({...modalData, exercises: [selectedExercise]});
               }
               setModalData(undefined);
               setSelectedExercise(undefined);
-            }}
-            style={{
-              width: '80%',
-              backgroundColor: buttonDisabled ? 'gray' : 'green',
-              borderRadius: radii.normal,
-              padding: 12,
-              alignSelf: 'center',
-            }}
-          >
-            <Text style={{textAlign: 'center', color: 'white'}}>Continue</Text>
-          </TouchableOpacity>
+            }} />
         </View>
       </TouchableOpacity>
     )
@@ -78,8 +72,8 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
     <>
       <View style={{flex: 1, width: '100%'}}>
         <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: spacing.large}}>
-          <Text style={headerStyle}>Exertion:</Text>
-          <Text style={headerStyle}>{Array.isArray(exertion) ? exertion.join(' / ') : exertion}</Text>
+          <Text medium>Exertion:</Text>
+          <Text medium>{Array.isArray(exertion) ? exertion.join(' / ') : exertion}</Text>
         </View>
 
         <View style={{flexDirection: 'row'}}>
@@ -89,13 +83,13 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
               return (
                 <View key={key} style={{flexDirection: 'row', marginBottom: spacing.large}}>
                   <View style={{flex: 1}}>
-                    <Text style={{...regularTextStyle, color: _.find(completed, {name}) ? 'green' : textColor}}>{name}</Text>
-                    <Text style={regularTextStyle}>{min !== max ? `${min} to ${max} minutes` : `${min} minutes`}</Text>
+                    <Text inputStyle={{color: _.find(completed, {name}) ? 'green' : textColor}}>{name}</Text>
+                    <Text>{min !== max ? `${min} to ${max} minutes` : `${min} minutes`}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => setModalData(workoutComponent)}
                     style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end', marginHorizontal: spacing.large}}>
-                    <Text style={{...regularTextStyle, color: 'green', fontSize: fontSizes.large}}>+</Text>
+                    <Text large inputStyle={{color: 'green'}}>+</Text>
                   </TouchableOpacity>
                 </View>
               );
@@ -105,22 +99,22 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
         <View style={{margin: spacing.large, flex: 1}}>
         {!timerDuration ? (
           <>
-            <Text style={{alignSelf: 'center', fontSize: fontSizes.large, color: textColor, marginBottom: spacing.medium}}>Rest</Text>
+            <Text large inputStyle={{alignSelf: 'center', marginBottom: spacing.medium}}>Rest</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TouchableOpacity
                 onPress={() => setTimerDuration(60)}
                 style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
-                <Text style={{...regularTextStyle, color: textColor, fontSize: fontSizes.large}}>1 min</Text>
+                <Text large>1 min</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setTimerDuration(180)}
                 style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
-                <Text style={{...regularTextStyle, color: textColor, fontSize: fontSizes.large}}>3 min</Text>
+                <Text large>3 min</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setTimerDuration(300)}
                 style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
-                <Text style={{...regularTextStyle, color: textColor, fontSize: fontSizes.large}}>5 min</Text>
+                <Text large>5 min</Text>
               </TouchableOpacity>
             </View>
           </>

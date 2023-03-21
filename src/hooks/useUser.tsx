@@ -3,7 +3,7 @@ import {UserInterface } from '../interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useUser = () => {
-  const [user, setUser] = useState<UserInterface>({});
+  const [user, setUser] = useState<UserInterface>();
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const getStoredUser = async () => {

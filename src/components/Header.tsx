@@ -1,19 +1,16 @@
 import React from 'react';
-import {Text, View, useColorScheme, TouchableOpacity} from 'react-native';
-import {fontSizes, spacing} from '../../style';
-import {useUserContext} from '../contexts/user';
+import {View, TouchableOpacity} from 'react-native';
+import {spacing} from '../../style';
+import Text from './Text';
+import {useUserContext} from '../contexts/userContext';
 
 const Header = () => {
   const userContext = useUserContext();
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundColor = isDarkMode ? 'black' : 'white';
-  const textColor = isDarkMode ? 'white' : 'black';
   return (
-    <View style={{backgroundColor, justifyContent: 'space-between', flexDirection: 'row', padding: spacing.small}}>
-      <Text style={{flex: 1, color: textColor, fontSize: fontSizes.medium}}>Hello, {userContext.user.name}</Text>
+    <View style={{justifyContent: 'space-between', flexDirection: 'row', padding: spacing.small}}>
+      {!!userContext.user && <Text>Hello, {userContext.user.name}</Text>}
       <TouchableOpacity onPress={() => userContext.signoutUser()}>
-        <Text style={{color: textColor, fontSize: fontSizes.normal}}>Sign Out</Text>
+        <Text small>Sign Out</Text>
       </TouchableOpacity>
     </View>
   );

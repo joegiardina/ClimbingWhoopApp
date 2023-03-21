@@ -8,7 +8,7 @@ import Header from '../components/Header';
 
 const Stack = createNativeStackNavigator();
 
-const MainStack = ({user}) => {
+const MainStack = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {

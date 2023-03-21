@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+import {Text, View} from 'react-native';
 import {useQuery} from 'react-query';
 import tw from 'twrnc';
 import WorkoutPicker from '../components/WorkoutPicker';
@@ -10,8 +7,8 @@ import Button from '../components/Button';
 import {WorkoutInterface} from '../interface';
 import {fetchPlan} from '../api';
 
-import {spacing, fontSizes, radii} from '../../style';
-import { useThemeContext } from '../contexts/themeContext';
+import {spacing, fontSizes} from '../../style';
+import {useThemeContext} from '../contexts/themeContext';
 
 
 // TODO: properly type navigation

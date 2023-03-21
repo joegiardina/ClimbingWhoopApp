@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
-import {fontSizes, spacing, radii} from '../../style';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TextInput} from 'react-native';
+import Button from './Button';
+import {fontSizes, spacing} from '../../style';
 import {ExerciseType} from '../interface';
 
 interface PropertyInterface {
@@ -44,7 +45,8 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing.normal}}>
         <Text style={{flex: 1, ...regularTextStyle}}>{name}</Text>
         {showTimerButton && (
-            <TouchableOpacity
+            <Button
+              text="Timer"
               onPress={() => navigation.navigate('TimerScreen', {
                 durationWork: values[timerPropNames[0]],
                 durationRest: values[timerPropNames[1]],
@@ -55,12 +57,8 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
               disabled={timerButtonDisabled}
               style={{
                 borderColor: timerButtonDisabled ? 'gray' : textColor,
-                borderRadius: radii.normal,
-                borderWidth: 1,
                 padding: spacing.small
-              }}>
-              <Text style={{color: timerButtonDisabled ? 'gray' : textColor}}>Timer</Text>
-            </TouchableOpacity>
+              }}/>
         )}
       </View>
         

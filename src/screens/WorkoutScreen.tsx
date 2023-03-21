@@ -1,19 +1,19 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import uuid from 'react-native-uuid';
-import {useColorScheme} from 'react-native';
 import _ from 'lodash';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View} from 'react-native';
 import WorkoutDisplay from '../components/WorkoutDisplay';
-import {spacing, radii} from '../../style';
+import Button from '../components/Button';
+import {spacing} from '../../style';
 import {WorkoutComponentInterface} from '../interface';
 import {postCompleted} from '../api';
+import {useThemeContext} from '../contexts/themeContext';
 
 // TODO: properly type navigation and route
 const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => {
   const {workout, result} = route.params;
-  const isDarkMode = useColorScheme() === 'dark';
+  const {themeContext} = useThemeContext();
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>([]);
-  const [error, setError] = useState<string>('');
   useEffect(() => {
     setCompleted(
       _.compact(
@@ -31,23 +31,21 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
 
   return (
     <View
-    style={{
-      backgroundColor: isDarkMode ? 'black' : 'white',
-      display: 'flex',
-      height: '100%',
-      alignItems: 'center',
-      paddingVertical: spacing.large,
-    }}>
+      style={{
+        backgroundColor: themeContext.colors.backgroundColor,
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
+        paddingVertical: spacing.large,
+      }}>
       <WorkoutDisplay workout={workout} completed={completed} onPress={onPressComponent} />
-      <TouchableOpacity
+      <Button
+        text="Complete Workout"
         onPress={async () => {
           const data = {id: uuid.v4(), data: completed};
-          console.log('complete workout', JSON.stringify(data, null, 2));
           const result = await postCompleted(data);
           if (result.success) {
             navigation.goBack();
-          } else {
-            setError('Something went wrong.');
           }
         }}
         disabled={buttonDisabled}
@@ -55,12 +53,7 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
           marginTop: 'auto',
           marginBottom: spacing.large,
           width: '80%',
-          backgroundColor: buttonDisabled ? 'gray' : 'green',
-          borderRadius: radii.normal,
-          padding: 12,
-        }}>
-        <Text style={{textAlign: 'center', color: 'white'}}>Complete Workout</Text>
-      </TouchableOpacity>
+        }} />
     </View>
   );
 }
