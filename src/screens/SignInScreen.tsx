@@ -1,40 +1,50 @@
 import React, {useState} from 'react';
 import {TextInputProps} from 'react-native';
 import {
-  Text,
-  useColorScheme,
   View,
+  Text,
   TextInput,
-  TouchableOpacity,
 } from 'react-native';
+import Button from '../components/Button';
+import LoadingOverlay from '../components/LoadingOverlay';
 import {auth, createUser} from '../api';
 import {spacing, fontSizes, radii} from '../../style';
 import {useUserContext} from '../contexts/user';
+import {useThemeContext} from '../contexts/themeContext';
 
-// TODO: properly type navigation
 const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [backgroundColor] = useState(isDarkMode ? 'black' : 'white');
-  const [textColor] = useState(isDarkMode ? 'white' : 'black')
+  const {themeContext} = useThemeContext();
+  const [loading, setLoading] = useState(false);
+  const {backgroundColor, textColor} = themeContext.colors;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
 
   const userContext = useUserContext();
 
   const onPressSignIn = async () => {
-    const authorizedUser = await auth(username, password);
-    if (authorizedUser && userContext) {
-      userContext.updateUser(authorizedUser);
+    setLoading(true);
+    const authenticatedUser = await auth(username, password);
+    if (authenticatedUser?.authenticated && userContext) {
+      userContext.updateUser(authenticatedUser);
+      setError(false);
+    } else {
+      setError(true);
     }
+    setLoading(false);
   }
   const onPressCreateUser = async () => {
-    const authorizedUser = await createUser(username, password);
-    if (authorizedUser && userContext) {
-      userContext.updateUser(authorizedUser);
+    setLoading(true);
+    const authenticatedUser = await createUser(username, password);
+    if (authenticatedUser?.authenticated && userContext) {
+      userContext.updateUser(authenticatedUser);
+      setError(false);
+    } else {
+      setError(true);
     }
+    setLoading(false);
   }
   const signInDisabled = !username || !password;
-
   const commonTextInputProps: TextInputProps = {
     style: {
       color: textColor,
@@ -51,39 +61,46 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor,
-        display: 'flex',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: spacing.large,
-      }}>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <TextInput
-          {...commonTextInputProps}
-          placeholder="Username"
-          onChangeText={(text) => setUsername(text)}
-        />
-        <View style={{marginTop: spacing.normal}}>
+    <>
+      {loading && <LoadingOverlay />}
+      <View
+        style={{
+          backgroundColor,
+          display: 'flex',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingVertical: spacing.large,
+        }}>
+        {error && (
+          <View style={{position: 'absolute', top: spacing.large}}>
+            <Text style={{color: 'red'}}>Something went wrong.</Text>
+          </View>
+        )}
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <TextInput
             {...commonTextInputProps}
-            secureTextEntry
-            placeholder="Password"
-            onChangeText={(text) => setPassword(text)}
+            placeholder="Username"
+            onChangeText={(text) => setUsername(text)}
           />
+          <View style={{marginTop: spacing.normal}}>
+            <TextInput
+              style={{marginTop: spacing.normal}}
+              {...commonTextInputProps}
+              secureTextEntry
+              placeholder="Password"
+              onChangeText={(text) => setPassword(text)}
+            />
+          </View>
+        </View>
+        <View style={{flex: 1, justifyContent: 'flex-start', marginTop: spacing.small}}>
+          <View style={{justifyContent: 'flex-start', marginTop: spacing.small, flexDirection: 'row'}}>
+            <Button style={{marginRight: spacing.small}} text="Sign In" disabled={signInDisabled} onPress={onPressSignIn} />
+            <Button text="Create Account" disabled={signInDisabled} onPress={onPressCreateUser} />
+          </View>
         </View>
       </View>
-      <View style={{flexDirection: 'row',  marginTop: spacing.small, flex: 1}}>
-        <TouchableOpacity style={{flex: 1, marginRight: spacing.small}} disabled={signInDisabled} onPress={onPressSignIn}>
-          <Text style={{color: signInDisabled ? backgroundColor : textColor}}>Sign In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{flex: 1}} disabled={signInDisabled} onPress={onPressCreateUser}>
-          <Text style={{color: signInDisabled ? backgroundColor : textColor}}>Create</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </>
   );
 }
 

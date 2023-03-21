@@ -16,4 +16,4 @@ export const UserContext = createContext<UserContextInterface>({
 export const useUserContext = () => {
   const userContext = useContext(UserContext);
   return userContext;
-}
+};

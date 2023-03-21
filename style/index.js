@@ -17,3 +17,22 @@ export const fontSizes = {
 export const radii = {
   normal: 6,
 };
+
+export const colors = {
+  light: {
+    backgroundColor: 'white',
+    textColor: 'black',
+  },
+  dark: {
+    backgroundColor: 'black',
+    textColor: 'white',
+  },
+};
+
+const theme = {
+  spacing,
+  fontSizes,
+  radii,
+};
+
+export default theme;

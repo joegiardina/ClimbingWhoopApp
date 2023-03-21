@@ -1,33 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
-  useColorScheme,
   View,
-  TouchableOpacity,
 } from 'react-native';
 import {useQuery} from 'react-query';
 import tw from 'twrnc';
 import WorkoutPicker from '../components/WorkoutPicker';
+import Button from '../components/Button';
 import {WorkoutInterface} from '../interface';
 import {fetchPlan} from '../api';
-import {useUserContext} from '../contexts/user';
 
 import {spacing, fontSizes, radii} from '../../style';
+import { useThemeContext } from '../contexts/themeContext';
 
-const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
 
 // TODO: properly type navigation
 const Home: React.FC<{navigation:any}> = ({navigation}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [backgroundColor] = useState(isDarkMode ? 'black' : 'white');
-  const [textColor] = useState(isDarkMode ? 'white' : 'black')
+  const {themeContext} = useThemeContext();
+  const {backgroundColor, textColor} = themeContext.colors;
   const [workout, setWorkout] = useState<WorkoutInterface | undefined>();
 
   const {data} = useQuery('plan', fetchPlan);
 
   const buttonDisabled = !workout;
-
-  const userContext = useUserContext();
   
   return (
     <View
@@ -46,19 +41,14 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
         data={data}
         setWorkout={setWorkout}
       />
-      <TouchableOpacity
+      <Button
+        text="Start Workout"
         onPress={() => navigation.navigate('WorkoutScreen', {workout})}
         disabled={buttonDisabled}
         style={{
           marginTop: 'auto',
-          marginBottom: spacing.large,
           width: '80%',
-          backgroundColor: buttonDisabled ? 'gray' : 'green',
-          borderRadius: radii.normal,
-          padding: 12,
-        }}>
-        <Text style={{textAlign: 'center', color: 'white'}}>Start Workout</Text>
-      </TouchableOpacity>
+        }} />
     </View>
   );
 }
