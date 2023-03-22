@@ -77,6 +77,7 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
             <TextInput
               keyboardType={property.type === 'number' ? 'number-pad' : 'default'}
               style={{
+                color: textColor,
                 flex: 1,
                 padding: spacing.small,
                 backgroundColor,
