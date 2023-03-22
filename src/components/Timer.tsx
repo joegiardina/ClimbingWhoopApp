@@ -22,7 +22,7 @@ const Timer: React.FC<{
   onFinish?: Function,
 }> = ({durationPrep, durationWork, durationRest, reps, sets, autoStart, onFinish}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const textColor = isDarkMode ? 'white' : 'black';
+  const textColor = 'white';
   const [remainingSec, setRemainingSec] = useState<number | undefined>();
   const [remainingReps, setRemainingReps] = useState<number>(reps);
   const [remainingSets, setRemainingSets] = useState<number>(sets);

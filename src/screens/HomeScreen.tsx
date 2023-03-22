@@ -31,7 +31,7 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
         paddingVertical: spacing.large,
       }}>
       <View style={tw`p-2 m-2 bg-blue-900 rounded-xl`}>
-        <Text style={{color: textColor, fontSize: fontSizes.large}}>Daily Workout</Text>
+        <Text style={{color: 'white', fontSize: fontSizes.large}}>Daily Workout</Text>
       </View>
       <WorkoutPicker
         textColor={textColor}
