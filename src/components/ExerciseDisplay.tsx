@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, TextInput} from 'react-native';
+import Text from './Text';
 import Button from './Button';
-import {fontSizes, spacing} from '../../style';
+import {spacing} from '../../style';
 import {ExerciseType} from '../interface';
+import {useThemeContext} from '../contexts/themeContext';
 
 interface PropertyInterface {
   name: string,
@@ -28,9 +30,8 @@ const timerPropNames = [
 const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:any, completed:any, navigation:any}> = ({exercise, result, setResult, completed, navigation}) => {
   const {name} = exercise;
   const [values, setValues] = useState(completed && completed[name] || {});
-  const textColor = 'white';
-  const regularTextStyle = {color: textColor, fontSize: fontSizes.normal};
-  const smallTextStyle = {color: textColor, fontSize: fontSizes.small};
+  const {themeContext} = useThemeContext();
+  const {textColor, backgroundColor} = themeContext.colors;
   const showTimerButton = _.every(timerPropNames, name => _.find(exercise.properties, {name}));
   const timerButtonDisabled = !_.every(timerPropNames, name => !!values[name]);
 
@@ -43,7 +44,7 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
   return (
     <View style={{alignItems: 'flex-start', width: '100%', flex: 1}}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing.normal}}>
-        <Text style={{flex: 1, ...regularTextStyle}}>{name}</Text>
+        <Text inputStyle={{flex: 1}}>{name}</Text>
         {showTimerButton && (
             <Button
               text="Timer"
@@ -72,14 +73,16 @@ const ExerciseDisplay: React.FC<{exercise:ExerciseType, result:any, setResult:an
               paddingHorizontal: spacing.normal,
               width: '100%',
             }}>
-            <Text style={{...smallTextStyle, flex: 1}}>{property.name}</Text>
+            <Text small inputStyle={{flex: 1}}>{property.name}</Text>
             <TextInput
               keyboardType={property.type === 'number' ? 'number-pad' : 'default'}
               style={{
                 flex: 1,
                 padding: spacing.small,
-                backgroundColor: 'white',
+                backgroundColor,
                 borderRadius: 4,
+                borderColor: textColor,
+                borderWidth: 1,
                 marginLeft: spacing.normal,
               }}
               value={values[property.name] ? String(values[property.name]) : ''}

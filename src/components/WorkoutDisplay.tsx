@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
-import {fontSizes, spacing, radii} from '../../style';
+import {spacing, radii} from '../../style';
 import {WorkoutInterface, WorkoutComponentInterface, ExerciseType} from '../interface';
 import Timer from './Timer';
 import Text from './Text';
 import Button from './Button';
+import {useThemeContext} from '../contexts/themeContext';
 
 const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComponentInterface[], onPress?:Function}> = ({workout, completed, onPress}) => {
   const {exertion, components} = workout;
-  const textColor = 'white';
-  const regularTextStyle = {color: textColor, fontSize: fontSizes.normal};
-  const headerStyle = {...regularTextStyle, fontSize: fontSizes.medium};
+  const {themeContext} = useThemeContext();
+  const {textColor, backgroundColor} = themeContext.colors;
   const [selectedExercise, setSelectedExercise] = useState<ExerciseType | undefined>();
   const [modalData, setModalData] = useState<ExerciseType | undefined>();
   const [timerDuration, setTimerDuration] = useState<number | undefined>();
@@ -36,10 +36,12 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
           width: '100%',
           margin: spacing.large * 2,
           padding: spacing.normal,
-          backgroundColor: 'white',
+          backgroundColor,
           borderRadius: radii.normal,
+          borderWidth: 1,
+          borderColor: textColor,
         }}>
-          <Text large inputStyle={{color: 'black', marginBottom: spacing.normal}}>Choose an Exercise:</Text>
+          <Text large inputStyle={{marginBottom: spacing.normal}}>Choose an Exercise:</Text>
           <View style={{paddingLeft: spacing.small}}>
             {exerciseNames.map(name => (
               <TouchableOpacity
@@ -48,7 +50,7 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
                   setSelectedExercise(_.find(exercises, {name}));
                 }}
                 style={{marginBottom: spacing.normal}}>
-                <Text medium inputStyle={{color: 'black'}}>{name}</Text>
+                <Text medium>{name}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -80,11 +82,12 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
           <View style={{flex: 1}}>
             {components?.map((workoutComponent, key) => {
               const {name, min, max} = workoutComponent;
+              const isCompleted = !!_.find(completed, {name});
               return (
                 <View key={key} style={{flexDirection: 'row', marginBottom: spacing.large}}>
                   <View style={{flex: 1}}>
-                    <Text inputStyle={{color: _.find(completed, {name}) ? 'green' : textColor}}>{name}</Text>
-                    <Text>{min !== max ? `${min} to ${max} minutes` : `${min} minutes`}</Text>
+                    <Text favorable={isCompleted}>{name}</Text>
+                    <Text favorable={isCompleted}>{min !== max ? `${min} to ${max} minutes` : `${min} minutes`}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => setModalData(workoutComponent)}
@@ -119,7 +122,10 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
             </View>
           </>
           ) : (
-            <Timer onFinish={() => setTimerDuration(undefined)} durationPrep={0} durationWork={0} durationRest={timerDuration} reps={0} sets={0} autoStart />
+            <TouchableOpacity style={{flex: 1}} onPress={() => setTimerDuration(undefined)}>
+              <Timer onFinish={() => setTimerDuration(undefined)} durationPrep={0} durationWork={0} durationRest={timerDuration} reps={0} sets={0} autoStart />
+              <Text small inputStyle={{textAlign: 'center', marginTop: spacing.small}}>Tap to Cancel</Text>
+            </TouchableOpacity>
           )}
         </View>
 
