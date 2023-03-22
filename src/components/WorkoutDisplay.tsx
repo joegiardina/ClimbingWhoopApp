@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, ViewStyle, StyleProp} from 'react-native';
 import _ from 'lodash';
 import {spacing, radii} from '../../style';
 import {WorkoutInterface, WorkoutComponentInterface, ExerciseType} from '../interface';
@@ -46,11 +46,9 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
             {exerciseNames.map(name => (
               <TouchableOpacity
                 key={name}
-                onPress={() => {
-                  setSelectedExercise(_.find(exercises, {name}));
-                }}
+                onPress={() => setSelectedExercise(_.find(exercises, {name}))}
                 style={{marginBottom: spacing.normal}}>
-                <Text medium>{name}</Text>
+                <Text favorable={selectedExercise?.name === name} medium>{name}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -70,6 +68,9 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
   };
 
   if (!workout || !workout.exertion) return null;
+
+  const restButtonStyle: StyleProp<ViewStyle> = {padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal};
+
   return (
     <>
       <View style={{flex: 1, width: '100%'}}>
@@ -106,17 +107,17 @@ const WorkoutDisplay: React.FC<{workout:WorkoutInterface, completed?:WorkoutComp
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TouchableOpacity
                 onPress={() => setTimerDuration(60)}
-                style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
+                style={restButtonStyle}>
                 <Text large>1 min</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setTimerDuration(180)}
-                style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
+                style={restButtonStyle}>
                 <Text large>3 min</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setTimerDuration(300)}
-                style={{padding: spacing.small, justifyContent: 'center', alignItems: 'center', borderColor: textColor, borderWidth: 1, borderRadius: radii.normal}}>
+                style={restButtonStyle}>
                 <Text large>5 min</Text>
               </TouchableOpacity>
             </View>

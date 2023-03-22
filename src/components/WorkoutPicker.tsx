@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {radii} from '../../style';
+import {radii, spacing} from '../../style';
 
 const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
 
@@ -32,11 +32,12 @@ const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}>
           key={key}
           onPress={() => setPhase(_phase)}
           style={{
-            marginLeft: 12,
+            marginLeft: spacing.small,
+            marginRight: spacing.small,
             borderWidth: 1,
             borderColor: getColor(phase === _phase),
             borderRadius: radii.normal,
-            padding: 12
+            padding: spacing.normal,
           }}>
           <Text style={{color: getColor(phase === _phase)}}>Phase {_phase}</Text>
         </TouchableOpacity>
@@ -46,18 +47,19 @@ const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}>
         style={{
         display: 'flex',
         flexDirection: 'row',
-        marginTop: 12,
+        marginTop: spacing.normal,
       }}>
         {DAYS.map((_day, key) => (
           <TouchableOpacity
             key={key}
             onPress={() => setDay(_day)}
             style={{
-              marginLeft: 12,
+              marginLeft: spacing.small,
+              marginRight: spacing.small,
               borderWidth: 1,
               borderColor: getColor(day === _day),
               borderRadius: radii.normal,
-              padding: 12
+              padding: spacing.normal,
             }}>
             <Text style={{color: getColor(day === _day)}}>{_day}</Text>
           </TouchableOpacity>

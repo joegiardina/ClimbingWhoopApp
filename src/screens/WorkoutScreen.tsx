@@ -33,10 +33,8 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
     <View
       style={{
         backgroundColor: themeContext.colors.backgroundColor,
-        display: 'flex',
         height: '100%',
         alignItems: 'center',
-        paddingVertical: spacing.large,
       }}>
       <WorkoutDisplay workout={workout} completed={completed} onPress={onPressComponent} />
       <Button
@@ -51,7 +49,6 @@ const Workout: React.FC<{navigation:any, route:any}> = ({navigation, route}) => 
         disabled={buttonDisabled}
         style={{
           marginTop: 'auto',
-          marginBottom: spacing.large,
           width: '80%',
         }} />
     </View>

@@ -196,7 +196,6 @@ const Timer: React.FC<{
         flex: 1,
         backgroundColor,
         alignItems: 'center',
-        paddingVertical: spacing.large,
         padding: spacing.normal,
         borderRadius: 50,
       }}>
