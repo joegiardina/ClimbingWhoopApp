@@ -61,6 +61,7 @@ const ExerciseDisplay: React.FC<{
         <Text inputStyle={{flex: 1}}>{name}</Text>
         {showTimerButton && (
           <Button
+            small
             text="Timer"
             onPress={() =>
               navigation.navigate(TIMER_SCREEN, {

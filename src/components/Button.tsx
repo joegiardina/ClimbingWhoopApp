@@ -8,9 +8,10 @@ interface ButtonProps {
   onPress?: () => any;
   style?: any;
   outline?: boolean;
+  small?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style}) => {
+const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style, small}) => {
   return (
     <TouchableOpacity
       disabled={!!disabled}
@@ -20,8 +21,9 @@ const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style}) => {
         {
           backgroundColor: disabled ? 'gray' : 'green',
           borderRadius: radii.normal,
-          paddingVertical: spacing.normal,
+          paddingVertical: !small ? spacing.normal : spacing.small,
           paddingHorizontal: spacing.small,
+          minWidth: !small && 100,
         },
       ]}>
       <Text style={{textAlign: 'center', color: 'white'}}>{text}</Text>
