@@ -177,21 +177,9 @@ const WorkoutDisplay: React.FC<{
               </Text>
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <TouchableOpacity
-                  onPress={() => setTimerDuration(60)}
-                  style={restButtonStyle}>
-                  <Text large>1 min</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setTimerDuration(180)}
-                  style={restButtonStyle}>
-                  <Text large>3 min</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setTimerDuration(300)}
-                  style={restButtonStyle}>
-                  <Text large>5 min</Text>
-                </TouchableOpacity>
+                <Button outline onPress={() => setTimerDuration(60)} text="1 min" largeText />
+                <Button outline onPress={() => setTimerDuration(180)} text="3 min" largeText />
+                <Button outline onPress={() => setTimerDuration(300)} text="5 min" largeText />
               </View>
             </>
           ) : (

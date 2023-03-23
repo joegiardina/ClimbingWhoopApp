@@ -20,7 +20,7 @@ const Text: React.FC<TextProps> = props => {
   const {children, style, ...passThroughProps} = props;
   const fontSizeProp = _.intersection(FONT_SIZES, _.keys(props))[0];
   let fontSize = fontSizes.normal;
-  if (fontSizeProp) {
+  if (fontSizeProp && _.get(props, fontSizeProp)) {
     fontSize = _.get(fontSizes, fontSizeProp);
   }
   let color = themeContext.colors.textColor;
@@ -32,11 +32,11 @@ const Text: React.FC<TextProps> = props => {
   return (
     <RNText
       style={[
-        style,
         {
           color,
           fontSize,
-        }
+        },
+        style,
       ]}
       {...passThroughProps}>
       {children}
