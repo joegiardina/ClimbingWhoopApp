@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {radii, spacing} from '../../style';
 
 const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
 
-const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}> = ({textColor, setWorkout, data}) => {
+const WorkoutPicker: React.FC<{
+  textColor: string;
+  setWorkout: Function;
+  data: any;
+}> = ({textColor, setWorkout, data}) => {
   const [phase, setPhase] = useState<number>(-1);
   const [day, setDay] = useState<string | undefined>();
 
@@ -16,9 +16,9 @@ const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}>
     if (phase > -1 && day && data) {
       setWorkout(data[phase][DAYS.indexOf(day)]);
     }
-  }, [day, phase, data]);
+  }, [day, phase, data, setWorkout]);
 
-  const getColor = (isSelected: Boolean) => isSelected ? 'green' : textColor;
+  const getColor = (isSelected: Boolean) => (isSelected ? 'green' : textColor);
 
   return (
     <>
@@ -28,27 +28,29 @@ const WorkoutPicker: React.FC<{textColor:string, setWorkout:Function, data:any}>
           flexDirection: 'row',
         }}>
         {[0, 1, 2, 3].map((_phase, key) => (
-        <TouchableOpacity
-          key={key}
-          onPress={() => setPhase(_phase)}
-          style={{
-            marginLeft: spacing.small,
-            marginRight: spacing.small,
-            borderWidth: 1,
-            borderColor: getColor(phase === _phase),
-            borderRadius: radii.normal,
-            padding: spacing.normal,
-          }}>
-          <Text style={{color: getColor(phase === _phase)}}>Phase {_phase}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            key={key}
+            onPress={() => setPhase(_phase)}
+            style={{
+              marginLeft: spacing.small,
+              marginRight: spacing.small,
+              borderWidth: 1,
+              borderColor: getColor(phase === _phase),
+              borderRadius: radii.normal,
+              padding: spacing.normal,
+            }}>
+            <Text style={{color: getColor(phase === _phase)}}>
+              Phase {_phase}
+            </Text>
+          </TouchableOpacity>
         ))}
       </View>
       <View
         style={{
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: spacing.normal,
-      }}>
+          display: 'flex',
+          flexDirection: 'row',
+          marginTop: spacing.normal,
+        }}>
         {DAYS.map((_day, key) => (
           <TouchableOpacity
             key={key}

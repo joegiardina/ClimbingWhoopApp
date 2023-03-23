@@ -1,31 +1,29 @@
 import React, {useState, useCallback} from 'react';
 import {TextInputProps} from 'react-native';
-import {
-  View,
-  Text,
-  TextInput,
-} from 'react-native';
+import {View, TextInput} from 'react-native';
+import Screen from '../components/Screen';
 import Button from '../components/Button';
+import Text from '../components/Text';
 import LoadingOverlay from '../components/LoadingOverlay';
-import {auth, createUser} from '../api';
+import {auth} from '../api';
 import {spacing, fontSizes, radii} from '../../style';
 import {useUserContext} from '../contexts/userContext';
 import {useThemeContext} from '../contexts/themeContext';
+import {SIGN_UP_SCREEN} from '../constants/navigation';
 
-const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
+const SignInScreen: React.FC<{navigation: any}> = ({navigation}) => {
   const {themeContext} = useThemeContext();
   const [loading, setLoading] = useState(false);
-  const {backgroundColor, textColor} = themeContext.colors;
+  const {textColor} = themeContext.colors;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
   const userContext = useUserContext();
 
-  const onPress = useCallback(async (isSignUp: Boolean) => {
+  const onPressSignIn = useCallback(async () => {
     setLoading(true);
-    const fn = isSignUp ? createUser : auth;
-    const user = await fn(username, password);
+    const user = await auth({username, password});
     if (user?.authenticated && userContext) {
       userContext.updateUser(user);
       setError(false);
@@ -34,6 +32,8 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
     }
     setLoading(false);
   }, [username, password, userContext, setError, setLoading]);
+
+  const onPressCreate = () => navigation.navigate(SIGN_UP_SCREEN);
 
   const signInDisabled = !username || !password;
   const commonTextInputProps: TextInputProps = {
@@ -45,26 +45,18 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
       borderWidth: 1,
       padding: spacing.small,
     },
-    autoCapitalize: "none",
-    autoComplete: "off",
+    autoCapitalize: 'none',
+    autoComplete: 'off',
     autoCorrect: false,
   };
 
   return (
     <>
       {loading && <LoadingOverlay />}
-      <View
-        style={{
-          backgroundColor,
-          display: 'flex',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingVertical: spacing.large,
-        }}>
+      <Screen>
         {error && (
           <View style={{position: 'absolute', top: spacing.large}}>
-            <Text style={{color: 'red'}}>Something went wrong.</Text>
+            <Text unfavorable>Something went wrong.</Text>
           </View>
         )}
         <View style={{flex: 1, width: 250}}>
@@ -72,7 +64,7 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
             <TextInput
               {...commonTextInputProps}
               placeholder="Username"
-              onChangeText={(text) => setUsername(text)}
+              onChangeText={text => setUsername(text)}
             />
             <View style={{marginTop: spacing.normal}}>
               <TextInput
@@ -80,20 +72,39 @@ const SignInScreen: React.FC<{navigation:any}> = ({navigation}) => {
                 {...commonTextInputProps}
                 secureTextEntry
                 placeholder="Password"
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={text => setPassword(text)}
               />
             </View>
           </View>
-          <View style={{flex: 1, justifyContent: 'flex-start', marginTop: spacing.small}}>
-            <View style={{justifyContent: 'space-between', marginTop: spacing.small, flexDirection: 'row'}}>
-              <Button style={{flex: 1, marginRight: spacing.small}} text="Create" disabled={signInDisabled} onPress={() => onPress(true)} />
-              <Button style={{flex: 1}} text="Sign In" disabled={signInDisabled} onPress={() => onPress(false)} />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-start',
+              marginTop: spacing.small,
+            }}>
+            <View
+              style={{
+                justifyContent: 'space-between',
+                marginTop: spacing.small,
+                flexDirection: 'row',
+              }}>
+              <Button
+                style={{flex: 1, marginRight: spacing.small}}
+                text="Create"
+                onPress={onPressCreate}
+              />
+              <Button
+                style={{flex: 1}}
+                text="Sign In"
+                disabled={signInDisabled}
+                onPress={onPressSignIn}
+              />
             </View>
           </View>
         </View>
-      </View>
+      </Screen>
     </>
   );
-}
+};
 
 export default SignInScreen;

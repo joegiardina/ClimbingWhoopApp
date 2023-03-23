@@ -9,10 +9,10 @@ import {fetchPlan} from '../api';
 
 import {spacing, fontSizes} from '../../style';
 import {useThemeContext} from '../contexts/themeContext';
-
+import {WORKOUT_SCREEN} from '../constants/navigation';
 
 // TODO: properly type navigation
-const Home: React.FC<{navigation:any}> = ({navigation}) => {
+const Home: React.FC<{navigation: any}> = ({navigation}) => {
   const {themeContext} = useThemeContext();
   const {backgroundColor, textColor} = themeContext.colors;
   const [workout, setWorkout] = useState<WorkoutInterface | undefined>();
@@ -20,7 +20,7 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
   const {data} = useQuery('plan', fetchPlan);
 
   const buttonDisabled = !workout;
-  
+
   return (
     <View
       style={{
@@ -31,7 +31,9 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
         paddingVertical: spacing.large,
       }}>
       <View style={tw`p-2 m-2 bg-blue-900 rounded-xl`}>
-        <Text style={{color: 'white', fontSize: fontSizes.large}}>Daily Workout</Text>
+        <Text style={{color: 'white', fontSize: fontSizes.large}}>
+          Daily Workout
+        </Text>
       </View>
       <WorkoutPicker
         textColor={textColor}
@@ -40,14 +42,15 @@ const Home: React.FC<{navigation:any}> = ({navigation}) => {
       />
       <Button
         text="Start Workout"
-        onPress={() => navigation.navigate('WorkoutScreen', {workout})}
+        onPress={() => navigation.navigate(WORKOUT_SCREEN, {workout})}
         disabled={buttonDisabled}
         style={{
           marginTop: 'auto',
           width: '80%',
-        }} />
+        }}
+      />
     </View>
   );
-}
+};
 
 export default Home;

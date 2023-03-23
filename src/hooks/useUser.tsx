@@ -1,5 +1,5 @@
 import {useState, useEffect, useCallback} from 'react';
-import {UserInterface } from '../interface';
+import {UserInterface} from '../interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useUser = () => {
@@ -8,13 +8,15 @@ const useUser = () => {
   useEffect(() => {
     const getStoredUser = async () => {
       const storedUserStr = await AsyncStorage.getItem('user');
-      const storedUser: UserInterface = storedUserStr ? JSON.parse(storedUserStr) : {};
+      const storedUser: UserInterface = storedUserStr
+        ? JSON.parse(storedUserStr)
+        : {};
       if (storedUser.authenticated) {
         setUser(storedUser);
       } else {
-        setUser({authenticated: false})
+        setUser({authenticated: false});
       }
-    }
+    };
     getStoredUser();
     setReady(true);
   }, []);

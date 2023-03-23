@@ -1,18 +1,23 @@
 export type ExerciseType = any;
 
 export interface WorkoutComponentInterface {
-  name: string,
-  min: number,
-  max: number,
-  exercises?: Array<any>,
-};
+  name: string;
+  min: number;
+  max: number;
+  exercises?: Array<any>;
+}
 
 export interface WorkoutInterface {
-  exertion?: string,
-  components?: Array<WorkoutComponentInterface>,
-};
+  exertion?: string;
+  components?: Array<WorkoutComponentInterface>;
+}
+
+interface UserDetailsInterface {
+  name: string;
+}
 
 export interface UserInterface {
-  name?: string;
-  authenticated?: boolean;
-};
+  username: string;
+  details: UserDetailsInterface;
+  authenticated: boolean;
+}

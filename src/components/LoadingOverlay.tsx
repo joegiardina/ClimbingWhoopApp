@@ -12,10 +12,11 @@ const LoadingOverlay = () => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(52, 52, 52, 0.8)',
-        zIndex: 2}}>
+        zIndex: 2,
+      }}>
       <ActivityIndicator size="large" />
     </SafeAreaView>
-  )
+  );
 };
 
 export default LoadingOverlay;

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 import {TouchableOpacity, Text, View, useColorScheme} from 'react-native';
 import {spacing, fontSizes, radii} from '../../style';
 
@@ -13,14 +13,22 @@ type TimerState = 'preparing' | 'working' | 'resting' | 'done' | 'ready';
 
 // TODO: properly type route
 const Timer: React.FC<{
-  durationPrep: number,
-  durationWork: number,
-  durationRest: number,
-  reps: number,
-  sets: number,
-  autoStart?: Boolean,
-  onFinish?: Function,
-}> = ({durationPrep, durationWork, durationRest, reps, sets, autoStart, onFinish}) => {
+  durationPrep: number;
+  durationWork: number;
+  durationRest: number;
+  reps: number;
+  sets: number;
+  autoStart?: Boolean;
+  onFinish?: Function;
+}> = ({
+  durationPrep,
+  durationWork,
+  durationRest,
+  reps,
+  sets,
+  autoStart,
+  onFinish,
+}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const textColor = 'white';
   const [remainingSec, setRemainingSec] = useState<number | undefined>();
@@ -39,7 +47,7 @@ const Timer: React.FC<{
     backgroundColor = 'blue';
   }
 
-  const states = ['ready', 'preparing', 'working', 'resting', 'done'];
+  // const states = ['ready', 'preparing', 'working', 'resting', 'done'];
 
   // const startSet = () => {
   //   setRemainingReps(reps);
@@ -150,33 +158,39 @@ const Timer: React.FC<{
         onFinish();
       }
     }
-  }, [timerState, onFinish]);
+  }, [timerState, onFinish, remainingSets]);
 
   useEffect(() => {
     let newRemainingSec;
-    console.log('remainingSec', remainingSec)
-    console.log('remainingReps', remainingReps)
+    console.log('remainingSec', remainingSec);
+    console.log('remainingReps', remainingReps);
     if (remainingSec === 0 && intervalId) {
       console.log('remaining sec 0 && interval', timerState);
       if (timerState === 'preparing') {
-        console.log(`if (timerState === 'preparing') {`);
+        console.log("if (timerState === 'preparing') {");
         newRemainingSec = durationWork;
         setTimerState('working');
       } else if (timerState === 'working') {
-        console.log(`} else if (timerState === 'working') {`);
+        console.log("} else if (timerState === 'working') {");
         if (remainingReps > 1) {
-          console.log(`if (remainingReps > 1) {`);
+          console.log('if (remainingReps > 1) {');
           newRemainingSec = durationRest;
         }
         setTimerState(remainingReps > 1 ? 'resting' : 'done');
-      } else if (timerState === 'resting' && remainingReps > 0 && durationWork) {
-        console.log(`} else if (timerState === 'resting' && remainingReps > 0 && durationWork) {`);
+      } else if (
+        timerState === 'resting' &&
+        remainingReps > 0 &&
+        durationWork
+      ) {
+        console.log(
+          "} else if (timerState === 'resting' && remainingReps > 0 && durationWork) {",
+        );
         newRemainingSec = durationWork;
         setRemainingReps(remainingReps => remainingReps - 1);
         setTimerState('working');
       } else if (timerState === 'resting' && onFinish) {
-        console.log(`} else if (timerState === 'resting' && onFinish) {`);
-        console.log('asdfasfd')
+        console.log("} else if (timerState === 'resting' && onFinish) {");
+        console.log('asdfasfd');
         onFinish();
       }
       clearInterval(intervalId);
@@ -188,8 +202,16 @@ const Timer: React.FC<{
         setIntervalId(id);
       }
     }
-  }, [remainingSec, remainingReps]);
-////////////////////////
+  }, [
+    remainingSec,
+    remainingReps,
+    durationRest,
+    durationWork,
+    intervalId,
+    onFinish,
+    timerState,
+  ]);
+  ////////////////////////
   return (
     <View
       style={{
@@ -201,23 +223,84 @@ const Timer: React.FC<{
       }}>
       {timerState === 'ready' && (
         <View>
-          <Text style={{color: textColor, fontSize: fontSizes.large}}>{sets} {sets === 1 ? 'set' : 'sets'} of {reps} {reps === 1 ? 'rep' : 'reps'}</Text>
-          <Text style={{color: textColor, fontSize: fontSizes.large}}>{durationWork}s on / {durationRest}s off</Text>
+          <Text style={{color: textColor, fontSize: fontSizes.large}}>
+            {sets} {sets === 1 ? 'set' : 'sets'} of {reps}{' '}
+            {reps === 1 ? 'rep' : 'reps'}
+          </Text>
+          <Text style={{color: textColor, fontSize: fontSizes.large}}>
+            {durationWork}s on / {durationRest}s off
+          </Text>
         </View>
       )}
-      {!!timerState && ['working', 'resting'].includes(timerState) && !!remainingReps && <Text style={{color: textColor, fontSize: fontSizes.medium}}>Rep {reps - remainingReps + 1} of {reps}</Text>}
-      {timerState === 'preparing' && <Text style={{textAlign: 'center', color: textColor, fontSize: fontSizes.large}}>GET PSYCHED</Text>}
-      {timerState === 'working' && <Text style={{textAlign: 'center', color: textColor, fontSize: fontSizes.large}}>Get it!!</Text>}
-      {timerState === 'resting' && <Text style={{textAlign: 'center', color: textColor, fontSize: fontSizes.large}}>Rest</Text>}
-      {timerState === 'done' && remainingSets > 0 && <Text style={{textAlign: 'center', color: textColor, fontSize: fontSizes.large}}>{remainingSets} {remainingSets === 1 ? 'set' : 'sets'} to go. Keep it up!</Text>}
-      {timerState === 'done' && remainingSets === 0 && <Text style={{textAlign: 'center', color: textColor, fontSize: fontSizes.large}}>Good job!</Text>}
+      {!!timerState &&
+        ['working', 'resting'].includes(timerState) &&
+        !!remainingReps && (
+          <Text style={{color: textColor, fontSize: fontSizes.medium}}>
+            Rep {reps - remainingReps + 1} of {reps}
+          </Text>
+        )}
+      {timerState === 'preparing' && (
+        <Text
+          style={{
+            textAlign: 'center',
+            color: textColor,
+            fontSize: fontSizes.large,
+          }}>
+          GET PSYCHED
+        </Text>
+      )}
+      {timerState === 'working' && (
+        <Text
+          style={{
+            textAlign: 'center',
+            color: textColor,
+            fontSize: fontSizes.large,
+          }}>
+          Get it!!
+        </Text>
+      )}
+      {timerState === 'resting' && (
+        <Text
+          style={{
+            textAlign: 'center',
+            color: textColor,
+            fontSize: fontSizes.large,
+          }}>
+          Rest
+        </Text>
+      )}
+      {timerState === 'done' && remainingSets > 0 && (
+        <Text
+          style={{
+            textAlign: 'center',
+            color: textColor,
+            fontSize: fontSizes.large,
+          }}>
+          {remainingSets} {remainingSets === 1 ? 'set' : 'sets'} to go. Keep it
+          up!
+        </Text>
+      )}
+      {timerState === 'done' && remainingSets === 0 && (
+        <Text
+          style={{
+            textAlign: 'center',
+            color: textColor,
+            fontSize: fontSizes.large,
+          }}>
+          Good job!
+        </Text>
+      )}
       <View
         style={{
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        {!!remainingSec && <Text style={{color: textColor, fontSize: fontSizes.large}}>{remainingSec}</Text>}
+        {!!remainingSec && (
+          <Text style={{color: textColor, fontSize: fontSizes.large}}>
+            {remainingSec}
+          </Text>
+        )}
         {!autoStart && timerState === 'ready' && (
           <TouchableOpacity
             onPress={startSet}
@@ -230,7 +313,8 @@ const Timer: React.FC<{
                 textAlign: 'center',
                 color: 'white',
                 fontSize: fontSizes.medium,
-                fontWeight: 'bold'}}>
+                fontWeight: 'bold',
+              }}>
               Start
             </Text>
           </TouchableOpacity>
@@ -244,15 +328,16 @@ const Timer: React.FC<{
               backgroundColor: 'green',
               ...buttonStyle,
             }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'white',
-              fontSize: fontSizes.medium,
-              fontWeight: 'bold'}}>
-            Start Next Set
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'white',
+                fontSize: fontSizes.medium,
+                fontWeight: 'bold',
+              }}>
+              Start Next Set
+            </Text>
+          </TouchableOpacity>
         )}
         {timerState === 'done' && remainingSets === 0 && (
           <TouchableOpacity
@@ -266,19 +351,20 @@ const Timer: React.FC<{
               backgroundColor: 'red',
               ...buttonStyle,
             }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'white',
-              fontSize: fontSizes.medium,
-              fontWeight: 'bold'}}>
-            Reset
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'white',
+                fontSize: fontSizes.medium,
+                fontWeight: 'bold',
+              }}>
+              Reset
+            </Text>
+          </TouchableOpacity>
         )}
       </View>
     </View>
   );
-}
+};
 
 export default Timer;

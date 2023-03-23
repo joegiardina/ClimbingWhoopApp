@@ -22,10 +22,14 @@ export const colors = {
   light: {
     backgroundColor: 'white',
     textColor: 'black',
+    favorable: 'green',
+    unfavorable: 'red',
   },
   dark: {
     backgroundColor: 'black',
     textColor: 'white',
+    favorable: 'green',
+    unfavorable: 'red',
   },
 };
 

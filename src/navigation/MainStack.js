@@ -1,3 +1,4 @@
+import React from 'react';
 import {useColorScheme} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
@@ -5,6 +6,12 @@ import WorkoutScreen from '../screens/WorkoutScreen';
 import WorkoutComponentScreen from '../screens/WorkoutComponentScreen';
 import TimerScreen from '../screens/TimerScreen';
 import Header from '../components/Header';
+import {
+  HOME_SCREEN,
+  TIMER_SCREEN,
+  WORKOUT_COMPONENT_SCREEN,
+  WORKOUT_SCREEN,
+} from '../constants/navigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,37 +26,41 @@ const MainStack = () => {
     color: isDarkMode ? 'white' : 'black',
   };
   return (
-    <Stack.Navigator initialRouteName="HomeScreen">
+    <Stack.Navigator initialRouteName={HOME_SCREEN}>
       <Stack.Screen
-        name="HomeScreen"
+        name={HOME_SCREEN}
         component={HomeScreen}
         options={{
-          header: () => <Header />,
-        }} />
+          header: Header,
+        }}
+      />
       <Stack.Screen
-        name="TimerScreen"
+        name={TIMER_SCREEN}
         component={TimerScreen}
         options={{
           headerStyle: backgroundStyle,
-          headerTitleStyle, 
-          headerTitle: 'Timer'
-        }} />
+          headerTitleStyle,
+          headerTitle: 'Timer',
+        }}
+      />
       <Stack.Screen
-        name="WorkoutScreen"
+        name={WORKOUT_SCREEN}
         component={WorkoutScreen}
         options={{
           headerStyle: backgroundStyle,
-          headerTitleStyle, 
-          headerTitle: 'Workout'
-        }} />
+          headerTitleStyle,
+          headerTitle: 'Workout',
+        }}
+      />
       <Stack.Screen
-        name="WorkoutComponent"
+        name={WORKOUT_COMPONENT_SCREEN}
         component={WorkoutComponentScreen}
         options={{
           headerStyle: backgroundStyle,
-          headerTitleStyle, 
-          headerTitle: 'Workout Component'
-        }} />
+          headerTitleStyle,
+          headerTitle: 'Workout Component',
+        }}
+      />
     </Stack.Navigator>
   );
 };
