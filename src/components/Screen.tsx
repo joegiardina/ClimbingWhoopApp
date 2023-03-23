@@ -12,11 +12,10 @@ const Screen: React.FC<ViewProps> = ({children, ...props}) => {
       {...props}
       style={{
         backgroundColor,
-        display: 'flex',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: spacing.large,
+        padding: spacing.normal,
       }}>
       {children}
     </View>

@@ -4,9 +4,7 @@ import Timer from '../components/Timer';
 
 const TimerScreen: React.FC<{route: any; navigation: any}> = ({route}) => {
   return (
-    <Screen>
-      <Timer {...route.params} />;
-    </Screen>
+    <Timer {...route.params} />
   );
 };
 

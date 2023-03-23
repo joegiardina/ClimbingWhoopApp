@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import _ from 'lodash';
-import {View} from 'react-native';
 import WorkoutDisplay from '../components/WorkoutDisplay';
+import Screen from '../components/Screen';
 import Button from '../components/Button';
 import {WorkoutComponentInterface} from '../interface';
 import useUser from '../hooks/useUser';
@@ -16,7 +16,6 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
 }) => {
   const {workout, result} = route.params;
   const {user} = useUser();
-  const {themeContext} = useThemeContext();
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>(
     [],
   );
@@ -41,12 +40,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   const buttonDisabled = completed.length !== workout.components.length;
 
   return (
-    <View
-      style={{
-        backgroundColor: themeContext.colors.backgroundColor,
-        height: '100%',
-        alignItems: 'center',
-      }}>
+    <Screen>
       <WorkoutDisplay
         workout={workout}
         completed={completed}
@@ -66,7 +60,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
           width: '80%',
         }}
       />
-    </View>
+    </Screen>
   );
 };
 

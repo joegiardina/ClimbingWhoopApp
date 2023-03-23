@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-// import _ from 'lodash';
+import _ from 'lodash';
 import {TouchableOpacity, Text, View, useColorScheme} from 'react-native';
 import {spacing, fontSizes, radii} from '../../style';
 
@@ -47,7 +47,7 @@ const Timer: React.FC<{
     backgroundColor = 'blue';
   }
 
-  // const states = ['ready', 'preparing', 'working', 'resting', 'done'];
+  const states = ['ready', 'preparing', 'working', 'resting', 'done'];
 
   // const startSet = () => {
   //   setRemainingReps(reps);
@@ -158,7 +158,7 @@ const Timer: React.FC<{
         onFinish();
       }
     }
-  }, [timerState, onFinish, remainingSets]);
+  }, [timerState, onFinish]);
 
   useEffect(() => {
     let newRemainingSec;
@@ -202,15 +202,7 @@ const Timer: React.FC<{
         setIntervalId(id);
       }
     }
-  }, [
-    remainingSec,
-    remainingReps,
-    durationRest,
-    durationWork,
-    intervalId,
-    onFinish,
-    timerState,
-  ]);
+  }, [remainingSec, remainingReps]);
   ////////////////////////
   return (
     <View

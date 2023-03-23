@@ -48,7 +48,7 @@ const ExerciseDisplay: React.FC<{
     if (_.keys(values).length) {
       setResult({...result, [name]: values});
     }
-  }, [values, name, result, setResult]);
+  }, [values]);
 
   return (
     <View style={{alignItems: 'flex-start', width: '100%', flex: 1}}>
@@ -87,7 +87,6 @@ const ExerciseDisplay: React.FC<{
             style={{
               flexDirection: 'row',
               marginBottom: spacing.normal,
-              paddingHorizontal: spacing.normal,
               width: '100%',
             }}>
             <Text small inputStyle={{flex: 1}}>
