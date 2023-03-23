@@ -19,7 +19,6 @@ const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style, outline,
   const {textColor, backgroundColor} = themeContext.colors;
   const buttonColor = outline ? backgroundColor : disabled ? 'gray' : 'green';
   const buttonTextColor = outline ? textColor : 'white';
-  console.log(buttonColor, buttonTextColor);
 
   return (
     <TouchableOpacity
