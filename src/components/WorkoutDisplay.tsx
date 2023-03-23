@@ -57,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({
           borderWidth: 1,
           borderColor: textColor,
         }}>
-        <Text large inputStyle={{marginBottom: spacing.normal}}>
+        <Text large style={{marginBottom: spacing.normal}}>
           Choose an Exercise:
         </Text>
         <View style={{paddingLeft: spacing.small}}>
@@ -155,7 +155,7 @@ const WorkoutDisplay: React.FC<{
                       alignItems: 'flex-end',
                       marginHorizontal: spacing.large,
                     }}>
-                    <Text large inputStyle={{color: 'green'}}>
+                    <Text large style={{color: 'green'}}>
                       +
                     </Text>
                   </TouchableOpacity>
@@ -169,7 +169,7 @@ const WorkoutDisplay: React.FC<{
             <>
               <Text
                 large
-                inputStyle={{
+                style={{
                   alignSelf: 'center',
                   marginBottom: spacing.medium,
                 }}>
@@ -209,7 +209,7 @@ const WorkoutDisplay: React.FC<{
               />
               <Text
                 small
-                inputStyle={{textAlign: 'center', marginTop: spacing.small}}>
+                style={{textAlign: 'center', marginTop: spacing.small}}>
                 Tap to Cancel
               </Text>
             </TouchableOpacity>

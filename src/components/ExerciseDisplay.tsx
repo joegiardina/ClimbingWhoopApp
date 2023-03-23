@@ -58,7 +58,7 @@ const ExerciseDisplay: React.FC<{
           justifyContent: 'space-between',
           marginBottom: spacing.normal,
         }}>
-        <Text inputStyle={{flex: 1}}>{name}</Text>
+        <Text style={{flex: 1}}>{name}</Text>
         {showTimerButton && (
           <Button
             small
@@ -90,7 +90,7 @@ const ExerciseDisplay: React.FC<{
               marginBottom: spacing.normal,
               width: '100%',
             }}>
-            <Text small inputStyle={{flex: 1}}>
+            <Text small style={{flex: 1}}>
               {property.name}
             </Text>
             <TextInput

@@ -5,9 +5,9 @@ import {fontSizes} from '../../style';
 import {useThemeContext} from '../contexts/themeContext';
 
 interface TextProps extends RNTextProps {
-  inputStyle?: object;
   small?: boolean;
   medium?: boolean;
+  style?: object,
   large?: boolean;
   favorable?: boolean;
   unfavorable?: boolean;
@@ -17,7 +17,7 @@ const FONT_SIZES = _.keys(fontSizes);
 
 const Text: React.FC<TextProps> = props => {
   const {themeContext} = useThemeContext();
-  const {children, inputStyle, ...passThroughProps} = props;
+  const {children, style, ...passThroughProps} = props;
   const fontSizeProp = _.intersection(FONT_SIZES, _.keys(props))[0];
   let fontSize = fontSizes.normal;
   if (fontSizeProp) {
@@ -31,11 +31,13 @@ const Text: React.FC<TextProps> = props => {
   }
   return (
     <RNText
-      style={{
-        color,
-        fontSize,
-        ...(!!inputStyle && inputStyle),
-      }}
+      style={[
+        style,
+        {
+          color,
+          fontSize,
+        }
+      ]}
       {...passThroughProps}>
       {children}
     </RNText>

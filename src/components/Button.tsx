@@ -11,7 +11,7 @@ interface ButtonProps {
   small?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style, small}) => {
+const Button: React.FC<ButtonProps> = ({text, disabled, onPress, style, outline, small}) => {
   return (
     <TouchableOpacity
       disabled={!!disabled}
