@@ -22,7 +22,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   );
   useEffect(() => {
     setCompleted(_.compact(_.uniqBy([result, ...completed], 'name')));
-  }, [result, setCompleted, completed]);
+  }, [result]);
 
   const onPressComponent = useCallback(
     (workoutComponent: WorkoutComponentInterface) => {
@@ -32,7 +32,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
         completed,
       });
     },
-    [completed, navigation, workout],
+    [completed],
   );
 
   if (!workout) {
