@@ -12,7 +12,7 @@ const CustomizeScreen = () => {
   return (
     <Screen useScrollView>
       <View style={{flex: 1}}>
-        {_.map(data, (v, k) => <Text style={{marginBottom: spacing.large}}>{k}: {Object.keys(v).join(', ')}</Text>)}
+        {_.map(data, (v, k) => <Text key={k} style={{marginBottom: spacing.large}}>{k}: {Object.keys(v).join(', ')}</Text>)}
       </View>
     </Screen>
   )
