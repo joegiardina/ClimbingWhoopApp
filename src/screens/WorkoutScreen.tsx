@@ -46,7 +46,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   if (!workout) {
     return null;
   }
-  const buttonDisabled = completed.length !== workout.components.length;
+  const buttonDisabled = completed.length === 0;
 
   return (
     <Screen>
