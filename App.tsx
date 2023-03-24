@@ -9,6 +9,7 @@ import {UserContext} from './src/contexts/userContext';
 import {ThemeContext, useThemeContext} from './src/contexts/themeContext';
 import MainStack from './src/navigation/MainStack';
 import UnauthenticatedStack from './src/navigation/UnauthenticatedStack';
+import Tabs from './src/navigation/Tabs';
 import {colors as themeColors} from './style';
 import useUser from './src/hooks/useUser';
 import LoadingOverlay from './src/components/LoadingOverlay';
@@ -42,7 +43,7 @@ function App(): JSX.Element {
                   ...DefaultTheme.colors,
                   background: backgroundColor,
                 }}}>
-              {user.authenticated ? <MainStack /> : <UnauthenticatedStack />}
+              {user.authenticated ? <Tabs /> : <UnauthenticatedStack />}
             </NavigationContainer>
           </QueryClientProvider>
         </UserContext.Provider>

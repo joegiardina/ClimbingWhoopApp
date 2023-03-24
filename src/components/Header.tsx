@@ -14,7 +14,7 @@ const Header = () => {
         padding: spacing.small,
       }}>
       {!!userContext.user && (
-        <Text>Hello, {userContext.user.details.name}</Text>
+        <Text>Hello, {userContext.user?.details?.name}</Text>
       )}
       <TouchableOpacity onPress={() => userContext.signoutUser()}>
         <Text small>Sign Out</Text>

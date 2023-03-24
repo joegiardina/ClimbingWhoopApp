@@ -92,7 +92,8 @@ const WorkoutDisplay: React.FC<{
   workout: WorkoutInterface;
   completed?: WorkoutComponentInterface[];
   onPress?: Function;
-}> = ({workout, completed, onPress}) => {
+  displayOnly?: boolean;
+}> = ({workout, completed, onPress, displayOnly}) => {
   const {exertion, components} = workout;
   const {themeContext} = useThemeContext();
   const {textColor, backgroundColor} = themeContext.colors;
@@ -105,15 +106,6 @@ const WorkoutDisplay: React.FC<{
   if (!workout || !workout.exertion) {
     return null;
   }
-
-  const restButtonStyle: StyleProp<ViewStyle> = {
-    padding: spacing.small,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: textColor,
-    borderWidth: 1,
-    borderRadius: radii.normal,
-  };
 
   return (
     <>
@@ -147,62 +139,67 @@ const WorkoutDisplay: React.FC<{
                         : `${min} minutes`}
                     </Text>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => setModalData(workoutComponent)}
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      marginHorizontal: spacing.large,
-                    }}>
-                    <Text large style={{color: 'green'}}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
+                  {!displayOnly && (
+                    <TouchableOpacity
+                      onPress={() => setModalData(workoutComponent)}
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'flex-end',
+                        marginHorizontal: spacing.large,
+                      }}>
+                      <Text large style={{color: 'green'}}>
+                        +
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               );
             })}
           </View>
         </View>
-        <View style={{margin: spacing.large, flex: 1}}>
-          {!timerDuration ? (
-            <>
-              <Text
-                large
-                style={{
-                  alignSelf: 'center',
-                  marginBottom: spacing.medium,
-                }}>
-                Rest
-              </Text>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Button outline onPress={() => setTimerDuration(60)} text="1 min" largeText />
-                <Button outline onPress={() => setTimerDuration(180)} text="3 min" largeText />
-                <Button outline onPress={() => setTimerDuration(300)} text="5 min" largeText />
-              </View>
-            </>
-          ) : (
-            <TouchableOpacity
-              style={{flex: 1}}
-              onPress={() => setTimerDuration(undefined)}>
-              <Timer
-                onFinish={() => setTimerDuration(undefined)}
-                durationPrep={0}
-                durationWork={0}
-                durationRest={timerDuration}
-                reps={0}
-                sets={0}
-                autoStart
-              />
-              <Text
-                small
-                style={{textAlign: 'center', marginTop: spacing.small}}>
-                Tap to Cancel
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        {!displayOnly && (
+
+          <View style={{margin: spacing.large, flex: 1}}>
+            {!timerDuration ? (
+              <>
+                <Text
+                  large
+                  style={{
+                    alignSelf: 'center',
+                    marginBottom: spacing.medium,
+                  }}>
+                  Rest
+                </Text>
+                <View
+                  style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <Button outline onPress={() => setTimerDuration(60)} text="1 min" largeText />
+                  <Button outline onPress={() => setTimerDuration(180)} text="3 min" largeText />
+                  <Button outline onPress={() => setTimerDuration(300)} text="5 min" largeText />
+                </View>
+              </>
+            ) : (
+              <TouchableOpacity
+                style={{flex: 1}}
+                onPress={() => setTimerDuration(undefined)}>
+                <Timer
+                  onFinish={() => setTimerDuration(undefined)}
+                  durationPrep={0}
+                  durationWork={0}
+                  durationRest={timerDuration}
+                  reps={0}
+                  sets={0}
+                  autoStart
+                />
+                <Text
+                  small
+                  style={{textAlign: 'center', marginTop: spacing.small}}>
+                  Tap to Cancel
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
       </View>
       {!!modalData && (
         <Modal
