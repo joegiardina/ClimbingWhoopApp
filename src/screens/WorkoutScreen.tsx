@@ -4,9 +4,8 @@ import WorkoutDisplay from '../components/WorkoutDisplay';
 import Screen from '../components/Screen';
 import Button from '../components/Button';
 import {WorkoutComponentInterface} from '../interface';
-import useUser from '../hooks/useUser';
-import {saveWorkout} from '../api';
-import {useThemeContext} from '../contexts/themeContext';
+import {useQuery, useQueryClient} from 'react-query';
+import {saveWorkout, fetchTodaysWorkout} from '../api';
 import {WORKOUT_COMPONENT_SCREEN} from '../constants/navigation';
 
 // TODO: properly type navigation and route
@@ -15,12 +14,22 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   route,
 }) => {
   const {workout, result} = route.params;
-  const {user} = useUser();
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>(
     [],
-  );
+    );
+    
+  const queryClient = useQueryClient();
+  const {data} = useQuery('todaysWorkout', fetchTodaysWorkout);
   useEffect(() => {
-    setCompleted(_.compact(_.uniqBy([result, ...completed], 'name')));
+    if (data?.data?.exercises) {
+      setCompleted(data.data.exercises);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (result) {
+      setCompleted(_.compact(_.uniqBy([result, ...completed], 'name')));
+    }
   }, [result]);
 
   const onPressComponent = useCallback(
@@ -47,10 +56,11 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
         onPress={onPressComponent}
       />
       <Button
-        text="Complete Workout"
+        text="Save Workout"
         onPress={async () => {
           const result = await saveWorkout({exercises: completed});
           if (result.success) {
+            queryClient.invalidateQueries('allWorkouts');
             navigation.goBack();
           }
         }}

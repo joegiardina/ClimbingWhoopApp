@@ -1,3 +1,5 @@
+const BASE_URL = 'https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com';
+
 let token;
 function getToken() {
   return token;
@@ -15,18 +17,29 @@ function addSessionToken(req) {
   }
 }
 
-const get = async url => {
-  const req = {};
-  addSessionToken(req);
+const getRespText = async (url, req) => {
   const resp = await fetch(url, req);
   const text = await resp.text();
   if (resp.status >= 400) {
     throw new Error(text);
   }
-  return JSON.parse(text);
+  return text;
+}
+
+const get = async path => {
+  const url = `${BASE_URL}${path}`;
+  const req = {};
+  addSessionToken(req);
+  return getRespText(url, req);
 };
 
-const post = async (url, data) => {
+const getJson = async path => {
+  const text = await get(path);
+  return JSON.parse(text);
+}
+
+const post = async (path, data) => {
+  const url = `${BASE_URL}${path}`;
   const req = {
     method: 'post',
     headers: {
@@ -35,27 +48,24 @@ const post = async (url, data) => {
     body: JSON.stringify(data),
   };
   addSessionToken(req);
-  const resp = await fetch(url, req);
-  const text = await resp.text();
-  if (resp.status >= 400) {
-    throw new Error(text);
-  }
+  const text = await getRespText(url, req);
   return JSON.parse(text);
 };
 
-export const fetchPlan = () =>
-  get('https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/getPlan');
+export const fetchPlan = () => getJson('/getPlan');
+  
+export const fetchWorkouts = () => getJson('/workouts');
 
-export const saveWorkout = data =>
-  post('https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/workout', {data});
+export const fetchTodaysWorkout = () => getJson('/workoutToday');
 
-export const auth = async ({username, password}) =>
-  post('https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/login', {
-    username,
-    password,
-  });
+export const fetchExercises = () => getJson('/exercises');
+  
+export const saveWorkout = data => post('/workout', {data});
+
+export const auth = async ({username, password}) => post('/login', {username, password});
+
 export const createUser = async ({username, password, details}) =>
-  post('https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com/createUser', {
+  post('/createUser', {
     username,
     password,
     details,

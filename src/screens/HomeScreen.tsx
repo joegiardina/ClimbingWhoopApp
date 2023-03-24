@@ -26,7 +26,6 @@ function getTodaysWorkout(data: any) {
 // TODO: properly type navigation
 const Home: React.FC<{navigation: any}> = ({navigation}) => {
   const {themeContext} = useThemeContext();
-  const {backgroundColor, textColor} = themeContext.colors;
   const [workout, setWorkout] = useState<WorkoutInterface | undefined>();
 
   const {data} = useQuery('plan', fetchPlan);

@@ -2,30 +2,16 @@ import React from 'react';
 import {View} from 'react-native';
 import MainStack from './MainStack';
 import Text from '../components/Text';
+import HistoryScreen from '../screens/HistoryScreen';
+import CustomizeScreen from '../screens/CustomizeScreen';
 import {useThemeContext} from '../contexts/themeContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-function HistoryScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Here you'll be able to view past and future workouts.</Text>
-    </View>
-  );
-}
 
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function CustomizeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Here you'll be able to add exercises and create workouts.</Text>
     </View>
   );
 }

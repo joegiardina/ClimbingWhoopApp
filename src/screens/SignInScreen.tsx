@@ -24,7 +24,7 @@ const SignInScreen: React.FC<{navigation: any}> = ({navigation}) => {
   const onPressSignIn = useCallback(async () => {
     setLoading(true);
     const user = await auth({username, password});
-    if (user?.authenticated && userContext) {
+    if (user?.authenticated) {
       userContext.updateUser(user);
       setError(false);
     } else {
