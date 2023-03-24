@@ -17,7 +17,8 @@ interface UserDetailsInterface {
 }
 
 export interface UserInterface {
-  username: string;
-  details: UserDetailsInterface;
+  username?: string;
+  details?: UserDetailsInterface;
   authenticated: boolean;
+  token?: UserDetailsInterface;
 }

@@ -1,5 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import {UserInterface} from '../interface';
+import {updateToken} from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useUser = () => {
@@ -13,6 +14,7 @@ const useUser = () => {
         : {};
       if (storedUser.authenticated) {
         setUser(storedUser);
+        updateToken(storedUser.token);
       } else {
         setUser({authenticated: false});
       }
@@ -23,6 +25,9 @@ const useUser = () => {
 
   const updateUser = useCallback((u: UserInterface) => {
     setUser(u);
+    if (u.token) {
+      updateToken(u.token);
+    }
     AsyncStorage.setItem('user', JSON.stringify(u));
   }, []);
 

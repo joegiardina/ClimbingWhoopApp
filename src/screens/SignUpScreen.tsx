@@ -42,7 +42,7 @@ const SignUpScreen: React.FC<{navigation: any}> = ({navigation}) => {
       return;
     }
     const user = await createUser({username, password, details: {name}});
-    if (user?.authenticated && userContext) {
+    if (user?.authenticated) {
       userContext.updateUser(user);
       setError(undefined);
       navigation.navigate(HOME_SCREEN);

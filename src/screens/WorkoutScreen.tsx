@@ -5,7 +5,7 @@ import Screen from '../components/Screen';
 import Button from '../components/Button';
 import {WorkoutComponentInterface} from '../interface';
 import useUser from '../hooks/useUser';
-import {postCompleted} from '../api';
+import {saveWorkout} from '../api';
 import {useThemeContext} from '../contexts/themeContext';
 import {WORKOUT_COMPONENT_SCREEN} from '../constants/navigation';
 
@@ -49,7 +49,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
       <Button
         text="Complete Workout"
         onPress={async () => {
-          const result = await postCompleted({exercises: completed, user});
+          const result = await saveWorkout({exercises: completed});
           if (result.success) {
             navigation.goBack();
           }
