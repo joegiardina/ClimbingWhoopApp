@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>UIAppFonts</key>
-	<array>
 		<string>MaterialCommunityIcons.ttf</string>
+	<array>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

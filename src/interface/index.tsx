@@ -22,3 +22,8 @@ export interface UserInterface {
   authenticated: boolean;
   token?: UserDetailsInterface;
 }
+
+export interface CardComponentInterface {
+  exercise?: any;
+  name?: string;
+}
