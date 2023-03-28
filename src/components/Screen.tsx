@@ -6,7 +6,7 @@ import {useThemeContext} from '../contexts/themeContext';
 
 type ScreenProps = ViewProps & {
   useScrollView?: boolean;
-}
+};
 
 const Screen: React.FC<ScreenProps> = ({children, ...props}) => {
   const {themeContext} = useThemeContext();
@@ -16,22 +16,19 @@ const Screen: React.FC<ScreenProps> = ({children, ...props}) => {
     backgroundColor,
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
     padding: spacing.normal,
   };
 
   if (props.useScrollView) {
     return (
-      <ScrollView contentContainerStyle={style} {...props} >
+      <ScrollView contentContainerStyle={style} {...props}>
         {children}
       </ScrollView>
-    )
+    );
   }
 
   return (
-    <View
-      {...props}
-      style={style}>
+    <View {...props} style={style}>
       {children}
     </View>
   );

@@ -14,10 +14,11 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   route,
 }) => {
   const {workout, result} = route.params;
+  console.log(JSON.stringify(workout, null, 2));
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>(
     [],
-    );
-    
+  );
+
   const queryClient = useQueryClient();
   const {data} = useQuery('todaysWorkout', fetchTodaysWorkout);
   useEffect(() => {

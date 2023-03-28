@@ -3,9 +3,7 @@ import Screen from '../components/Screen';
 import Timer from '../components/Timer';
 
 const TimerScreen: React.FC<{route: any; navigation: any}> = ({route}) => {
-  return (
-    <Timer {...route.params} />
-  );
+  return <Timer {...route.params} />;
 };
 
 export default TimerScreen;

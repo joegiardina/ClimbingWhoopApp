@@ -159,7 +159,6 @@ const WorkoutDisplay: React.FC<{
           </View>
         </View>
         {!displayOnly && (
-
           <View style={{margin: spacing.large, flex: 1}}>
             {!timerDuration ? (
               <>
@@ -172,10 +171,28 @@ const WorkoutDisplay: React.FC<{
                   Rest
                 </Text>
                 <View
-                  style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Button outline onPress={() => setTimerDuration(60)} text="1 min" largeText />
-                  <Button outline onPress={() => setTimerDuration(180)} text="3 min" largeText />
-                  <Button outline onPress={() => setTimerDuration(300)} text="5 min" largeText />
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Button
+                    outline
+                    onPress={() => setTimerDuration(60)}
+                    text="1 min"
+                    largeText
+                  />
+                  <Button
+                    outline
+                    onPress={() => setTimerDuration(180)}
+                    text="3 min"
+                    largeText
+                  />
+                  <Button
+                    outline
+                    onPress={() => setTimerDuration(300)}
+                    text="5 min"
+                    largeText
+                  />
                 </View>
               </>
             ) : (

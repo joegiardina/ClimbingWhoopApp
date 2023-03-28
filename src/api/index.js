@@ -24,7 +24,7 @@ const getRespText = async (url, req) => {
     throw new Error(text);
   }
   return text;
-}
+};
 
 const get = async path => {
   const url = `${BASE_URL}${path}`;
@@ -36,7 +36,7 @@ const get = async path => {
 const getJson = async path => {
   const text = await get(path);
   return JSON.parse(text);
-}
+};
 
 const post = async (path, data) => {
   const url = `${BASE_URL}${path}`;
@@ -53,16 +53,21 @@ const post = async (path, data) => {
 };
 
 export const fetchPlan = () => getJson('/getPlan');
-  
+
 export const fetchWorkouts = () => getJson('/workouts');
 
 export const fetchTodaysWorkout = () => getJson('/workoutToday');
 
 export const fetchExercises = () => getJson('/exercises');
-  
+
+export const fetchExerciseProps = () => getJson('/exerciseProps');
+
+export const saveCustomExercise = data => post('/exerciseCustom', {data});
+
 export const saveWorkout = data => post('/workout', {data});
 
-export const auth = async ({username, password}) => post('/login', {username, password});
+export const auth = async ({username, password}) =>
+  post('/login', {username, password});
 
 export const createUser = async ({username, password, details}) =>
   post('/createUser', {

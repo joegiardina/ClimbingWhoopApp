@@ -10,7 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 function SettingsScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Settings!</Text>
     </View>
   );
@@ -22,43 +22,63 @@ export default function Tabs() {
   const {themeContext} = useThemeContext();
   const {backgroundColor, textColor} = themeContext.colors;
   return (
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {backgroundColor}
-        }}>
-        <Tab.Screen
-          name="Today"
-          component={MainStack}
-          options={{
-            tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="home" color={color} size={size} />,
-            tabBarShowLabel: false,
-          }}
-        />
-        <Tab.Screen
-          name="Calendar"
-          component={HistoryScreen}
-          options={{
-            tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="calendar-clock" color={color} size={size} />,
-            tabBarShowLabel: false,
-          }}
-        />
-        <Tab.Screen
-          name="Customize"
-          component={CustomizeScreen}
-          options={{
-            tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="clipboard-edit-outline" color={color} size={size} />,
-            tabBarShowLabel: false,
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="cog-outline" color={color} size={size} />,
-            tabBarShowLabel: false,
-          }}
-        />
-      </Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {backgroundColor},
+      }}>
+      <Tab.Screen
+        name="Today"
+        component={MainStack}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+      <Tab.Screen
+        name="Calendar"
+        component={HistoryScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="calendar-clock"
+              color={color}
+              size={size}
+            />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+      <Tab.Screen
+        name="Customize"
+        component={CustomizeScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="clipboard-edit-outline"
+              color={color}
+              size={size}
+            />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="cog-outline"
+              color={color}
+              size={size}
+            />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+    </Tab.Navigator>
   );
 }

@@ -7,10 +7,9 @@ import {
 } from 'react-query'
 import {UserContext} from './src/contexts/userContext';
 import {ThemeContext, useThemeContext} from './src/contexts/themeContext';
-import MainStack from './src/navigation/MainStack';
 import UnauthenticatedStack from './src/navigation/UnauthenticatedStack';
 import Tabs from './src/navigation/Tabs';
-import {colors as themeColors} from './style';
+import * as theme from './style';
 import useUser from './src/hooks/useUser';
 import LoadingOverlay from './src/components/LoadingOverlay';
 
@@ -18,7 +17,7 @@ const queryClient = new QueryClient();
 
 function App(): JSX.Element {
   const {isDarkMode} = useThemeContext();
-  const colors = themeColors[isDarkMode ? 'dark' : 'light'];
+  const colors = theme.colors[isDarkMode ? 'dark' : 'light'];
   const {backgroundColor} = colors;
 
   const {user, ready, updateUser, signoutUser} = useUser();
@@ -28,7 +27,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <ThemeContext.Provider value={{colors}}>
+    <ThemeContext.Provider value={{...theme, colors}}>
       <SafeAreaView style={{backgroundColor, flex: 1}}>
         <UserContext.Provider value={{user, updateUser, signoutUser}}>
           <StatusBar

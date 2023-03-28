@@ -13,13 +13,13 @@ import {WORKOUT_SCREEN} from '../constants/navigation';
 import WorkoutDisplay from '../components/WorkoutDisplay';
 
 // this is dumb, just getting something to work
-const JS_DAYS = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa']
+const JS_DAYS = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa'];
 const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
 function getTodaysWorkout(data: any) {
   const today = new Date();
   const day = JS_DAYS[today.getDay()];
-  const phase = 2;
-  return data[phase][DAYS.indexOf(day)]
+  const phase = 1;
+  return data[phase][DAYS.indexOf(day)];
 }
 ///////////////
 
@@ -34,16 +34,14 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
 
   useEffect(() => {
     if (data) {
-      setWorkout(getTodaysWorkout(data))
+      setWorkout(getTodaysWorkout(data));
     }
-  }, [data])
+  }, [data]);
 
   return (
     <Screen>
       <View style={{alignSelf: 'flex-start'}}>
-        <Text large>
-          Today's Workout
-        </Text>
+        <Text large>Today's Workout</Text>
       </View>
       <View
         style={{
@@ -52,12 +50,7 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
           width: '100%',
           paddingTop: spacing.large,
         }}>
-        {!!workout && (
-          <WorkoutDisplay
-            workout={workout}
-            displayOnly
-          />
-        )}
+        {!!workout && <WorkoutDisplay workout={workout} displayOnly />}
       </View>
       <Button
         text="Start Workout"
