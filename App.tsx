@@ -1,10 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import {QueryClient, QueryClientProvider} from 'react-query';
 import {UserContext} from './src/contexts/userContext';
 import {ThemeContext, useThemeContext} from './src/contexts/themeContext';
 import UnauthenticatedStack from './src/navigation/UnauthenticatedStack';
@@ -41,7 +38,8 @@ function App(): JSX.Element {
                 colors: {
                   ...DefaultTheme.colors,
                   background: backgroundColor,
-                }}}>
+                },
+              }}>
               {user.authenticated ? <Tabs /> : <UnauthenticatedStack />}
             </NavigationContainer>
           </QueryClientProvider>

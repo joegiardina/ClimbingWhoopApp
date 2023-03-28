@@ -5,7 +5,7 @@ import {spacing, radii} from '../../style';
 import {
   WorkoutInterface,
   WorkoutComponentInterface,
-  ExerciseType,
+  ExerciseInterface,
 } from '../interface';
 import Timer from './Timer';
 import Text from './Text';
@@ -98,9 +98,9 @@ const WorkoutDisplay: React.FC<{
   const {themeContext} = useThemeContext();
   const {textColor, backgroundColor} = themeContext.colors;
   const [selectedExercise, setSelectedExercise] = useState<
-    ExerciseType | undefined
+    ExerciseInterface | undefined
   >();
-  const [modalData, setModalData] = useState<ExerciseType | undefined>();
+  const [modalData, setModalData] = useState<ExerciseInterface | undefined>();
   const [timerDuration, setTimerDuration] = useState<number | undefined>();
 
   if (!workout || !workout.exertion) {

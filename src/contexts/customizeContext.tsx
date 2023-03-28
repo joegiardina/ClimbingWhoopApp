@@ -1,22 +1,33 @@
 import {createContext, useContext} from 'react';
-import {WorkoutComponentList, ExerciseList, PropertyList} from '../interface';
+import {
+  WorkoutComponentList,
+  ExerciseInterfaceList,
+  ExerciseInterface,
+  PropertyList,
+  WorkoutInterfaceList,
+  WorkoutInterface,
+} from '../interface';
 
 interface CustomizeContextInterface {
   propertyList: PropertyList;
-  exerciseList: ExerciseList;
+  exerciseList: ExerciseInterfaceList;
   componentList: WorkoutComponentList;
-  updateExercises: (input: ExerciseList) => void;
+  workoutList: WorkoutInterfaceList;
   updateComponents: (input: WorkoutComponentList) => void;
   updateProperties: (input: PropertyList) => void;
+  saveCustomWorkout: (input: WorkoutInterface) => void;
+  saveCustomExercise: (input: ExerciseInterface) => void;
 }
 
 export const CustomizeContext = createContext<CustomizeContextInterface>({
   propertyList: [],
   exerciseList: [],
   componentList: [],
-  updateExercises: (input: ExerciseList) => {},
+  workoutList: [],
   updateComponents: (input: WorkoutComponentList) => {},
   updateProperties: (input: PropertyList) => {},
+  saveCustomWorkout: (input: WorkoutInterface) => {},
+  saveCustomExercise: (input: ExerciseInterface) => {},
 });
 
 export const useCustomizeContext = () => {

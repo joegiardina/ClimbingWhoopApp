@@ -13,7 +13,6 @@ import {PropertyType} from '../interface';
 import {useThemeContext} from '../contexts/themeContext';
 import SelectDropdown from './SelectDropdown';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {saveCustomExercise} from '../api';
 import {useCustomizeContext} from '../contexts/customizeContext';
 
 interface ExerciseCreationProps {}
@@ -22,7 +21,7 @@ const ExerciseCreation: React.FC<ExerciseCreationProps> = () => {
   const {themeContext} = useThemeContext();
   const {colors, fontSizes, radii, spacing} = themeContext;
   const {textColor} = colors;
-  const {propertyList} = useCustomizeContext();
+  const {propertyList, saveCustomExercise} = useCustomizeContext();
 
   const [name, setName] = useState('');
   const [properties, setProperties] = useState<Array<PropertyType>>([]);

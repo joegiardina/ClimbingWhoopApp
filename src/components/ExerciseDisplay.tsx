@@ -4,7 +4,7 @@ import {View, TextInput} from 'react-native';
 import Text from './Text';
 import Button from './Button';
 import {spacing} from '../../style';
-import {ExerciseType} from '../interface';
+import {ExerciseInterface} from '../interface';
 import {useThemeContext} from '../contexts/themeContext';
 import {TIMER_SCREEN} from '../constants/navigation';
 
@@ -29,7 +29,7 @@ const timerPropNames = [
 
 // TODO update types
 const ExerciseDisplay: React.FC<{
-  exercise: ExerciseType;
+  exercise: ExerciseInterface;
   result: any;
   setResult: any;
   completed: any;

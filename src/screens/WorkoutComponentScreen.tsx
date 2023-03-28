@@ -5,7 +5,7 @@ import Screen from '../components/Screen';
 import Button from '../components/Button';
 import Text from '../components/Text';
 import ExerciseDisplay from '../components/ExerciseDisplay';
-import {ExerciseType} from '../interface';
+import {ExerciseInterface} from '../interface';
 import {WORKOUT_SCREEN} from '../constants/navigation';
 
 // TODO: properly type route
@@ -29,7 +29,7 @@ const WorkoutComponent: React.FC<{route: any; navigation: any}> = ({
           Duration:{' '}
           {min !== max ? `${min} to ${max} minutes` : `${min} minutes`}
         </Text>
-        {exercises?.map((exercise: ExerciseType, key: number) => (
+        {exercises?.map((exercise: ExerciseInterface, key: number) => (
           <ExerciseDisplay
             key={key}
             result={result}

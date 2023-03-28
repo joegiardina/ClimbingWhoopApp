@@ -4,6 +4,7 @@ import MainStack from './MainStack';
 import Text from '../components/Text';
 import HistoryScreen from '../screens/HistoryScreen';
 import CustomizeScreen from '../screens/CustomizeScreen';
+import CustomizeStack from './CustomizeStack';
 import {useThemeContext} from '../contexts/themeContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,7 +21,7 @@ const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
   const {themeContext} = useThemeContext();
-  const {backgroundColor, textColor} = themeContext.colors;
+  const {backgroundColor} = themeContext.colors;
   return (
     <Tab.Navigator
       screenOptions={{
@@ -53,7 +54,7 @@ export default function Tabs() {
       />
       <Tab.Screen
         name="Customize"
-        component={CustomizeScreen}
+        component={CustomizeStack}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons

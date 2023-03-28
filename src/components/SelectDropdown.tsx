@@ -1,21 +1,25 @@
 import _ from 'lodash';
 import React, {useState} from 'react';
 import {TouchableOpacity, View, ViewStyle} from 'react-native';
-import {ExerciseType, PropertyType} from '../interface';
+import {ExerciseInterface, PropertyType} from '../interface';
 import Text from './Text';
 import Modal from './Modal';
 import {useThemeContext} from '../contexts/themeContext';
 
+type OptionType = ExerciseInterface | PropertyType;
+
 interface SelectDropdownProps {
-  options: Array<ExerciseType | PropertyType>;
+  auto?: Boolean;
+  option: OptionType;
+  options: Array<OptionType>;
   onSelect: Function;
 }
 
-const RenderOption = ({option, index, onPress}) => {
+const RenderOption = ({option, onPress}) => {
   const {name, type} = option;
   const onPressOption = () => onPress(option);
   return (
-    <TouchableOpacity key={index} onPress={onPressOption}>
+    <TouchableOpacity onPress={onPressOption}>
       <Text>
         {name}
         {!!type ? ` (${type})` : ''}
@@ -24,14 +28,19 @@ const RenderOption = ({option, index, onPress}) => {
   );
 };
 
-const SelectDropdown: React.FC<SelectDropdownProps> = ({options, onSelect}) => {
+const SelectDropdown: React.FC<SelectDropdownProps> = ({
+  auto,
+  option,
+  options,
+  onSelect,
+}) => {
   const {themeContext} = useThemeContext();
   const {colors, spacing, radii} = themeContext;
   const {textColor, backgroundColor} = colors;
-  const [selectedOption, setSelectedOption] = useState<
-    PropertyType | undefined
-  >();
-  const [showOptions, setShowOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<OptionType | undefined>(
+    option,
+  );
+  const [showOptions, setShowOptions] = useState(!!auto);
 
   const inputStyle: ViewStyle = {
     borderRadius: radii.normal,
@@ -49,7 +58,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({options, onSelect}) => {
     setShowOptions(false);
   };
   return (
-    <>
+    <View style={{flex: 1}}>
       <TouchableOpacity style={inputStyle} onPress={toggleOptions}>
         {!!selectedOption && (
           <Text>
@@ -63,10 +72,12 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({options, onSelect}) => {
           Select an Option:
         </Text>
         {_.map(options, (option, index) => (
-          <RenderOption option={option} index={index} onPress={onPress} />
+          <View key={index}>
+            <RenderOption option={option} onPress={onPress} />
+          </View>
         ))}
       </Modal>
-    </>
+    </View>
   );
 };
 

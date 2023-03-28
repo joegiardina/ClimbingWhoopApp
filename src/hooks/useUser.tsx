@@ -12,7 +12,7 @@ const useUser = () => {
       const storedUser: UserInterface = storedUserStr
         ? JSON.parse(storedUserStr)
         : {};
-      if (storedUser.authenticated) {
+      if (storedUser.token) {
         setUser(storedUser);
         updateToken(storedUser.token);
       } else {
@@ -26,7 +26,7 @@ const useUser = () => {
   const updateUser = useCallback((u: UserInterface) => {
     setUser(u);
     if (u.token) {
-      updateToken(u.token);
+      updateToken(u.token as string);
     }
     AsyncStorage.setItem('user', JSON.stringify(u));
   }, []);

@@ -8,7 +8,7 @@ import {fetchWorkouts} from '../api';
 import {spacing} from '../../style';
 
 const HistoryScreen = () => {
-  const {data} = useQuery('allWorkouts', fetchWorkouts);
+  const {data} = useQuery('allHistoricalWorkouts', fetchWorkouts);
   return (
     <Screen>
       <FlatList

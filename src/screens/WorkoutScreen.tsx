@@ -14,7 +14,6 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   route,
 }) => {
   const {workout, result} = route.params;
-  console.log(JSON.stringify(workout, null, 2));
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>(
     [],
   );
@@ -61,7 +60,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
         onPress={async () => {
           const result = await saveWorkout({exercises: completed});
           if (result.success) {
-            queryClient.invalidateQueries('allWorkouts');
+            queryClient.invalidateQueries('allHistoricalWorkouts');
             navigation.goBack();
           }
         }}
