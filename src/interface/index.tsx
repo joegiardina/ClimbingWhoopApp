@@ -24,6 +24,7 @@ export interface UserInterface {
 }
 
 export interface CardComponentInterface {
-  exercise?: any;
+  item?: any;
   name?: string;
+  key?: string;
 }
