@@ -6,6 +6,7 @@ import Text from '../components/Text';
 import Screen from '../components/Screen';
 import WorkoutList from '../components/WorkoutList';
 import {WorkoutInterface} from '../interface';
+import ExpandingWorkout from '../components/ExpandingWorkout';
 import {fetchCustomWorkouts} from '../api';
 
 import {spacing} from '../../style';
@@ -37,6 +38,7 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
       <View style={{alignSelf: 'flex-start'}}>
         <Text large>Today's Workout</Text>
       </View>
+      <ExpandingWorkout />
       <WorkoutList workoutList={workoutList} onPress={item => setWorkout(item)} />
       <View
         style={{

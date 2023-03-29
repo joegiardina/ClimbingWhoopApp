@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from 'react-query';
@@ -9,6 +9,9 @@ import Tabs from './src/navigation/Tabs';
 import * as theme from './style';
 import useUser from './src/hooks/useUser';
 import LoadingOverlay from './src/components/LoadingOverlay';
+import ExpandingWorkout from './src/components/ExpandingWorkout';
+import View from './src/components/View';
+import Text from './src/components/Text';
 
 const queryClient = new QueryClient();
 
@@ -19,34 +22,37 @@ function App(): JSX.Element {
 
   const {user, ready, updateUser, signoutUser} = useUser();
 
+  const [expanded, setExpanded] = useState(false);
   if (!ready || !user) {
     return <LoadingOverlay />;
   }
-
   return (
-    <ThemeContext.Provider value={{...theme, colors}}>
-      <SafeAreaView style={{backgroundColor, flex: 1}}>
-        <UserContext.Provider value={{user, updateUser, signoutUser}}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundColor}
-          />
-          <QueryClientProvider client={queryClient}>
-            <NavigationContainer
-              theme={{
-                dark: isDarkMode,
-                colors: {
-                  ...DefaultTheme.colors,
-                  background: backgroundColor,
-                },
-              }}>
-              {user.authenticated ? <Tabs /> : <UnauthenticatedStack />}
-            </NavigationContainer>
-          </QueryClientProvider>
-        </UserContext.Provider>
-      </SafeAreaView>
-    </ThemeContext.Provider>
-  );
+    <ExpandingWorkout />
+  )
+  // return (
+  //   <ThemeContext.Provider value={{...theme, colors}}>
+  //     <SafeAreaView style={{backgroundColor, flex: 1}}>
+  //       <UserContext.Provider value={{user, updateUser, signoutUser}}>
+  //         <StatusBar
+  //           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+  //           backgroundColor={backgroundColor}
+  //         />
+  //         <QueryClientProvider client={queryClient}>
+  //           <NavigationContainer
+  //             theme={{
+  //               dark: isDarkMode,
+  //               colors: {
+  //                 ...DefaultTheme.colors,
+  //                 background: backgroundColor,
+  //               },
+  //             }}>
+  //             {user.authenticated ? <Tabs /> : <UnauthenticatedStack />}
+  //           </NavigationContainer>
+  //         </QueryClientProvider>
+  //       </UserContext.Provider>
+  //     </SafeAreaView>
+  //   </ThemeContext.Provider>
+  // );
 }
 
 export default App;
