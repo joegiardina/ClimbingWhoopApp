@@ -15,9 +15,18 @@ const useCustomize = () => {
   const [propertyList, setPropertyList] = useState<PropertyList>([]);
   const [componentList, setComponentList] = useState<WorkoutComponentList>([]);
   const [workoutList, setWorkoutList] = useState<WorkoutInterfaceList>([]);
-  const exercisesQuery = useQuery('allExercises', api.fetchExercises);
-  const propertiesQuery = useQuery('allProperties', api.fetchExerciseProps);
-  const workoutsQuery = useQuery('allWorkouts', api.fetchCustomWorkouts);
+  const exercisesQuery = useQuery({
+    queryKey: 'allExercises',
+    queryFn: api.fetchExercises,
+  });
+  const propertiesQuery = useQuery({
+    queryKey: 'allProperties',
+    queryFn: api.fetchExerciseProps,
+  });
+  const workoutsQuery = useQuery({
+    queryKey: 'allWorkouts',
+    queryFn: api.fetchCustomWorkouts,
+  });
 
   const saveCustomExercise = async (data: ExerciseInterface) => {
     await api.saveCustomExercise(data);

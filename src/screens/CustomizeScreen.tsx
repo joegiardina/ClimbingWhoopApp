@@ -6,10 +6,12 @@ import Button from '../components/Button';
 import {FlatList, TouchableOpacity} from 'react-native';
 import ExerciseCreation from '../components/ExerciseCreation';
 import WorkoutCreation from '../components/WorkoutCreation';
+import WorkoutList from '../components/WorkoutList';
 import Screen from '../components/Screen';
 import {spacing} from '../../style';
 import {WORKOUT_CREATION_SCREEN} from '../constants/navigation';
 import {useCustomizeContext} from '../contexts/customizeContext';
+import { WorkoutInterface } from '../interface';
 
 const CustomizeScreen: React.FC<{navigation: any}> = ({navigation}) => {
   const customizeContext = useCustomizeContext();
@@ -48,26 +50,10 @@ const CustomizeScreen: React.FC<{navigation: any}> = ({navigation}) => {
           />
         </View>
       )}
-      <View style={{alignSelf: 'flex-start', marginTop: spacing.large}}>
-        <Text medium style={{marginBottom: spacing.small}}>
-          Workouts
-        </Text>
-        <FlatList
-          data={workoutList}
-          renderItem={({item, index}) => {
-            const onPress = () =>
-              navigation.navigate(WORKOUT_CREATION_SCREEN, {workout: item});
-            return (
-              <TouchableOpacity
-                key={index}
-                style={{marginBottom: spacing.small}}
-                onPress={onPress}>
-                <Text>{item.name}</Text>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
+      <WorkoutList
+        workoutList={workoutList}
+        onPress={(item: WorkoutInterface) => navigation.navigate(WORKOUT_CREATION_SCREEN, {workout: item})}
+      />
     </Screen>
   );
 };

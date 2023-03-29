@@ -103,24 +103,27 @@ const WorkoutDisplay: React.FC<{
   const [modalData, setModalData] = useState<ExerciseInterface | undefined>();
   const [timerDuration, setTimerDuration] = useState<number | undefined>();
 
-  if (!workout || !workout.exertion) {
+  if (!workout) {
     return null;
   }
 
   return (
     <>
       <View style={{flex: 1, width: '100%'}}>
+        {!!workout.exertion && (
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             marginBottom: spacing.large,
           }}>
+
           <Text medium>Exertion:</Text>
           <Text medium>
             {Array.isArray(exertion) ? exertion.join(' / ') : exertion}
           </Text>
         </View>
+            )}
 
         <View style={{flexDirection: 'row'}}>
           <View style={{flex: 1}}>
@@ -133,11 +136,13 @@ const WorkoutDisplay: React.FC<{
                   style={{flexDirection: 'row', marginBottom: spacing.large}}>
                   <View style={{flex: 1}}>
                     <Text favorable={isCompleted}>{name}</Text>
-                    <Text favorable={isCompleted}>
-                      {min !== max
-                        ? `${min} to ${max} minutes`
-                        : `${min} minutes`}
-                    </Text>
+                    {min && max && (
+                      <Text favorable={isCompleted}>
+                        {min !== max
+                          ? `${min} to ${max} minutes`
+                          : `${min} minutes`}
+                      </Text>
+                    )}
                   </View>
                   {!displayOnly && (
                     <TouchableOpacity
