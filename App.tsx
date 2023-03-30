@@ -17,7 +17,7 @@ const {isDarkMode} = useThemeContext();
   const colors = theme.colors[isDarkMode ? 'dark' : 'light'];
   const {backgroundColor} = colors;
 
-  const {user, ready, updateUser, signoutUser} = useUser();
+  const {user, ready, updateUser, signoutUser} = useUser(queryClient);
 
   if (!ready || !user) {
     return <LoadingOverlay />;
