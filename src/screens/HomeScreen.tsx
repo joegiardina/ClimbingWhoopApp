@@ -1,29 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
-import {useQuery} from 'react-query';
 import Button from '../components/Button';
 import Text from '../components/Text';
 import Screen from '../components/Screen';
 import WorkoutList from '../components/WorkoutList';
 import {WorkoutInterface} from '../interface';
-import {fetchCustomWorkouts} from '../api';
 
 import {spacing} from '../../style';
-import {useThemeContext} from '../contexts/themeContext';
 import {WORKOUT_SCREEN} from '../constants/navigation';
 import WorkoutDisplay from '../components/WorkoutDisplay';
-import { useCustomizeContext } from '../contexts/customizeContext';
-
-// this is dumb, just getting something to work
-const JS_DAYS = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa'];
-const DAYS = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su'];
-function getTodaysWorkout(data: any) {
-  const today = new Date();
-  const day = JS_DAYS[today.getDay()];
-  const phase = 1;
-  return data[phase][DAYS.indexOf(day)];
-}
-///////////////
+import {useCustomizeContext} from '../contexts/customizeContext';
 
 // TODO: properly type navigation
 const Home: React.FC<{navigation: any}> = ({navigation}) => {
@@ -37,7 +23,10 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
       <View style={{alignSelf: 'flex-start'}}>
         <Text large>Today's Workout</Text>
       </View>
-      <WorkoutList workoutList={workoutList} onPress={item => setWorkout(item)} />
+      <WorkoutList
+        workoutList={workoutList}
+        onPress={item => setWorkout(item)}
+      />
       <View
         style={{
           flex: 1,
@@ -47,7 +36,9 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
         }}>
         {!!workout && (
           <>
-            <Text medium style={{marginBottom: spacing.normal}}>Workout Info</Text>
+            <Text medium style={{marginBottom: spacing.normal}}>
+              Workout Info
+            </Text>
             <WorkoutDisplay workout={workout} displayOnly />
           </>
         )}

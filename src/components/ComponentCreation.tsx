@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
@@ -23,7 +23,10 @@ import {useCustomizeContext} from '../contexts/customizeContext';
 interface ComponentCreationProps {
   workout?: WorkoutInterface;
   workoutComponent?: WorkoutComponentInterface;
-  onSave: (input: WorkoutComponentInterface) => void;
+  onSave: (
+    component: WorkoutComponentInterface,
+    workout?: WorkoutInterface,
+  ) => void;
 }
 
 const ComponentCreation: React.FC<ComponentCreationProps> = ({
@@ -71,16 +74,16 @@ const ComponentCreation: React.FC<ComponentCreationProps> = ({
           <FlatList
             data={exercises}
             renderItem={({index}) => {
-              const onSelect = option => {
-                const props = [...exercises];
-                props[index] = option;
-                setExercises(props);
+              const onSelect = (option: ExerciseInterface) => {
+                const items = [...exercises];
+                items[index] = option;
+                setExercises(items);
                 setOpenOptions(false);
               };
               const onDelete = () => {
-                const props = [...exercises];
-                _.pullAt(props, index);
-                setExercises(props);
+                const items = [...exercises];
+                _.pullAt(items, index);
+                setExercises(items);
                 setOpenOptions(false);
               };
               return (

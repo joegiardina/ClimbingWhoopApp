@@ -9,6 +9,8 @@ interface TextProps extends RNTextProps {
   medium?: boolean;
   style?: object;
   large?: boolean;
+  extraLarge?: boolean;
+  huge?: boolean;
   favorable?: boolean;
   unfavorable?: boolean;
 }

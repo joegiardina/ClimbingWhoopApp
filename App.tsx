@@ -12,8 +12,8 @@ import LoadingOverlay from './src/components/LoadingOverlay';
 
 const queryClient = new QueryClient();
 
-function App(): JSX.Element {
-  const {isDarkMode} = useThemeContext();
+const App: React.FC = () => {
+const {isDarkMode} = useThemeContext();
   const colors = theme.colors[isDarkMode ? 'dark' : 'light'];
   const {backgroundColor} = colors;
 
@@ -24,28 +24,30 @@ function App(): JSX.Element {
   }
 
   return (
-    <ThemeContext.Provider value={{...theme, colors}}>
-      <SafeAreaView style={{backgroundColor, flex: 1}}>
-        <UserContext.Provider value={{user, updateUser, signoutUser}}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundColor}
-          />
-          <QueryClientProvider client={queryClient}>
-            <NavigationContainer
-              theme={{
-                dark: isDarkMode,
-                colors: {
-                  ...DefaultTheme.colors,
-                  background: backgroundColor,
-                },
-              }}>
-              {user.authenticated ? <Tabs /> : <UnauthenticatedStack />}
-            </NavigationContainer>
-          </QueryClientProvider>
-        </UserContext.Provider>
-      </SafeAreaView>
-    </ThemeContext.Provider>
+    <>
+      <ThemeContext.Provider value={{...theme, colors}}>
+        <SafeAreaView style={{backgroundColor, flex: 1}}>
+          <UserContext.Provider value={{user, updateUser, signoutUser}}>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+              backgroundColor={backgroundColor}
+            />
+            <QueryClientProvider client={queryClient}>
+              <NavigationContainer
+                theme={{
+                  dark: isDarkMode,
+                  colors: {
+                    ...DefaultTheme.colors,
+                    background: backgroundColor,
+                  },
+                }}>
+                {user.authenticated ? <Tabs /> : <UnauthenticatedStack />}
+              </NavigationContainer>
+            </QueryClientProvider>
+          </UserContext.Provider>
+        </SafeAreaView>
+      </ThemeContext.Provider>
+    </>
   );
 }
 

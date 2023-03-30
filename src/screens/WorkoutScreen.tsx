@@ -17,7 +17,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>(
     [],
   );
-  console.log(workout)
+  console.log(workout);
   const queryClient = useQueryClient();
   const {data} = useQuery('todaysWorkout', fetchTodaysWorkout);
   useEffect(() => {

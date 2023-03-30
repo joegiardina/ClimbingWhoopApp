@@ -65,11 +65,11 @@ const ExerciseDisplay: React.FC<{
             text="Timer"
             onPress={() =>
               navigation.navigate(TIMER_SCREEN, {
-                durationWork: values[timerPropNames[0]],
-                durationRest: values[timerPropNames[1]],
+                workTime: values[timerPropNames[0]],
+                restTime: values[timerPropNames[1]],
                 reps: values[timerPropNames[2]],
                 sets: values[timerPropNames[3]],
-                durationPrep: 3,
+                prepTime: 3,
               })
             }
             disabled={timerButtonDisabled}

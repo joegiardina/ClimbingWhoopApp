@@ -1,6 +1,5 @@
-import _ from 'lodash';
-import React, {useState, useEffect} from 'react';
-import {View, FlatList} from 'react-native';
+import React from 'react';
+import {FlatList} from 'react-native';
 import {useQuery} from 'react-query';
 import Text from '../components/Text';
 import Screen from '../components/Screen';

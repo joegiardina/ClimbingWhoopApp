@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, ViewStyle, StyleProp} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
 import {spacing, radii} from '../../style';
 import {
@@ -111,19 +111,18 @@ const WorkoutDisplay: React.FC<{
     <>
       <View style={{flex: 1, width: '100%'}}>
         {!!workout.exertion && (
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: spacing.large,
-          }}>
-
-          <Text medium>Exertion:</Text>
-          <Text medium>
-            {Array.isArray(exertion) ? exertion.join(' / ') : exertion}
-          </Text>
-        </View>
-            )}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: spacing.large,
+            }}>
+            <Text medium>Exertion:</Text>
+            <Text medium>
+              {Array.isArray(exertion) ? exertion.join(' / ') : exertion}
+            </Text>
+          </View>
+        )}
 
         <View style={{flexDirection: 'row'}}>
           <View style={{flex: 1}}>
@@ -206,11 +205,11 @@ const WorkoutDisplay: React.FC<{
                 onPress={() => setTimerDuration(undefined)}>
                 <Timer
                   onFinish={() => setTimerDuration(undefined)}
-                  durationPrep={0}
-                  durationWork={0}
-                  durationRest={timerDuration}
-                  reps={0}
-                  sets={0}
+                  prepTime={0}
+                  workTime={0}
+                  restTime={timerDuration}
+                  reps={1}
+                  sets={1}
                   autoStart
                 />
                 <Text

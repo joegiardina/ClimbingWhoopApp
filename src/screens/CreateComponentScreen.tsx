@@ -13,8 +13,9 @@ const CreateComponentScreen: React.FC<{navigation: any; route: any}> = ({
     route.params?.workoutComponent;
   const onSave = (
     result: WorkoutComponentInterface,
-    workout: WorkoutInterface,
+    workout?: WorkoutInterface,
   ) => {
+    console.log(result, workout);
     navigation.navigate(WORKOUT_CREATION_SCREEN, {
       workout,
       workoutComponent: result,

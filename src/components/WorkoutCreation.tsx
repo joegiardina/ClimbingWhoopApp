@@ -9,17 +9,9 @@ import {
 import View from './View';
 import Text from './Text';
 import Button from './Button';
-import {
-  WorkoutComponentInterface,
-  WorkoutComponentList,
-  WorkoutInterface,
-} from '../interface';
+import {WorkoutComponentList, WorkoutInterface} from '../interface';
 import {useThemeContext} from '../contexts/themeContext';
-import SelectDropdown from './SelectDropdown';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {saveCustomExercise} from '../api';
-import ComponentCreation from './ComponentCreation';
-import {useCustomizeContext} from '../contexts/customizeContext';
 import {COMPONENT_CREATION_SCREEN} from '../constants/navigation';
 
 interface WorkoutCreationProps {
@@ -35,13 +27,15 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
 }) => {
   const workout = route?.params?.workout || {};
   const {themeContext} = useThemeContext();
-  const {componentList} = useCustomizeContext();
   const {colors, fontSizes, radii, spacing} = themeContext;
   const {textColor} = colors;
   const [name, setName] = useState(workout.name || '');
   const [components, setComponents] = useState<WorkoutComponentList>(
     workout.components || [],
   );
+
+  const result: WorkoutInterface = {...workout, name, components};
+  console.log('CURRENT RESULT', result);
 
   const commonTextInputProps: TextInputProps = {
     style: {
@@ -90,12 +84,13 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
                   <View row>
                     <TouchableOpacity
                       style={{marginBottom: spacing.small, flex: 1}}
-                      onPress={() =>
+                      onPress={() => {
+                        console.log('nav to comp', result, item);
                         navigation.navigate(COMPONENT_CREATION_SCREEN, {
-                          workout,
+                          workout: result,
                           workoutComponent: item,
-                        })
-                      }>
+                        });
+                      }}>
                       <Text>{item.name}</Text>
                       <Text small>
                         {JSON.stringify(_.map(item.exercises, 'name'))}
@@ -121,13 +116,12 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
           small
           outline
           text="Add Component"
-          onPress={() => navigation.navigate(COMPONENT_CREATION_SCREEN)}
+          onPress={() =>
+            navigation.navigate(COMPONENT_CREATION_SCREEN, {workout: result})
+          }
         />
       </View>
-      <Button
-        text="Save"
-        onPress={() => onSave({id: workout.id, name, components})}
-      />
+      <Button text="Save" onPress={() => onSave(result)} />
     </View>
   );
 };

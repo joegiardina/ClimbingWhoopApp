@@ -15,14 +15,17 @@ interface SelectDropdownProps {
   onSelect: Function;
 }
 
-const RenderOption = ({option, onPress}) => {
+const RenderOption: React.FC<{option: OptionType; onPress: Function}> = ({
+  option,
+  onPress,
+}) => {
   const {name, type} = option;
   const onPressOption = () => onPress(option);
   return (
     <TouchableOpacity onPress={onPressOption}>
       <Text>
         {name}
-        {!!type ? ` (${type})` : ''}
+        {type ? ` (${type})` : ''}
       </Text>
     </TouchableOpacity>
   );
@@ -36,7 +39,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
 }) => {
   const {themeContext} = useThemeContext();
   const {colors, spacing, radii} = themeContext;
-  const {textColor, backgroundColor} = colors;
+  const {textColor} = colors;
   const [selectedOption, setSelectedOption] = useState<OptionType | undefined>(
     option,
   );
@@ -63,7 +66,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
         {!!selectedOption && (
           <Text>
             {selectedOption.name}
-            {!!selectedOption.type ? ` (${selectedOption.type})` : ''}
+            {selectedOption.type ? ` (${selectedOption.type})` : ''}
           </Text>
         )}
       </TouchableOpacity>

@@ -13,10 +13,10 @@ interface CustomizeContextInterface {
   exerciseList: ExerciseInterfaceList;
   componentList: WorkoutComponentList;
   workoutList: WorkoutInterfaceList;
-  updateComponents: (input: WorkoutComponentList) => void;
-  updateProperties: (input: PropertyList) => void;
-  saveCustomWorkout: (input: WorkoutInterface) => void;
-  saveCustomExercise: (input: ExerciseInterface) => void;
+  updateComponents: (_: WorkoutComponentList) => void;
+  updateProperties: (_: PropertyList) => void;
+  saveCustomWorkout: (_: WorkoutInterface) => void;
+  saveCustomExercise: (_: ExerciseInterface) => void;
 }
 
 export const CustomizeContext = createContext<CustomizeContextInterface>({
@@ -24,10 +24,10 @@ export const CustomizeContext = createContext<CustomizeContextInterface>({
   exerciseList: [],
   componentList: [],
   workoutList: [],
-  updateComponents: (input: WorkoutComponentList) => {},
-  updateProperties: (input: PropertyList) => {},
-  saveCustomWorkout: (input: WorkoutInterface) => {},
-  saveCustomExercise: (input: ExerciseInterface) => {},
+  updateComponents: (_: WorkoutComponentList) => {},
+  updateProperties: (_: PropertyList) => {},
+  saveCustomWorkout: (_: WorkoutInterface) => {},
+  saveCustomExercise: (_: ExerciseInterface) => {},
 });
 
 export const useCustomizeContext = () => {

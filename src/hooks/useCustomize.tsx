@@ -28,15 +28,15 @@ const useCustomize = () => {
     queryFn: api.fetchCustomWorkouts,
   });
 
-  const saveCustomExercise = async (data: ExerciseInterface) => {
+  const saveCustomExercise = useCallback(async (data: ExerciseInterface) => {
     await api.saveCustomExercise(data);
     exercisesQuery.refetch();
-  };
+  }, []);
 
-  const saveCustomWorkout = async (data: WorkoutInterface) => {
+  const saveCustomWorkout = useCallback(async (data: WorkoutInterface) => {
     await api.saveCustomWorkout(data);
     workoutsQuery.refetch();
-  };
+  }, []);
 
   useEffect(() => {
     if (exercisesQuery.data && !exercisesQuery.isFetching) {

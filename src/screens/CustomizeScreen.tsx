@@ -1,17 +1,14 @@
-import _ from 'lodash';
 import React, {useState} from 'react';
 import Text from '../components/Text';
 import View from '../components/View';
 import Button from '../components/Button';
-import {FlatList, TouchableOpacity} from 'react-native';
 import ExerciseCreation from '../components/ExerciseCreation';
-import WorkoutCreation from '../components/WorkoutCreation';
 import WorkoutList from '../components/WorkoutList';
 import Screen from '../components/Screen';
 import {spacing} from '../../style';
 import {WORKOUT_CREATION_SCREEN} from '../constants/navigation';
 import {useCustomizeContext} from '../contexts/customizeContext';
-import { WorkoutInterface } from '../interface';
+import {WorkoutInterface} from '../interface';
 
 const CustomizeScreen: React.FC<{navigation: any}> = ({navigation}) => {
   const customizeContext = useCustomizeContext();
@@ -52,7 +49,9 @@ const CustomizeScreen: React.FC<{navigation: any}> = ({navigation}) => {
       )}
       <WorkoutList
         workoutList={workoutList}
-        onPress={(item: WorkoutInterface) => navigation.navigate(WORKOUT_CREATION_SCREEN, {workout: item})}
+        onPress={(item: WorkoutInterface) =>
+          navigation.navigate(WORKOUT_CREATION_SCREEN, {workout: item})
+        }
       />
     </Screen>
   );
