@@ -7,7 +7,7 @@ import {useThemeContext} from '../contexts/themeContext';
 interface TextProps extends RNTextProps {
   small?: boolean;
   medium?: boolean;
-  style?: object,
+  style?: object;
   large?: boolean;
   favorable?: boolean;
   unfavorable?: boolean;

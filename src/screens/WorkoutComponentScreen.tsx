@@ -5,7 +5,7 @@ import Screen from '../components/Screen';
 import Button from '../components/Button';
 import Text from '../components/Text';
 import ExerciseDisplay from '../components/ExerciseDisplay';
-import {ExerciseType} from '../interface';
+import {ExerciseInterface} from '../interface';
 import {WORKOUT_SCREEN} from '../constants/navigation';
 
 // TODO: properly type route
@@ -26,9 +26,10 @@ const WorkoutComponent: React.FC<{route: any; navigation: any}> = ({
       <ScrollView contentContainerStyle={{width: '100%', alignItems: 'center'}}>
         <Text large>{name}</Text>
         <Text medium>
-          Duration: {min !== max ? `${min} to ${max} minutes` : `${min} minutes`}
+          Duration:{' '}
+          {min !== max ? `${min} to ${max} minutes` : `${min} minutes`}
         </Text>
-        {exercises?.map((exercise: ExerciseType, key: number) => (
+        {exercises?.map((exercise: ExerciseInterface, key: number) => (
           <ExerciseDisplay
             key={key}
             result={result}
@@ -45,7 +46,8 @@ const WorkoutComponent: React.FC<{route: any; navigation: any}> = ({
               ...route.params,
               result: {name, result},
             })
-          } />
+          }
+        />
       </ScrollView>
     </Screen>
   );

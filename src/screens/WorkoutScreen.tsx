@@ -16,8 +16,8 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
   const {workout, result} = route.params;
   const [completed, setCompleted] = useState<Array<WorkoutComponentInterface>>(
     [],
-    );
-    
+  );
+  console.log(workout)
   const queryClient = useQueryClient();
   const {data} = useQuery('todaysWorkout', fetchTodaysWorkout);
   useEffect(() => {
@@ -60,7 +60,7 @@ const Workout: React.FC<{navigation: any; route: any}> = ({
         onPress={async () => {
           const result = await saveWorkout({exercises: completed});
           if (result.success) {
-            queryClient.invalidateQueries('allWorkouts');
+            queryClient.invalidateQueries('allHistoricalWorkouts');
             navigation.goBack();
           }
         }}

@@ -5,7 +5,7 @@ import {spacing, radii} from '../../style';
 import {
   WorkoutInterface,
   WorkoutComponentInterface,
-  ExerciseType,
+  ExerciseInterface,
 } from '../interface';
 import Timer from './Timer';
 import Text from './Text';
@@ -98,29 +98,32 @@ const WorkoutDisplay: React.FC<{
   const {themeContext} = useThemeContext();
   const {textColor, backgroundColor} = themeContext.colors;
   const [selectedExercise, setSelectedExercise] = useState<
-    ExerciseType | undefined
+    ExerciseInterface | undefined
   >();
-  const [modalData, setModalData] = useState<ExerciseType | undefined>();
+  const [modalData, setModalData] = useState<ExerciseInterface | undefined>();
   const [timerDuration, setTimerDuration] = useState<number | undefined>();
 
-  if (!workout || !workout.exertion) {
+  if (!workout) {
     return null;
   }
 
   return (
     <>
       <View style={{flex: 1, width: '100%'}}>
+        {!!workout.exertion && (
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             marginBottom: spacing.large,
           }}>
+
           <Text medium>Exertion:</Text>
           <Text medium>
             {Array.isArray(exertion) ? exertion.join(' / ') : exertion}
           </Text>
         </View>
+            )}
 
         <View style={{flexDirection: 'row'}}>
           <View style={{flex: 1}}>
@@ -133,11 +136,13 @@ const WorkoutDisplay: React.FC<{
                   style={{flexDirection: 'row', marginBottom: spacing.large}}>
                   <View style={{flex: 1}}>
                     <Text favorable={isCompleted}>{name}</Text>
-                    <Text favorable={isCompleted}>
-                      {min !== max
-                        ? `${min} to ${max} minutes`
-                        : `${min} minutes`}
-                    </Text>
+                    {min && max && (
+                      <Text favorable={isCompleted}>
+                        {min !== max
+                          ? `${min} to ${max} minutes`
+                          : `${min} minutes`}
+                      </Text>
+                    )}
                   </View>
                   {!displayOnly && (
                     <TouchableOpacity
@@ -159,7 +164,6 @@ const WorkoutDisplay: React.FC<{
           </View>
         </View>
         {!displayOnly && (
-
           <View style={{margin: spacing.large, flex: 1}}>
             {!timerDuration ? (
               <>
@@ -172,10 +176,28 @@ const WorkoutDisplay: React.FC<{
                   Rest
                 </Text>
                 <View
-                  style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Button outline onPress={() => setTimerDuration(60)} text="1 min" largeText />
-                  <Button outline onPress={() => setTimerDuration(180)} text="3 min" largeText />
-                  <Button outline onPress={() => setTimerDuration(300)} text="5 min" largeText />
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Button
+                    outline
+                    onPress={() => setTimerDuration(60)}
+                    text="1 min"
+                    largeText
+                  />
+                  <Button
+                    outline
+                    onPress={() => setTimerDuration(180)}
+                    text="3 min"
+                    largeText
+                  />
+                  <Button
+                    outline
+                    onPress={() => setTimerDuration(300)}
+                    text="5 min"
+                    largeText
+                  />
                 </View>
               </>
             ) : (
