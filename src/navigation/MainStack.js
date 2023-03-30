@@ -26,7 +26,7 @@ const MainStack = () => {
     color: isDarkMode ? 'white' : 'black',
   };
   return (
-    <Stack.Navigator initialRouteName={HOME_SCREEN}>
+    <Stack.Navigator initialRouteName={TIMER_SCREEN}>
       <Stack.Screen
         name={HOME_SCREEN}
         component={HomeScreen}
