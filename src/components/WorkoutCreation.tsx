@@ -33,9 +33,7 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
   const [components, setComponents] = useState<WorkoutComponentList>(
     workout.components || [],
   );
-
   const result: WorkoutInterface = {...workout, name, components};
-  console.log('CURRENT RESULT', result);
 
   const commonTextInputProps: TextInputProps = {
     style: {
@@ -84,13 +82,12 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
                   <View row>
                     <TouchableOpacity
                       style={{marginBottom: spacing.small, flex: 1}}
-                      onPress={() => {
-                        console.log('nav to comp', result, item);
+                      onPress={() =>
                         navigation.navigate(COMPONENT_CREATION_SCREEN, {
                           workout: result,
                           workoutComponent: item,
-                        });
-                      }}>
+                        })
+                      }>
                       <Text>{item.name}</Text>
                       <Text small>
                         {JSON.stringify(_.map(item.exercises, 'name'))}
