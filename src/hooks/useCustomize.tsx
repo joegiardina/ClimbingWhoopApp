@@ -37,9 +37,11 @@ const useCustomize = () => {
 
   useEffect(() => {
     if (query.data && !query.isFetching) {
+      console.log(JSON.stringify(query.data));
       setExerciseList(query.data.exercises as ExerciseInterfaceList);
       setWorkoutList(query.data.workouts as WorkoutInterfaceList);
       setPropertyList(query.data.props as PropertyList);
+      setComponentList(query.data.components as WorkoutComponentList);
     }
   }, [query.isFetching, query.status]);
 
