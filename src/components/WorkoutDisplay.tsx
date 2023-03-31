@@ -199,7 +199,7 @@ const WorkoutDisplay: React.FC<{
             ) : (
               <TouchableOpacity
                 style={{flex: 1}}
-                onPress={() => setTimerDuration(undefined)}>
+                onLongPress={() => setTimerDuration(undefined)}>
                 <Timer
                   onFinish={() => setTimerDuration(undefined)}
                   prepTime={0}
@@ -212,7 +212,7 @@ const WorkoutDisplay: React.FC<{
                 <Text
                   small
                   style={{textAlign: 'center', marginTop: spacing.small}}>
-                  Tap to Cancel
+                  Tap and Hold Timer to Cancel
                 </Text>
               </TouchableOpacity>
             )}
