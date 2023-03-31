@@ -1,6 +1,6 @@
 import React from 'react';
-import {ScrollView, View, ViewStyle} from 'react-native';
-import {ViewProps} from 'react-native/types';
+import {ScrollView, ViewStyle} from 'react-native';
+import View, {ViewProps} from './View';
 import {spacing} from '../../style';
 import {useThemeContext} from '../contexts/themeContext';
 
@@ -15,13 +15,12 @@ const Screen: React.FC<ScreenProps> = ({children, ...props}) => {
   const style: ViewStyle = {
     backgroundColor,
     height: '100%',
-    alignItems: 'center',
     padding: spacing.normal,
   };
 
   if (props.useScrollView) {
     return (
-      <ScrollView contentContainerStyle={style} {...props}>
+      <ScrollView contentContainerStyle={[style, props.style]} {...props}>
         {children}
       </ScrollView>
     );

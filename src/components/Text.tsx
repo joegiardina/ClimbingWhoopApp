@@ -5,21 +5,22 @@ import {fontSizes} from '../../style';
 import {useThemeContext} from '../contexts/themeContext';
 
 interface TextProps extends RNTextProps {
-  small?: boolean;
-  medium?: boolean;
+  bold?: Boolean;
+  small?: Boolean;
+  medium?: Boolean;
   style?: object;
-  large?: boolean;
-  extraLarge?: boolean;
-  huge?: boolean;
-  favorable?: boolean;
-  unfavorable?: boolean;
+  large?: Boolean;
+  extraLarge?: Boolean;
+  huge?: Boolean;
+  favorable?: Boolean;
+  unfavorable?: Boolean;
 }
 
 const FONT_SIZES = _.keys(fontSizes);
 
 const Text: React.FC<TextProps> = props => {
   const {themeContext} = useThemeContext();
-  const {children, style, ...passThroughProps} = props;
+  const {children, style, bold, ...passThroughProps} = props;
   const fontSizeProp = _.intersection(FONT_SIZES, _.keys(props))[0];
   let fontSize = fontSizes.normal;
   if (fontSizeProp && _.get(props, fontSizeProp)) {
@@ -37,6 +38,9 @@ const Text: React.FC<TextProps> = props => {
         {
           color,
           fontSize,
+        },
+        bold && {
+          fontWeight: 600,
         },
         style,
       ]}

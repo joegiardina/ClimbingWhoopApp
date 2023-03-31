@@ -21,12 +21,14 @@ export const radii = {
 export const colors = {
   light: {
     backgroundColor: 'white',
+    containerBackground: '#B5B5B5',
     textColor: 'black',
     favorable: 'green',
     unfavorable: 'red',
   },
   dark: {
     backgroundColor: 'black',
+    containerBackground: '#2F2F2F',
     textColor: 'white',
     favorable: 'green',
     unfavorable: 'red',

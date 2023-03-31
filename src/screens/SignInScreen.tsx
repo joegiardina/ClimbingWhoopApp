@@ -53,7 +53,7 @@ const SignInScreen: React.FC<{navigation: any}> = ({navigation}) => {
   return (
     <>
       {loading && <LoadingOverlay />}
-      <Screen>
+      <Screen centered>
         {error && (
           <View style={{position: 'absolute', top: spacing.large}}>
             <Text unfavorable>Something went wrong.</Text>
@@ -61,12 +61,14 @@ const SignInScreen: React.FC<{navigation: any}> = ({navigation}) => {
         )}
         <View style={{flex: 1, width: 250}}>
           <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <Text small>Username</Text>
             <TextInput
               {...commonTextInputProps}
               placeholder="Username"
               onChangeText={text => setUsername(text)}
             />
             <View style={{marginTop: spacing.normal}}>
+              <Text small>Password</Text>
               <TextInput
                 style={{marginTop: spacing.normal}}
                 {...commonTextInputProps}

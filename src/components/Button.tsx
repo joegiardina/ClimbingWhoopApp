@@ -13,6 +13,7 @@ interface ButtonProps {
   style?: any;
   outline?: boolean;
   small?: boolean;
+  unfavorable?: Boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,13 +23,29 @@ const Button: React.FC<ButtonProps> = ({
   style,
   outline,
   largeText,
-  textOnly,
   small,
+  unfavorable,
+  textOnly,
 }) => {
   const {themeContext} = useThemeContext();
   const {textColor, backgroundColor} = themeContext.colors;
-  const buttonColor = outline ? backgroundColor : disabled ? 'gray' : 'green';
-  const buttonTextColor = outline ? textColor : 'white';
+
+  let buttonColor = 'green';
+  let buttonTextColor = 'white';
+  if (disabled) {
+    buttonColor = 'gray';
+    buttonTextColor = 'white';
+  } else if (unfavorable) {
+    buttonColor = 'red';
+    buttonTextColor = 'white';
+  } else if (outline) {
+    buttonColor = backgroundColor;
+    buttonTextColor = textColor;
+  } else if (textOnly) {
+    buttonColor = backgroundColor;
+  }
+
+  const borderColor = outline ? textColor : buttonColor;
 
   return (
     <TouchableOpacity
@@ -36,19 +53,19 @@ const Button: React.FC<ButtonProps> = ({
       onPress={onPress}
       style={[
         {
-          backgroundColor: !textOnly && buttonColor,
+          backgroundColor: buttonColor,
           borderRadius: radii.normal,
-          borderColor: !textOnly && outline && buttonTextColor,
-          borderWidth: !textOnly && outline && 1,
+          borderColor: borderColor || backgroundColor,
+          borderWidth: 1,
           paddingVertical: !small ? spacing.normal : spacing.small,
-          paddingHorizontal: spacing.small,
+          paddingHorizontal: spacing.normal,
           minWidth: !small && 80,
           alignItems: 'center',
           justifyContent: 'center',
         },
         style,
       ]}>
-      <Text large={!!largeText} style={{color: buttonTextColor}}>
+      <Text bold large={!!largeText} style={{color: buttonTextColor}}>
         {text}
       </Text>
     </TouchableOpacity>

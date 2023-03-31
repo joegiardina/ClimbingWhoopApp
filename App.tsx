@@ -13,7 +13,7 @@ import LoadingOverlay from './src/components/LoadingOverlay';
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-const {isDarkMode} = useThemeContext();
+  const {isDarkMode} = useThemeContext();
   const colors = theme.colors[isDarkMode ? 'dark' : 'light'];
   const {backgroundColor} = colors;
 

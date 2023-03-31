@@ -1,20 +1,22 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useColorScheme} from 'react-native';
 import {SIGN_IN_SCREEN, SIGN_UP_SCREEN} from '../constants/navigation';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import { useThemeContext } from '../contexts/themeContext';
 
 const Stack = createNativeStackNavigator();
 
 const UnauthenticatedStack = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
+  const {themeContext} = useThemeContext();
+  const {colors} = themeContext;
+  const {backgroundColor, textColor} = colors;
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? 'black' : 'white',
+    flex: 1,
+    backgroundColor,
   };
   const headerTitleStyle = {
-    color: isDarkMode ? 'white' : 'black',
+    color: textColor,
   };
   return (
     <Stack.Navigator initialRouteName={SIGN_IN_SCREEN}>

@@ -11,6 +11,6 @@ export const ThemeContext = createContext({
 
 export const useThemeContext = () => {
   const themeContext = useContext(ThemeContext);
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = true//useColorScheme() === 'dark';
   return {themeContext, isDarkMode};
 };

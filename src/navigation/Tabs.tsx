@@ -14,6 +14,7 @@ import {
   EditIcon,
   SettingsIcon,
 } from '../components/TabBarIcon';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 function SettingsScreen() {
   return (
@@ -72,11 +73,14 @@ const TabNavigator: React.FC<{backgroundColor: string}> = ({
 
 export default function Tabs() {
   const {themeContext} = useThemeContext();
-  const {context} = useCustomize();
+  const {ready, context} = useCustomize();
   const {backgroundColor} = themeContext.colors;
   return (
-    <CustomizeContext.Provider value={context}>
-      <TabNavigator backgroundColor={backgroundColor} />
-    </CustomizeContext.Provider>
+    <>
+      {!ready && <LoadingOverlay />}
+      <CustomizeContext.Provider value={context}>
+        <TabNavigator backgroundColor={backgroundColor} />
+      </CustomizeContext.Provider>
+    </>
   );
 }

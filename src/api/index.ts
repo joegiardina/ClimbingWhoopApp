@@ -10,7 +10,7 @@ type Headers = {
 };
 
 type ReqType = RequestInit & {
-  method?: 'get' | 'post' | undefined;
+  method?: 'get' | 'post' | 'delete' | undefined;
   headers?: Headers;
   body?: Object;
 };
@@ -39,17 +39,30 @@ function addSessionToken(req: ReqType) {
 }
 
 const getRespText = async (url: string, req: ReqType) => {
-  const resp = await fetch(url, req);
-  const text = await resp.text();
-  if (resp.status >= 400) {
-    throw new Error(text);
+  try {
+
+    const resp = await fetch(url, req);
+    const text = await resp.text();
+    if (resp.status >= 400) {
+      throw new Error(text);
+    }
+    console.log('request', resp.status, req.method, url);
+    return text;
+  } catch (e) {
+    console.log('request error', e, req.method, url);
   }
-  return text;
 };
 
 const get = async (path: string) => {
   const url = `${BASE_URL}${path}`;
-  const req: ReqType = {};
+  const req: ReqType = {method: 'get'};
+  addSessionToken(req);
+  return getRespText(url, req);
+};
+
+const del = async (path: string) => {
+  const url = `${BASE_URL}${path}`;
+  const req: ReqType = {method: 'delete'};
   addSessionToken(req);
   return getRespText(url, req);
 };
@@ -74,16 +87,21 @@ const post = async (path: string, data: any) => {
 };
 
 export const fetchPlan = () => getJson('/getPlan');
-export const fetchWorkouts = () => getJson('/workouts');
+export const fetchWorkouts = () => getJson('/completedWorkouts');
 export const fetchTodaysWorkout = () => getJson('/workoutToday');
 export const fetchExercises = () => getJson('/exercises');
 export const fetchExerciseProps = () => getJson('/exerciseProps');
 export const saveCustomExercise = (data: ExerciseInterface) =>
-  post('/exerciseCustom', {data});
-export const saveWorkout = (data: WorkoutInterface) => post('/workout', {data});
-export const saveCustomWorkout = (data: WorkoutInterface) =>
-  post('/workoutCustom', {data});
-export const fetchCustomWorkouts = () => getJson('/workoutsCustom');
+  post('/exercise', {data});
+export const saveCompletedWorkout = (data: WorkoutInterface) => post('/completeWorkout', {data});
+export const saveWorkout = (data: WorkoutInterface) =>
+  post('/workout', {data});
+export const deleteWorkout = (data: WorkoutInterface) => {
+  console.log('deleteing', data.id);
+  return del(`/workout?id=${data.id}`);
+}
+export const fetchCustomWorkouts = () => getJson('/workouts');
+export const fetchInitialData = () => getJson('/init');
 
 export const auth = async ({username, password}: AuthInputType) =>
   post('/login', {username, password});

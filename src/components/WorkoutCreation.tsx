@@ -18,12 +18,14 @@ interface WorkoutCreationProps {
   navigation: any;
   route: any;
   onSave: (input: WorkoutInterface) => void;
+  onDelete: (input: WorkoutInterface) => void;
 }
 
 const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
   navigation,
   route,
   onSave,
+  onDelete,
 }) => {
   const workout = route?.params?.workout || {};
   const {themeContext} = useThemeContext();
@@ -57,8 +59,8 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
   }, [route.params]);
 
   return (
-    <View style={{width: '100%'}}>
-      <View style={{marginBottom: spacing.normal}}>
+    <View expand>
+      <View style={{marginBottom: spacing.large}}>
         <Text medium>Name</Text>
         <TextInput
           defaultValue={name}
@@ -67,7 +69,7 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
         />
       </View>
       {!!components.length && (
-        <View style={{marginLeft: spacing.normal}}>
+        <>
           <Text medium>Components</Text>
           <View style={{marginLeft: spacing.small}}>
             <FlatList
@@ -105,20 +107,22 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
               }}
             />
           </View>
-        </View>
+        </>
       )}
-      <View style={{marginBottom: spacing.normal}}>
-        <Button
-          style={{marginBottom: spacing.small}}
-          small
-          outline
-          text="Add Component"
-          onPress={() =>
-            navigation.navigate(COMPONENT_CREATION_SCREEN, {workout: result})
-          }
-        />
-      </View>
-      <Button text="Save" onPress={() => onSave(result)} />
+      <Button
+        style={{marginBottom: spacing.normal}}
+        small
+        outline
+        text="Add Component"
+        onPress={() =>
+          navigation.navigate(COMPONENT_CREATION_SCREEN, {workout: result})
+        }
+      />
+      <View expand />
+      <Button text="Save" onPress={() => onSave(result)} style={{marginBottom: spacing.small}} />
+      {result.id && (
+        <Button unfavorable text="Delete" onPress={() => onDelete(result)} />
+      )}
     </View>
   );
 };

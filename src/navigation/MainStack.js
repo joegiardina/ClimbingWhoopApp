@@ -12,18 +12,20 @@ import {
   WORKOUT_COMPONENT_SCREEN,
   WORKOUT_SCREEN,
 } from '../constants/navigation';
+import { useThemeContext } from '../contexts/themeContext';
 
 const Stack = createNativeStackNavigator();
 
 const MainStack = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
+  const {themeContext} = useThemeContext();
+  const {colors} = themeContext;
+  const {backgroundColor, textColor} = colors;
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? 'black' : 'white',
     flex: 1,
+    backgroundColor,
   };
   const headerTitleStyle = {
-    color: isDarkMode ? 'white' : 'black',
+    color: textColor,
   };
   return (
     <Stack.Navigator initialRouteName={HOME_SCREEN}>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
 import Button from '../components/Button';
 import Text from '../components/Text';
+import View from '../components/View';
 import Screen from '../components/Screen';
 import WorkoutList from '../components/WorkoutList';
 import {WorkoutInterface} from '../interface';
@@ -9,6 +9,7 @@ import {WorkoutInterface} from '../interface';
 import {spacing} from '../../style';
 import {WORKOUT_SCREEN} from '../constants/navigation';
 import WorkoutDisplay from '../components/WorkoutDisplay';
+import HomeScreenItem from '../components/HomeScreenItem';
 import {useCustomizeContext} from '../contexts/customizeContext';
 
 // TODO: properly type navigation
@@ -19,38 +20,40 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
   const buttonDisabled = !workout;
 
   return (
-    <Screen>
-      <View style={{alignSelf: 'flex-start'}}>
-        <Text large>Today's Workout</Text>
+    <Screen style={{alignItems: 'flex-start'}}>
+      <Text large style={{marginBottom: spacing.normal}}>Welcome</Text>
+      <View style={{marginBottom: spacing.normal}}>
+        <WorkoutList
+          workoutList={workoutList}
+          onPress={item => setWorkout(item)}
+          navigation={navigation}
+        />
       </View>
-      <WorkoutList
-        workoutList={workoutList}
-        onPress={item => setWorkout(item)}
-      />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          width: '100%',
-          paddingTop: spacing.large,
-        }}>
+      <View expand>
         {!!workout && (
-          <>
-            <Text medium style={{marginBottom: spacing.normal}}>
-              Workout Info
+          <HomeScreenItem>
+            <Text medium bold style={{alignSelf: 'flex-start', marginBottom: spacing.normal}}>
+              Selected Workout
             </Text>
-            <WorkoutDisplay workout={workout} displayOnly />
-          </>
+            <View fullWidth style={{alignSelf: 'flex-start', paddingLeft: spacing.small}}>
+              <View row fullWidth>
+                <View expand centered>
+                  <Text bold>{workout.name}</Text>
+                </View>
+                <View expand>
+                  <Text bold>Components:</Text>
+                  {workout.components.map(({name}, key) => <Text key={key}>- {name}</Text>)}
+                </View>
+              </View>
+            </View>
+          </HomeScreenItem>
         )}
       </View>
-      <View style={{flex: 1}}>
+      <View centered >
         <Button
           text="Start Workout"
           onPress={() => navigation.navigate(WORKOUT_SCREEN, {workout})}
           disabled={buttonDisabled}
-          style={{
-            width: '80%',
-          }}
         />
       </View>
     </Screen>

@@ -124,7 +124,8 @@ const WorkoutDisplay: React.FC<{
           </View>
         )}
 
-        <View style={{flexDirection: 'row'}}>
+        <Text large>Components</Text>
+        <View style={{marginTop: spacing.normal, flexDirection: 'row'}}>
           <View style={{flex: 1}}>
             {components?.map((workoutComponent, key) => {
               const {name, min, max} = workoutComponent;
@@ -134,7 +135,7 @@ const WorkoutDisplay: React.FC<{
                   key={key}
                   style={{flexDirection: 'row', marginBottom: spacing.large}}>
                   <View style={{flex: 1}}>
-                    <Text favorable={isCompleted}>{name}</Text>
+                    <Text medium bold={isCompleted} favorable={isCompleted}>{name}</Text>
                     {min && max && (
                       <Text favorable={isCompleted}>
                         {min !== max
@@ -152,7 +153,7 @@ const WorkoutDisplay: React.FC<{
                         alignItems: 'flex-end',
                         marginHorizontal: spacing.large,
                       }}>
-                      <Text large style={{color: 'green'}}>
+                      <Text large>
                         +
                       </Text>
                     </TouchableOpacity>
@@ -163,13 +164,12 @@ const WorkoutDisplay: React.FC<{
           </View>
         </View>
         {!displayOnly && (
-          <View style={{margin: spacing.large, flex: 1}}>
+          <View style={{marginTop: spacing.large, flex: 1}}>
             {!timerDuration ? (
               <>
                 <Text
                   large
                   style={{
-                    alignSelf: 'center',
                     marginBottom: spacing.medium,
                   }}>
                   Rest
@@ -177,25 +177,22 @@ const WorkoutDisplay: React.FC<{
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    justifyContent: 'space-around',
                   }}>
                   <Button
                     outline
                     onPress={() => setTimerDuration(60)}
                     text="1 min"
-                    largeText
                   />
                   <Button
                     outline
                     onPress={() => setTimerDuration(180)}
                     text="3 min"
-                    largeText
                   />
                   <Button
                     outline
                     onPress={() => setTimerDuration(300)}
                     text="5 min"
-                    largeText
                   />
                 </View>
               </>

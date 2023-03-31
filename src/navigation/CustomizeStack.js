@@ -1,9 +1,9 @@
 import React from 'react';
-import {useColorScheme} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CustomizeScreen from '../screens/CustomizeScreen';
 import CreateComponentScreen from '../screens/CreateComponentScreen';
 import CreateWorkoutScreen from '../screens/CreateWorkoutScreen';
+import {useThemeContext} from '../contexts/themeContext';
 import {
   WORKOUT_CREATION_SCREEN,
   COMPONENT_CREATION_SCREEN,
@@ -13,14 +13,15 @@ import {
 const Stack = createNativeStackNavigator();
 
 const CustomizeStack = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
+  const {themeContext} = useThemeContext();
+  const {colors} = themeContext;
+  const {backgroundColor, textColor} = colors;
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? 'black' : 'white',
     flex: 1,
+    backgroundColor,
   };
   const headerTitleStyle = {
-    color: isDarkMode ? 'white' : 'black',
+    color: textColor,
   };
   return (
     <Stack.Navigator initialRouteName={CUSTOMIZE_SCREEN}>

@@ -15,7 +15,8 @@ interface CustomizeContextInterface {
   workoutList: WorkoutInterfaceList;
   updateComponents: (_: WorkoutComponentList) => void;
   updateProperties: (_: PropertyList) => void;
-  saveCustomWorkout: (_: WorkoutInterface) => void;
+  saveWorkout: (_: WorkoutInterface) => void;
+  deleteWorkout: (_: WorkoutInterface) => void,
   saveCustomExercise: (_: ExerciseInterface) => void;
 }
 
@@ -26,7 +27,8 @@ export const CustomizeContext = createContext<CustomizeContextInterface>({
   workoutList: [],
   updateComponents: (_: WorkoutComponentList) => {},
   updateProperties: (_: PropertyList) => {},
-  saveCustomWorkout: (_: WorkoutInterface) => {},
+  saveWorkout: (_: WorkoutInterface) => {},
+  deleteWorkout: (_: WorkoutInterface) => {},
   saveCustomExercise: (_: ExerciseInterface) => {},
 });
 

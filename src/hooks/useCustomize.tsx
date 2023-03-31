@@ -15,52 +15,37 @@ const useCustomize = () => {
   const [propertyList, setPropertyList] = useState<PropertyList>([]);
   const [componentList, setComponentList] = useState<WorkoutComponentList>([]);
   const [workoutList, setWorkoutList] = useState<WorkoutInterfaceList>([]);
-  const exercisesQuery = useQuery({
-    queryKey: 'allExercises',
-    queryFn: api.fetchExercises,
-  });
-  const propertiesQuery = useQuery({
-    queryKey: 'allProperties',
-    queryFn: api.fetchExerciseProps,
-  });
-  const workoutsQuery = useQuery({
-    queryKey: 'allWorkouts',
-    queryFn: api.fetchCustomWorkouts,
+  const query = useQuery({
+    queryKey: 'data',
+    queryFn: api.fetchInitialData,
   });
 
   const saveCustomExercise = useCallback(async (data: ExerciseInterface) => {
     await api.saveCustomExercise(data);
-    exercisesQuery.refetch();
+    query.refetch();
   }, []);
 
-  const saveCustomWorkout = useCallback(async (data: WorkoutInterface) => {
-    await api.saveCustomWorkout(data);
-    workoutsQuery.refetch();
+  const saveWorkout = useCallback(async (data: WorkoutInterface) => {
+    await api.saveWorkout(data);
+    query.refetch();
+  }, []);
+
+  const deleteWorkout = useCallback(async (data: WorkoutInterface) => {
+    await api.deleteWorkout(data);
+    query.refetch();
   }, []);
 
   useEffect(() => {
-    if (exercisesQuery.data && !exercisesQuery.isFetching) {
-      setExerciseList(exercisesQuery.data as ExerciseInterfaceList);
+    if (query.data && !query.isFetching) {
+      setExerciseList(query.data.exercises as ExerciseInterfaceList);
+      setWorkoutList(query.data.workouts as WorkoutInterfaceList);
+      setPropertyList(query.data.props as PropertyList);
     }
-  }, [exercisesQuery.isFetching, exercisesQuery.status]);
-
-  useEffect(() => {
-    if (propertiesQuery.data && !propertiesQuery.isFetching) {
-      setPropertyList(propertiesQuery.data as PropertyList);
-    }
-  }, [propertiesQuery.isFetching, propertiesQuery.status]);
-
-  useEffect(() => {
-    if (workoutsQuery.data && !workoutsQuery.isFetching) {
-      setWorkoutList(workoutsQuery.data as WorkoutInterfaceList);
-    }
-  }, [workoutsQuery.isFetching, workoutsQuery.status]);
+  }, [query.isFetching, query.status]);
 
   return {
-    ready:
-      !exercisesQuery.isLoading &&
-      !propertiesQuery.isLoading &&
-      !workoutsQuery.isLoading,
+    ready: !query.isLoading,
+    isError: query.isError,
     context: {
       exerciseList,
       propertyList,
@@ -70,7 +55,8 @@ const useCustomize = () => {
       updateProperties: setPropertyList,
       updateComponents: setComponentList,
       saveCustomExercise,
-      saveCustomWorkout,
+      saveWorkout,
+      deleteWorkout,
     },
   };
 };
