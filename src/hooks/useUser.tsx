@@ -1,6 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import {UserInterface} from '../interface';
-import {updateToken} from '../api';
+import {getToken, updateToken} from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type {QueryClient} from 'react-query';
 
@@ -28,6 +28,8 @@ const useUser = (queryClient: QueryClient) => {
     setUser(u);
     if (u.token) {
       updateToken(u.token as string);
+    } else {
+      u.token = getToken();
     }
     AsyncStorage.setItem('user', JSON.stringify(u));
     queryClient.removeQueries();

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View as RNView, ViewProps as RNViewProps} from 'react-native';
-import { useThemeContext } from '../contexts/themeContext';
+import {useThemeContext} from '../contexts/themeContext';
 
 export interface ViewProps extends RNViewProps {
   expand?: Boolean;

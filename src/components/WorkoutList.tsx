@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
 import View from './View';
 import Text from './Text';
-import WorkoutDisplay from './WorkoutDisplay';
 import {WorkoutInterfaceList, WorkoutInterface} from '../interface';
-import { useThemeContext } from '../contexts/themeContext';
+import {useThemeContext} from '../contexts/themeContext';
 import Button from './Button';
-import { WORKOUT_CREATION_SCREEN, CUSTOMIZE_SCREEN } from '../constants/navigation';
+import {WORKOUT_CREATION_SCREEN} from '../constants/navigation';
 
 type WorkoutListInput = {
   workoutList: WorkoutInterfaceList;
@@ -15,7 +14,12 @@ type WorkoutListInput = {
   showAdd?: boolean;
 };
 
-const WorkoutList: React.FC<WorkoutListInput> = ({workoutList, onPress, navigation, showAdd}) => {
+const WorkoutList: React.FC<WorkoutListInput> = ({
+  workoutList,
+  onPress,
+  navigation,
+  showAdd,
+}) => {
   const {themeContext} = useThemeContext();
   const {spacing} = themeContext;
   return (
@@ -31,15 +35,19 @@ const WorkoutList: React.FC<WorkoutListInput> = ({workoutList, onPress, navigati
               key={index}
               style={{marginBottom: spacing.small}}
               onPress={() => onPress(item)}>
-                <View row style={{alignItems: 'flex-end'}}>
-                  <Text style={{flex: 1}}>{item.name}</Text>
-                </View>
+              <View row style={{alignItems: 'flex-end'}}>
+                <Text style={{flex: 1}}>{item.name}</Text>
+              </View>
             </TouchableOpacity>
           )}
         />
         {showAdd && (
           <View>
-            <Button small text="Workout +" onPress={() => navigation.navigate(WORKOUT_CREATION_SCREEN)} />
+            <Button
+              small
+              text="Workout +"
+              onPress={() => navigation.navigate(WORKOUT_CREATION_SCREEN)}
+            />
           </View>
         )}
       </View>

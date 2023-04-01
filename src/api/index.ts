@@ -1,4 +1,8 @@
-import {ExerciseInterface, WorkoutInterface} from '../interface';
+import {
+  ExerciseInterface,
+  UserDetailsInterface,
+  WorkoutInterface,
+} from '../interface';
 
 const BASE_URL = 'https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com';
 
@@ -22,7 +26,7 @@ type AuthInputType = {
 };
 
 let token: string;
-function getToken() {
+export function getToken() {
   return token;
 }
 
@@ -40,7 +44,6 @@ function addSessionToken(req: ReqType) {
 
 const getRespText = async (url: string, req: ReqType) => {
   try {
-
     const resp = await fetch(url, req);
     const text = await resp.text();
     if (resp.status >= 400) {
@@ -93,15 +96,15 @@ export const fetchExercises = () => getJson('/exercises');
 export const fetchExerciseProps = () => getJson('/exerciseProps');
 export const saveCustomExercise = (data: ExerciseInterface) =>
   post('/exercise', {data});
-export const saveCompletedWorkout = (data: WorkoutInterface) => post('/completeWorkout', {data});
-export const saveWorkout = (data: WorkoutInterface) =>
-  post('/workout', {data});
-export const deleteWorkout = (data: WorkoutInterface) => {
-  console.log('deleteing', data.id);
-  return del(`/workout?id=${data.id}`);
-}
+export const saveCompletedWorkout = (data: WorkoutInterface) =>
+  post('/completeWorkout', {data});
+export const saveWorkout = (data: WorkoutInterface) => post('/workout', {data});
+export const deleteWorkout = (data: WorkoutInterface) =>
+  del(`/workout?id=${data.id}`);
 export const fetchCustomWorkouts = () => getJson('/workouts');
 export const fetchInitialData = () => getJson('/init');
+export const saveUser = (details: UserDetailsInterface) =>
+  post('/user', {details});
 
 export const auth = async ({username, password}: AuthInputType) =>
   post('/login', {username, password});

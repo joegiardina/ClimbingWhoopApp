@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SIGN_IN_SCREEN, SIGN_UP_SCREEN} from '../constants/navigation';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import { useThemeContext } from '../contexts/themeContext';
+import {useThemeContext} from '../contexts/themeContext';
 
 const Stack = createNativeStackNavigator();
 

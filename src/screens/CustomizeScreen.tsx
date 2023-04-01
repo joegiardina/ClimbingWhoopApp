@@ -28,18 +28,18 @@ const CustomizeScreen: React.FC<{navigation: any}> = ({navigation}) => {
         onPress={(item: WorkoutInterface) =>
           navigation.navigate(WORKOUT_CREATION_SCREEN, {workout: item})
         }
-        />
-        {!!creating && (
-          <View style={{marginTop: spacing.large, width: '100%'}}>
-            {creating === 'exercise' && <ExerciseCreation />}
-            <Button
-              small
-              text="Cancel"
-              onPress={() => setCreating(undefined)}
-              textOnly
-            />
-          </View>
-        )}
+      />
+      {!!creating && (
+        <View style={{marginTop: spacing.large, width: '100%'}}>
+          {creating === 'exercise' && <ExerciseCreation />}
+          <Button
+            small
+            text="Cancel"
+            onPress={() => setCreating(undefined)}
+            textOnly
+          />
+        </View>
+      )}
       <View expand />
       <View centered>
         <Button

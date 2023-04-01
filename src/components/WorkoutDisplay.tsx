@@ -135,7 +135,9 @@ const WorkoutDisplay: React.FC<{
                   key={key}
                   style={{flexDirection: 'row', marginBottom: spacing.large}}>
                   <View style={{flex: 1}}>
-                    <Text medium bold={isCompleted} favorable={isCompleted}>{name}</Text>
+                    <Text medium bold={isCompleted} favorable={isCompleted}>
+                      {name}
+                    </Text>
                     {min && max && (
                       <Text favorable={isCompleted}>
                         {min !== max
@@ -153,9 +155,7 @@ const WorkoutDisplay: React.FC<{
                         alignItems: 'flex-end',
                         marginHorizontal: spacing.large,
                       }}>
-                      <Text large>
-                        +
-                      </Text>
+                      <Text large>+</Text>
                     </TouchableOpacity>
                   )}
                 </View>

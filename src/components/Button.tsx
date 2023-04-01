@@ -30,13 +30,13 @@ const Button: React.FC<ButtonProps> = ({
   const {themeContext} = useThemeContext();
   const {textColor, backgroundColor} = themeContext.colors;
 
-  let buttonColor = 'green';
+  let buttonColor = themeContext.colors.favorable;
   let buttonTextColor = 'white';
   if (disabled) {
     buttonColor = 'gray';
     buttonTextColor = 'white';
   } else if (unfavorable) {
-    buttonColor = 'red';
+    buttonColor = themeContext.colors.unfavorable;
     buttonTextColor = 'white';
   } else if (outline) {
     buttonColor = backgroundColor;

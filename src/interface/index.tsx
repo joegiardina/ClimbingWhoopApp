@@ -30,7 +30,7 @@ export interface WorkoutInterface {
 
 export type WorkoutInterfaceList = Array<WorkoutInterface>;
 
-interface UserDetailsInterface {
+export interface UserDetailsInterface {
   name: string;
 }
 

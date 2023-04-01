@@ -16,7 +16,7 @@ interface CustomizeContextInterface {
   updateComponents: (_: WorkoutComponentList) => void;
   updateProperties: (_: PropertyList) => void;
   saveWorkout: (_: WorkoutInterface) => void;
-  deleteWorkout: (_: WorkoutInterface) => void,
+  deleteWorkout: (_: WorkoutInterface) => void;
   saveCustomExercise: (_: ExerciseInterface) => void;
 }
 

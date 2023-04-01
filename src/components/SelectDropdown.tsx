@@ -1,16 +1,20 @@
 import _ from 'lodash';
 import React, {useState} from 'react';
 import {TouchableOpacity, View, ViewStyle} from 'react-native';
-import {ExerciseInterface, PropertyType} from '../interface';
+import {
+  ExerciseInterface,
+  PropertyType,
+  WorkoutComponentInterface,
+} from '../interface';
 import Text from './Text';
 import Modal from './Modal';
 import {useThemeContext} from '../contexts/themeContext';
 
-type OptionType = ExerciseInterface | PropertyType;
+type OptionType = ExerciseInterface | PropertyType | WorkoutComponentInterface;
 
 interface SelectDropdownProps {
   auto?: Boolean;
-  option: OptionType;
+  option?: OptionType;
   options: Array<OptionType>;
   onSelect: Function;
 }
@@ -60,6 +64,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
     setSelectedOption(option);
     setShowOptions(false);
   };
+
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity style={inputStyle} onPress={toggleOptions}>

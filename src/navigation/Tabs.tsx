@@ -1,8 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
 import MainStack from './MainStack';
-import Text from '../components/Text';
 import HistoryScreen from '../screens/HistoryScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import CustomizeStack from './CustomizeStack';
 import {useThemeContext} from '../contexts/themeContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -15,14 +14,6 @@ import {
   SettingsIcon,
 } from '../components/TabBarIcon';
 import LoadingOverlay from '../components/LoadingOverlay';
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 

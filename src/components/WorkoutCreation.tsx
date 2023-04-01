@@ -119,7 +119,11 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
         }
       />
       <View expand />
-      <Button text="Save" onPress={() => onSave(result)} style={{marginBottom: spacing.small}} />
+      <Button
+        text="Save"
+        onPress={() => onSave(result)}
+        style={{marginBottom: spacing.small}}
+      />
       {result.id && (
         <Button unfavorable text="Delete" onPress={() => onDelete(result)} />
       )}

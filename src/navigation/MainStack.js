@@ -1,5 +1,4 @@
 import React from 'react';
-import {useColorScheme} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import WorkoutScreen from '../screens/WorkoutScreen';
@@ -12,7 +11,7 @@ import {
   WORKOUT_COMPONENT_SCREEN,
   WORKOUT_SCREEN,
 } from '../constants/navigation';
-import { useThemeContext } from '../contexts/themeContext';
+import {useThemeContext} from '../contexts/themeContext';
 
 const Stack = createNativeStackNavigator();
 

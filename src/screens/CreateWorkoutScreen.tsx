@@ -19,7 +19,12 @@ const CreateWorkoutScreen: React.FC<{navigation: any; route: any}> = ({
   };
   return (
     <Screen>
-      <WorkoutCreation navigation={navigation} route={route} onSave={onSave} onDelete={onDelete} />
+      <WorkoutCreation
+        navigation={navigation}
+        route={route}
+        onSave={onSave}
+        onDelete={onDelete}
+      />
     </Screen>
   );
 };

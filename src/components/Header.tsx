@@ -6,6 +6,7 @@ import {useUserContext} from '../contexts/userContext';
 
 const Header = () => {
   const userContext = useUserContext();
+  console.log('render header', userContext.user);
   return (
     <View
       style={{

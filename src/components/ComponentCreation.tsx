@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, {useState} from 'react';
 import {
-  View,
   TextInput,
   TextInputProps,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import View from './View';
 import Text from './Text';
 import Button from './Button';
 import {

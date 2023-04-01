@@ -30,8 +30,8 @@ export const colors = {
     backgroundColor: 'black',
     containerBackground: '#2F2F2F',
     textColor: 'white',
-    favorable: 'green',
-    unfavorable: 'red',
+    favorable: '#26780C',
+    unfavorable: '#A82323',
   },
 };
 
