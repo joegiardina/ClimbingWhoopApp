@@ -34,14 +34,14 @@ const TabNavigator: React.FC<{backgroundColor: string}> = ({
           tabBarShowLabel: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Calendar"
         component={HistoryScreen}
         options={{
           tabBarIcon: CalendarIcon,
           tabBarShowLabel: false,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Customize"
         component={CustomizeStack}

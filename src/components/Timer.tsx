@@ -121,8 +121,6 @@ const Timer: React.FC<TimerProps> = ({
       onPress={handleStart}
       style={{
         flex: 1,
-        width: '100%',
-        backgroundColor,
         justifyContent: 'center',
         alignItems: 'center',
       }}>
@@ -135,7 +133,15 @@ const Timer: React.FC<TimerProps> = ({
       <View style={{margin: spacing.large, flex: 1, justifyContent: 'center'}}>
         {!isActive && state === 'ready' && <Text large>START</Text>}
         {isActive && (
-          <View style={{alignItems: 'center'}}>
+          <View
+            centered
+            style={{
+              height: 250,
+              width: 250,
+              padding: spacing.extraLarge,
+              backgroundColor,
+              borderRadius: 200,
+            }}>
             <Text large>
               {state === 'preparing'
                 ? 'GET READY'

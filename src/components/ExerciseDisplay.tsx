@@ -74,7 +74,6 @@ const ExerciseDisplay: React.FC<{
             }
             disabled={timerButtonDisabled}
             style={{
-              borderColor: timerButtonDisabled ? 'gray' : textColor,
               padding: spacing.small,
             }}
           />

@@ -32,20 +32,24 @@ const Button: React.FC<ButtonProps> = ({
 
   let buttonColor = themeContext.colors.favorable;
   let buttonTextColor = 'white';
+  let borderColor = buttonColor;
   if (disabled) {
     buttonColor = 'gray';
     buttonTextColor = 'white';
+    borderColor = buttonColor;
   } else if (unfavorable) {
     buttonColor = themeContext.colors.unfavorable;
     buttonTextColor = 'white';
+    borderColor = buttonColor;
   } else if (outline) {
     buttonColor = backgroundColor;
     buttonTextColor = textColor;
+    borderColor = textColor;
   } else if (textOnly) {
     buttonColor = backgroundColor;
+    borderColor = buttonColor;
   }
 
-  const borderColor = outline ? textColor : buttonColor;
 
   return (
     <TouchableOpacity

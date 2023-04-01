@@ -3,6 +3,7 @@ export const spacing = {
   normal: 12,
   medium: 18,
   large: 24,
+  extraLarge: 32,
 };
   
 export const fontSizes = {
@@ -11,7 +12,7 @@ export const fontSizes = {
   medium: 20,
   large: 32,
   extraLarge: 64,
-  huge: 128,
+  huge: 96,
 };
 
 export const radii = {
