@@ -14,6 +14,10 @@ export const CalendarIcon: React.FC<IconProps> = ({color, size}) => (
   <MaterialCommunityIcons name="calendar-clock" color={color} size={size} />
 );
 
+export const TicklistIcon: React.FC<IconProps> = ({color, size}) => (
+  <MaterialCommunityIcons name="format-list-checks" color={color} size={size} />
+);
+
 export const EditIcon: React.FC<IconProps> = ({color, size}) => (
   <MaterialCommunityIcons
     name="clipboard-edit-outline"

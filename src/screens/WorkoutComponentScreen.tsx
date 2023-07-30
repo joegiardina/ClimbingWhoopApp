@@ -25,10 +25,12 @@ const WorkoutComponent: React.FC<{route: any; navigation: any}> = ({
     <Screen>
       <ScrollView contentContainerStyle={{width: '100%', alignItems: 'center'}}>
         <Text large>{name}</Text>
-        <Text medium>
-          Duration:{' '}
-          {min !== max ? `${min} to ${max} minutes` : `${min} minutes`}
-        </Text>
+        {(min || max) && (
+          <Text medium>
+            Duration:{' '}
+            {min !== max ? `${min} to ${max} minutes` : `${min} minutes`}
+          </Text>
+        )}
         {exercises?.map((exercise: ExerciseInterface, key: number) => (
           <ExerciseDisplay
             key={key}

@@ -6,6 +6,7 @@ import {
   PropertyList,
   WorkoutInterfaceList,
   WorkoutInterface,
+  RecoveryInterfaceList,
 } from '../interface';
 
 interface CustomizeContextInterface {
@@ -13,11 +14,17 @@ interface CustomizeContextInterface {
   exerciseList: ExerciseInterfaceList;
   componentList: WorkoutComponentList;
   workoutList: WorkoutInterfaceList;
+  recovery: RecoveryInterfaceList;
+  ticklist: any;
+  isWhoopConnected: Boolean;
+  isMountainProjectConnected: Boolean;
   updateComponents: (_: WorkoutComponentList) => void;
   updateProperties: (_: PropertyList) => void;
   saveWorkout: (_: WorkoutInterface) => void;
   deleteWorkout: (_: WorkoutInterface) => void;
   saveCustomExercise: (_: ExerciseInterface) => void;
+  deleteTicklist: () => void;
+  updateTicklist: () => void;
 }
 
 export const CustomizeContext = createContext<CustomizeContextInterface>({
@@ -25,11 +32,17 @@ export const CustomizeContext = createContext<CustomizeContextInterface>({
   exerciseList: [],
   componentList: [],
   workoutList: [],
+  recovery: [],
+  ticklist: {},
+  isWhoopConnected: false,
+  isMountainProjectConnected: false,
   updateComponents: (_: WorkoutComponentList) => {},
   updateProperties: (_: PropertyList) => {},
   saveWorkout: (_: WorkoutInterface) => {},
   deleteWorkout: (_: WorkoutInterface) => {},
   saveCustomExercise: (_: ExerciseInterface) => {},
+  deleteTicklist: () => {},
+  updateTicklist: () => {},
 });
 
 export const useCustomizeContext = () => {

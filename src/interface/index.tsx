@@ -40,3 +40,24 @@ export interface UserInterface {
   authenticated: boolean;
   token?: string;
 }
+
+interface RecoveryScoreInterface {
+  user_calibrating: Boolean;
+  recovery_score: number;
+  resting_heart_rate: number;
+  hrv_rmssd_milli: number;
+  spo2_percentage: number;
+  skin_temp_celsius: number;
+}
+
+export interface RecoveryInterface {
+  cycle_id: number;
+  sleep_id: number;
+  user_id: number;
+  created_at: string;
+  updated_at: string;
+  score_state: string;
+  score: RecoveryScoreInterface;
+}
+
+export type RecoveryInterfaceList = Array<RecoveryInterface>;

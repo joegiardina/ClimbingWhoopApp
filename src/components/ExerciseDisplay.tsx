@@ -62,6 +62,7 @@ const ExerciseDisplay: React.FC<{
         {showTimerButton && (
           <Button
             small
+            outline
             text="Timer"
             onPress={() =>
               navigation.navigate(TIMER_SCREEN, {

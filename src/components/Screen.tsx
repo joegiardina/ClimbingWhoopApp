@@ -14,20 +14,19 @@ const Screen: React.FC<ScreenProps> = ({children, ...props}) => {
 
   const style: ViewStyle = {
     backgroundColor,
-    height: '100%',
     padding: spacing.normal,
   };
 
   if (props.useScrollView) {
     return (
-      <ScrollView contentContainerStyle={[style, props.style]} {...props}>
+      <ScrollView style={{flex: 1}} contentContainerStyle={[style, props.style]} {...props}>
         {children}
       </ScrollView>
     );
   }
 
   return (
-    <View {...props} style={style}>
+    <View {...props} style={[{height: '100%'}, style]}>
       {children}
     </View>
   );

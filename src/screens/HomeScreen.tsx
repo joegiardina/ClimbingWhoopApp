@@ -13,7 +13,7 @@ import {useCustomizeContext} from '../contexts/customizeContext';
 // TODO: properly type navigation
 const Home: React.FC<{navigation: any}> = ({navigation}) => {
   const [workout, setWorkout] = useState<WorkoutInterface | undefined>();
-  const {workoutList} = useCustomizeContext();
+  const {workoutList, recovery, isWhoopConnected} = useCustomizeContext();
 
   useEffect(() => {
     setWorkout(undefined);
@@ -21,11 +21,33 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
 
   const buttonDisabled = !workout;
 
+  const recoveryScore = recovery[0]?.score.recovery_score;
+  let recoveryColor;
+  if (recoveryScore < 33) {
+    recoveryColor = 'red';
+  } else if (recoveryScore < 67) {
+    recoveryColor = 'yellow';
+  } else {
+    recoveryColor = 'green';
+  }
+
   return (
     <Screen>
       <Text large style={{marginBottom: spacing.large}}>
         Welcome
       </Text>
+      {isWhoopConnected && (
+        <View container style={{marginBottom: spacing.normal}}>
+          <Text medium bold>
+            Last Night's Recovery:
+          </Text>
+          <View style={{alignSelf: 'flex-end'}}>
+            <Text extraLarge color={recoveryColor} bold>
+              {recoveryScore}
+            </Text>
+          </View>
+        </View>
+      )}
       <View style={{marginBottom: spacing.normal}}>
         <WorkoutList
           workoutList={workoutList}
@@ -60,13 +82,11 @@ const Home: React.FC<{navigation: any}> = ({navigation}) => {
           </View>
         )}
       </View>
-      <View centered>
-        <Button
-          text="Start Workout"
-          onPress={() => navigation.navigate(WORKOUT_SCREEN, {workout})}
-          disabled={buttonDisabled}
-        />
-      </View>
+      <Button
+        text="Start Workout"
+        onPress={() => navigation.navigate(WORKOUT_SCREEN, {workout})}
+        disabled={buttonDisabled}
+      />
     </Screen>
   );
 };

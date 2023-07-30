@@ -1,3 +1,4 @@
+import {Linking} from 'react-native';
 import {
   ExerciseInterface,
   UserDetailsInterface,
@@ -7,6 +8,8 @@ import {
 const BASE_URL = 'https://vs7k2w1olc.execute-api.us-west-1.amazonaws.com';
 
 const SESSION_HEADER_NAME = 'x-cwa-session';
+
+const OAUTH_URL = `${BASE_URL}/oauth`;
 
 type Headers = {
   'content-type'?: string;
@@ -72,7 +75,7 @@ const del = async (path: string) => {
 
 const getJson = async (path: string) => {
   const text = await get(path);
-  return JSON.parse(text);
+  return text ? JSON.parse(text) : text;
 };
 
 const post = async (path: string, data: any) => {
@@ -86,28 +89,49 @@ const post = async (path: string, data: any) => {
   };
   addSessionToken(req);
   const text = await getRespText(url, req);
-  return JSON.parse(text);
+  return text ? JSON.parse(text) : text;
 };
 
-export const fetchPlan = () => getJson('/getPlan');
+// get saved completed workouts
 export const fetchWorkouts = () => getJson('/completedWorkouts');
+// get the saved workout for today's date
 export const fetchTodaysWorkout = () => getJson('/workoutToday');
-export const fetchExercises = () => getJson('/exercises');
-export const fetchExerciseProps = () => getJson('/exerciseProps');
-export const saveCustomExercise = (data: ExerciseInterface) =>
-  post('/exercise', {data});
+// save current workout
 export const saveCompletedWorkout = (data: WorkoutInterface) =>
   post('/completeWorkout', {data});
+// save a new custom workout
 export const saveWorkout = (data: WorkoutInterface) => post('/workout', {data});
+// delete a custom workout
 export const deleteWorkout = (data: WorkoutInterface) =>
   del(`/workout?id=${data.id}`);
+// get all custom workouts
 export const fetchCustomWorkouts = () => getJson('/workouts');
+// fetch custom exercises
+export const fetchExercises = () => getJson('/exercises');
+// fetch props used for creating exercises
+export const fetchExerciseProps = () => getJson('/exerciseProps');
+// save a custom exercise
+export const saveCustomExercise = (data: ExerciseInterface) =>
+  post('/exercise', {data});
+// fetch whoop recovery data
+export const fetchRecovery = () => get('/recovery');
+
+// single endpoint for all initial data required by the app
 export const fetchInitialData = () => getJson('/init');
+// update user details
 export const saveUser = (details: UserDetailsInterface) =>
   post('/user', {details});
-
+// login
 export const auth = async ({username, password}: AuthInputType) =>
   post('/login', {username, password});
+// start oauth process
+export const oauth = (token: string) =>
+  Linking.openURL(`${OAUTH_URL}?token=${token}`);
+// disconnect oauth
+export const disconnectOAuth = () => get('/disconnect_oauth');
+
+export const updateTicklist = userId => get(`/updateTicklist?userId=${userId}`);
+export const deleteTicklist = () => del('/ticklist');
 
 export const createUser = async ({
   username,

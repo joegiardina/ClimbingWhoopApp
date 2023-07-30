@@ -6,16 +6,23 @@ import Button from '../components/Button';
 import Text from '../components/Text';
 import View from '../components/View';
 import LoadingOverlay from '../components/LoadingOverlay';
-import {saveUser} from '../api';
+import {saveUser, disconnectOAuth, oauth} from '../api';
 import {spacing, fontSizes, radii} from '../../style';
 import {useUserContext} from '../contexts/userContext';
 import {useThemeContext} from '../contexts/themeContext';
+import {useCustomizeContext} from '../contexts/customizeContext';
 
 const SettingsScreen: React.FC = () => {
   const {user} = useUserContext();
+  const {
+    deleteTicklist,
+    updateTicklist,
+    isWhoopConnected,
+    isMountainProjectConnected,
+  } = useCustomizeContext();
   const {themeContext} = useThemeContext();
   const {textColor} = themeContext.colors;
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>(user?.details?.name || '');
   const [success, setSuccess] = useState(false);
 
   const userContext = useUserContext();
@@ -53,20 +60,94 @@ const SettingsScreen: React.FC = () => {
       <Text large style={{marginBottom: spacing.large}}>
         Settings
       </Text>
-      <Text small>Username</Text>
-      <Text medium style={{padding: spacing.small}}>
-        {user.username}
-      </Text>
-      <Text small>Name</Text>
-      <View style={{flex: 1, width: 250}}>
-        <TextInput
-          defaultValue={user.details?.name}
-          style={{marginTop: spacing.normal}}
-          {...commonTextInputProps}
-          placeholder="Name"
-          onChangeText={text => setName(text)}
-        />
+      <View style={{marginBottom: spacing.small}}>
+        <Text small>Username</Text>
+        <Text medium style={{padding: spacing.small}}>
+          {user.username}
+        </Text>
       </View>
+      <View>
+        <Text small>Name</Text>
+        <View style={{width: 250}}>
+          <TextInput
+            defaultValue={name}
+            {...commonTextInputProps}
+            placeholder="Name"
+            onChangeText={text => setName(text)}
+          />
+        </View>
+      </View>
+      <Text
+        medium
+        style={{marginTop: spacing.large, marginBottom: spacing.small}}>
+        WHOOP
+      </Text>
+      <View style={{marginBottom: spacing.small, alignItems: 'flex-start'}}>
+        <View style={{justifyContent: 'space-between', alignItems: 'center'}}>
+          {isWhoopConnected ? (
+            <>
+              <Text style={{marginBottom: spacing.small}} favorable>
+                WHOOP is connected.
+              </Text>
+              <Button
+                text="Disconnect WHOOP"
+                outline
+                small
+                unfavorable
+                onPress={disconnectOAuth}
+              />
+            </>
+          ) : (
+            <>
+              <Text style={{marginBottom: spacing.small}} unfavorable>
+                WHOOP not connected.
+              </Text>
+              <Button
+                text="Connect WHOOP"
+                outline
+                small
+                onPress={() => user.token && oauth(user.token)}
+              />
+            </>
+          )}
+        </View>
+      </View>
+      <Text
+        medium
+        style={{marginTop: spacing.large, marginBottom: spacing.small}}>
+        Climbing
+      </Text>
+      <View style={{marginBottom: spacing.small, alignItems: 'flex-start'}}>
+        <View style={{justifyContent: 'space-between', alignItems: 'center'}}>
+          {isMountainProjectConnected ? (
+            <>
+              <Text style={{marginBottom: spacing.small}} favorable>
+                Mountain Project is connected.
+              </Text>
+              <Button
+                text="Disconnect Mountain Project"
+                outline
+                small
+                unfavorable
+                onPress={() => deleteTicklist()}
+              />
+            </>
+          ) : (
+            <>
+              <Text style={{marginBottom: spacing.small}} unfavorable>
+                Mountain Project not connected.
+              </Text>
+              <Button
+                text="Connect Mountain Project"
+                outline
+                small
+                onPress={() => updateTicklist()}
+              />
+            </>
+          )}
+        </View>
+      </View>
+      <View expand />
       {success && (
         <View centered style={{marginBottom: spacing.small}}>
           <Text medium>Saved!</Text>

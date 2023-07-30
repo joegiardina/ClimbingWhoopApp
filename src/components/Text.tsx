@@ -5,6 +5,7 @@ import {fontSizes} from '../../style';
 import {useThemeContext} from '../contexts/themeContext';
 
 interface TextProps extends RNTextProps {
+  color?: string;
   bold?: Boolean;
   small?: Boolean;
   medium?: Boolean;
@@ -26,12 +27,13 @@ const Text: React.FC<TextProps> = props => {
   if (fontSizeProp && _.get(props, fontSizeProp)) {
     fontSize = _.get(fontSizes, fontSizeProp);
   }
-  let color = themeContext.colors.textColor;
+  let textColor = themeContext.colors.textColor;
   if (props.favorable) {
-    color = themeContext.colors.favorable;
+    textColor = themeContext.colors.favorable;
   } else if (props.unfavorable) {
-    color = themeContext.colors.unfavorable;
+    textColor = themeContext.colors.unfavorable;
   }
+  const color = props.color || textColor;
   return (
     <RNText
       style={[

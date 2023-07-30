@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   TextInput,
   TextInputProps,
   FlatList,
   TouchableOpacity,
+  AlertButton,
 } from 'react-native';
 import View from './View';
 import Text from './Text';
@@ -125,7 +127,25 @@ const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
         style={{marginBottom: spacing.small}}
       />
       {result.id && (
-        <Button unfavorable text="Delete" onPress={() => onDelete(result)} />
+        <Button
+          unfavorable
+          textOnly
+          text="Delete"
+          onPress={() => {
+            const yesButton: AlertButton = {
+              text: 'Yes',
+              isPreferred: false,
+              onPress: () => onDelete(result),
+              style: 'destructive',
+            };
+            const noButton: AlertButton = {
+              text: 'No',
+              isPreferred: true,
+              onPress: console.log,
+            };
+            Alert.alert('Are you sure?', undefined, [yesButton, noButton]);
+          }}
+        />
       )}
     </View>
   );

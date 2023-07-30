@@ -28,28 +28,29 @@ const Button: React.FC<ButtonProps> = ({
   textOnly,
 }) => {
   const {themeContext} = useThemeContext();
-  const {textColor, backgroundColor} = themeContext.colors;
+  const {backgroundColor} = themeContext.colors;
 
   let buttonColor = themeContext.colors.favorable;
   let buttonTextColor = 'white';
-  let borderColor = buttonColor;
+  let borderWidth = 1;
   if (disabled) {
     buttonColor = 'gray';
     buttonTextColor = 'white';
-    borderColor = buttonColor;
   } else if (unfavorable) {
     buttonColor = themeContext.colors.unfavorable;
     buttonTextColor = 'white';
-    borderColor = buttonColor;
-  } else if (outline) {
-    buttonColor = backgroundColor;
-    buttonTextColor = textColor;
-    borderColor = textColor;
-  } else if (textOnly) {
-    buttonColor = backgroundColor;
-    borderColor = buttonColor;
   }
 
+  let borderColor = buttonColor;
+  if (outline) {
+    borderColor = buttonColor;
+    buttonTextColor = buttonColor;
+    buttonColor = backgroundColor;
+  } else if (textOnly) {
+    borderWidth = 0;
+    buttonTextColor = buttonColor;
+    buttonColor = backgroundColor;
+  }
 
   return (
     <TouchableOpacity
@@ -59,8 +60,8 @@ const Button: React.FC<ButtonProps> = ({
         {
           backgroundColor: buttonColor,
           borderRadius: radii.normal,
-          borderColor: borderColor || backgroundColor,
-          borderWidth: 1,
+          borderColor: borderColor,
+          borderWidth: borderWidth,
           paddingVertical: !small ? spacing.normal : spacing.small,
           paddingHorizontal: spacing.normal,
           minWidth: !small && 80,

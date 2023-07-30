@@ -8,6 +8,7 @@ import {
   WorkoutInterface,
   ExerciseInterface,
   ExerciseInterfaceList,
+  RecoveryInterfaceList,
 } from '../interface';
 
 const useCustomize = () => {
@@ -15,6 +16,11 @@ const useCustomize = () => {
   const [propertyList, setPropertyList] = useState<PropertyList>([]);
   const [componentList, setComponentList] = useState<WorkoutComponentList>([]);
   const [workoutList, setWorkoutList] = useState<WorkoutInterfaceList>([]);
+  const [recovery, setRecovery] = useState<RecoveryInterfaceList>([]);
+  const [ticklist, setTicklist] = useState<Array<any>>([]);
+  const [isWhoopConnected, setIsWhoopConnected] = useState(false);
+  const [isMountainProjectConnected, setIsMountainProjectConnected] =
+    useState(false);
   const query = useQuery({
     queryKey: 'data',
     queryFn: api.fetchInitialData,
@@ -35,12 +41,26 @@ const useCustomize = () => {
     query.refetch();
   }, []);
 
+  const updateTicklist = useCallback(async () => {
+    await api.updateTicklist('200998393');
+    query.refetch();
+  }, []);
+
+  const deleteTicklist = useCallback(async () => {
+    await api.deleteTicklist();
+    query.refetch();
+  }, []);
+
   useEffect(() => {
     if (query.data && !query.isFetching) {
+      setIsWhoopConnected(query.data.user.isWhoopConnected);
+      setIsMountainProjectConnected(query.data.user.isMountainProjectConnected);
       setExerciseList(query.data.exercises as ExerciseInterfaceList);
       setWorkoutList(query.data.workouts as WorkoutInterfaceList);
       setPropertyList(query.data.props as PropertyList);
       setComponentList(query.data.components as WorkoutComponentList);
+      setTicklist(query.data.ticklist as any);
+      setRecovery(query.data.recovery);
     }
   }, [query.isFetching, query.status]);
 
@@ -52,12 +72,18 @@ const useCustomize = () => {
       propertyList,
       componentList,
       workoutList,
+      recovery,
+      ticklist,
+      isWhoopConnected,
+      isMountainProjectConnected,
       updateExercises: setExerciseList,
       updateProperties: setPropertyList,
       updateComponents: setComponentList,
       saveCustomExercise,
       saveWorkout,
       deleteWorkout,
+      updateTicklist,
+      deleteTicklist,
     },
   };
 };

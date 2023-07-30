@@ -1,6 +1,7 @@
 import React from 'react';
 import MainStack from './MainStack';
 import HistoryScreen from '../screens/HistoryScreen';
+import TicklistScreen from '../screens/TicklistScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import CustomizeStack from './CustomizeStack';
 import {useThemeContext} from '../contexts/themeContext';
@@ -9,7 +10,7 @@ import useCustomize from '../hooks/useCustomize';
 import {CustomizeContext} from '../contexts/customizeContext';
 import {
   HomeIcon,
-  CalendarIcon,
+  TicklistIcon,
   EditIcon,
   SettingsIcon,
 } from '../components/TabBarIcon';
@@ -34,14 +35,14 @@ const TabNavigator: React.FC<{backgroundColor: string}> = ({
           tabBarShowLabel: false,
         }}
       />
-      {/* <Tab.Screen
-        name="Calendar"
-        component={HistoryScreen}
+      <Tab.Screen
+        name="Ticklist"
+        component={TicklistScreen}
         options={{
-          tabBarIcon: CalendarIcon,
+          tabBarIcon: TicklistIcon,
           tabBarShowLabel: false,
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Customize"
         component={CustomizeStack}

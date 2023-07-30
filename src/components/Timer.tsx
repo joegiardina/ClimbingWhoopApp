@@ -142,14 +142,18 @@ const Timer: React.FC<TimerProps> = ({
               backgroundColor,
               borderRadius: 200,
             }}>
-            <Text large>
+            <Text color="white" large>
               {state === 'preparing'
                 ? 'GET READY'
                 : state === 'working'
                 ? 'GET IT!!'
                 : 'Rest'}
             </Text>
-            {timeLeft > 0 && <Text huge>{timeLeft}</Text>}
+            {timeLeft > 0 && (
+              <Text huge color="white">
+                {timeLeft}
+              </Text>
+            )}
           </View>
         )}
         {!isActive && state === 'done' && <Text large>Good work.</Text>}
